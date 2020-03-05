@@ -6,7 +6,9 @@ import java.util.Random;
 
 public class LetterCryptogram extends Cryptogram {
 
-    List<Character> cryptogramAlphabet = new ArrayList<>();
+    private List<Character> cryptogramAlphabet = new ArrayList<>();
+    private HashMap<Character, Character> map = encryptionMap();
+
 
     public LetterCryptogram(File String){
 
@@ -52,12 +54,16 @@ public class LetterCryptogram extends Cryptogram {
     //changing letters in the cypher for the ones in the map
     public String alphEncryptedCryptogram() {
         String a = returnCryptogram();
-        HashMap<Character, Character> map = encryptionMap();
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){
             encrypted_cryptogram.append(map.get(a.charAt(i)));
         }
         return encrypted_cryptogram.toString();
+    }
+
+    //return map for the answer
+    public HashMap<Character, Character> getMap(){
+        return map;
     }
 
 
