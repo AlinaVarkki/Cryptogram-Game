@@ -7,7 +7,7 @@ import java.util.Random;
 public class LetterCryptogram extends Cryptogram {
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
-    private HashMap<Character, Character> map = encryptionMap();
+    private HashMap<Character, Character> map;
 
 
     public LetterCryptogram(File String){
@@ -15,14 +15,14 @@ public class LetterCryptogram extends Cryptogram {
     }
 
     public LetterCryptogram(){
-
+        encryptionMap();
     }
 
     //method that generates map for encyption
     //the output is a map that has real alphabet mapped to the letter for encryption
     private HashMap<Character, Character> encryptionMap(){
 
-        HashMap<Character, Character> map = new HashMap<>();
+        map = new HashMap<>();
 
         //arraylist to add alphabet to the map as a key without changing this array
         ArrayList<Character> alphabetNoChange = new ArrayList<>();

@@ -22,11 +22,12 @@ public class Game {
 
     public static void main(String[] argc){
         HashMap<Character, Character> solution = new HashMap<>();
+        LetterCryptogram newCryptogram = new LetterCryptogram();
         System.out.println("To set encrypted letter to the solution enter 'set [encrypted letter] [real letter]'");
         System.out.println("To remove set letter enter 'remove [encrypted letter]'");
         System.out.println("To check your solution, enter 'check'");
         System.out.println("To exit enter 'exit'");
-        String cr = generateCryptogram();
+        String cr = newCryptogram.alphEncryptedCryptogram();;
         System.out.println(cr);
 
         //take in input and put it in the map to compare if the input is correct
@@ -50,12 +51,12 @@ public class Game {
                 shouldcontinue = false;
             }
             else if(tokens[0].equals("check")){
-                LetterCryptogram a = new LetterCryptogram();
-                HashMap<Character, Character> answer =  a.getMap();
+                //LetterCryptogram a = new LetterCryptogram();
+                HashMap<Character, Character> answer =  newCryptogram.getMap();
                 Set<Character> keys = solution.keySet();
                 boolean correct = true;
                     for(Character b: keys){
-                        if(!answer.get(b).equals(solution.get(b))){
+                        if(answer.get(b).equals(solution.get(b)) == false){
                             correct = false;
                         }
                     }
@@ -89,10 +90,10 @@ public class Game {
 
     }
 
-    private static String generateCryptogram(){
-        LetterCryptogram newCryptogram = new LetterCryptogram();
-        return newCryptogram.alphEncryptedCryptogram();
-    }
+//    private static String generateCryptogram(){
+//        LetterCryptogram newCryptogram = new LetterCryptogram();
+//        return newCryptogram.alphEncryptedCryptogram();
+//    }
 
     public void enterLetter(char a){
 
