@@ -8,4 +8,5 @@ public class Cryptogram {
     public String getFrequncies(){
         return "";
     }
+
 }

@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NumberCryptogram extends Cryptogram{
+public class NumberCryptogram extends Cryptogram {
 
     List<Character> cryptogramAlphabet = new ArrayList<>();
 
