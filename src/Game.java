@@ -13,6 +13,10 @@ public class Game {
 
     }
 
+    public static void main(String[] argc){
+        System.out.println(generateCryptogram());
+    }
+
     public char getHint(){
         return 'a';
     }
@@ -25,8 +29,9 @@ public class Game {
 
     }
 
-    public void generateCryptogram(){
-
+    private static String generateCryptogram(){
+        LetterCryptogram newCryptogram = new LetterCryptogram();
+        return newCryptogram.alphEncryptedCryptogram();
     }
 
     public void enterLetter(char a){

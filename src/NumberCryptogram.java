@@ -14,9 +14,12 @@ public class NumberCryptogram extends Cryptogram {
 
     }
 
+
+
     public char getPlainLetter(char cryptoLetter){
 
         return 'a';
     }
+
 
 }
