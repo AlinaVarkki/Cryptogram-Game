@@ -32,7 +32,8 @@ public class Cryptogram {
     }
 
     //method that returns letters in the Cryptogram as a set
-    public Set<Character> getCryptogramCharacters(String a){
+    public Set<Character> getCryptogramCharacters(){
+        String a = returnCryptogram();
         Set<Character> cryptogramCharacters = new HashSet<>();
         for(int i = 0; i < a.length(); i++){
             cryptogramCharacters.add(a.charAt(i));

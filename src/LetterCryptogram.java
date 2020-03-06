@@ -9,7 +9,6 @@ public class LetterCryptogram extends Cryptogram {
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, Character> map;
 
-
     public LetterCryptogram(File String){
 
     }
