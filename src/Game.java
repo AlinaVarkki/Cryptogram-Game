@@ -8,7 +8,13 @@ public class Game {
 
 
     Player currentPlayer;
+    //map to store the encryption used
+    private HashMap<Character, Character> answer;
+    private static LetterCryptogram newCryptogram = new LetterCryptogram();
+    //map that stores the mapping that user enteres
     private HashMap<Character, Character> solution = new HashMap<>();
+    //initializing tokens of user input
+    private String[] tokens = {""};
 
     public Game(Player p, String cryptType){
 
@@ -18,23 +24,24 @@ public class Game {
 
     }
 
+    public Game(){
+        printRules();
+        System.out.println(generateCryptogram());
+        takeInput();
+    }
 
-
-    public static void main(String[] argc){
-        HashMap<Character, Character> solution = new HashMap<>();
-        LetterCryptogram newCryptogram = new LetterCryptogram();
+    //prints rules in console
+    private void printRules(){
         System.out.println("To set encrypted letter to the solution enter 'set [encrypted letter] [real letter]'");
         System.out.println("To remove set letter enter 'remove [encrypted letter]'");
         System.out.println("To check your solution, enter 'check'");
         System.out.println("To exit enter 'exit'");
-        String cr = newCryptogram.alphEncryptedCryptogram();;
-        System.out.println(cr);
+    }
 
-        //take in input and put it in the map to compare if the input is correct
-
-        String[] tokens = {""};
+    //takes user input and calls methods accordingly
+    private void takeInput(){
         boolean shouldcontinue = true;
-        while(shouldcontinue == true) {
+        while(shouldcontinue) {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
 
@@ -42,25 +49,19 @@ public class Game {
 
 
             if(tokens[0].equals("set") && tokens[1] != null && tokens[1].length() == 1 && tokens[2] != null && tokens[2].length() == 1 && tokens.length < 4){
-                solution.put(tokens[1].charAt(0), tokens[2].charAt(0));
+                enterLetter(tokens[1].charAt(0), tokens[2].charAt(0));
             }
             else if(tokens[0].equals("remove") && solution.containsKey(tokens[1].charAt(0)) && tokens.length < 3){
-                solution.remove(tokens[1].charAt(0));
+                undoLetter(tokens[1].charAt(0));
             }
             else if(tokens[0].equals("exit")){
                 shouldcontinue = false;
             }
             else if(tokens[0].equals("check")){
-                //LetterCryptogram a = new LetterCryptogram();
-                HashMap<Character, Character> answer =  newCryptogram.getMap();
-                Set<Character> keys = solution.keySet();
-                boolean correct = true;
-                    for(Character b: keys){
-                        if(answer.get(b).equals(solution.get(b)) == false){
-                            correct = false;
-                        }
-                    }
-                if(correct == false){
+
+                boolean correct = checkSolution();
+
+                if(!correct){
                     System.out.println("your solution is wrong");
                 }
                 else{
@@ -72,34 +73,44 @@ public class Game {
                 System.out.println("Sorry syntax is wrong");
             }
 
-            System.out.println("________________");
+            System.out.println("_________________________________________");
         }
-        System.exit(1);
+    }
 
+    //adding user input to the solution map
+    private void enterLetter(Character a, Character b){
+        solution.put(a, b);
+    }
+
+    //removing user input from the map
+    private void undoLetter(Character c){
+        solution.remove(c);
+    }
+
+    //works but doesn't check the solution properly, checks all the letters, not just the ones in the cryptogram
+    private boolean checkSolution(){
+        answer =  newCryptogram.getMap();
+        Set<Character> keys = solution.keySet();
+        boolean correct = true;
+        for(Character b: keys){
+            if(!answer.get(b).equals(solution.get(b))){
+                correct = false;
+            }
+        }
+        return correct;
+    }
+
+    private static String generateCryptogram(){
+        return newCryptogram.alphEncryptedCryptogram();
     }
 
     public char getHint(){
         return 'a';
     }
 
-    public void loadPlayer(){
+    public void loadPlayer(){ }
 
-    }
-
-    public void playGame(){
-
-    }
-
-//    private static String generateCryptogram(){
-//        LetterCryptogram newCryptogram = new LetterCryptogram();
-//        return newCryptogram.alphEncryptedCryptogram();
-//    }
-
-    public void enterLetter(char a){
-
-    }
-
-    public void undoLetter(){}
+    public void playGame(){}
 
     public void viewFrequencies(){}
 
