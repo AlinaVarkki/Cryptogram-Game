@@ -20,7 +20,7 @@ public class Game {
 
     public Game(){
         printRules();
-        System.out.println(generateCryptogram());
+        System.out.println(generateCryptogram().toUpperCase());
         takeInput();
     }
 
@@ -30,39 +30,46 @@ public class Game {
         System.out.println("To remove set letter enter 'remove [encrypted letter]'");
         System.out.println("To check your solution, enter 'check'");
         System.out.println("To exit enter 'exit'");
+        System.out.println();
+        System.out.println();
     }
 
     //takes user input and calls methods accordingly
     private void takeInput(){
         boolean shouldcontinue = true;
+
         while(shouldcontinue) {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
 
             tokens = input.split(" ");
 
-
-            if(tokens[0].equals("set") && tokens[1] != null && tokens[1].length() == 1 && tokens[2] != null && tokens[2].length() == 1 && tokens.length < 4){
-                enterLetter(tokens[1].charAt(0), tokens[2].charAt(0));
-            }
-            else if(tokens[0].equals("remove") && solution.containsKey(tokens[1].charAt(0)) && tokens.length < 3){
-                undoLetter(tokens[1].charAt(0));
-            }
-            else if(tokens[0].equals("exit")){
-                shouldcontinue = false;
-            }
-            else if(tokens[0].equals("check")){
-                boolean correct = checkSolution();
-                if(!correct){
-                    System.out.println("your solution is wrong");
+            try {
+                if (tokens[0].equals("set") && tokens[1] != null && tokens[1].length() == 1 && tokens[2] != null && tokens[2].length() == 1 && tokens.length < 4) {
+                    enterLetter(tokens[1].charAt(0), tokens[2].charAt(0));
+                }
+                else if (tokens[0].equals("remove") && tokens[1] != null && solution.containsKey(tokens[1].charAt(0)) && tokens.length < 3) {
+                    undoLetter(tokens[1].charAt(0));
+                }
+                else if (tokens[0].equals("exit")) {
+                    shouldcontinue = false;
+                }
+                else if (tokens[0].equals("check")) {
+                    boolean correct = checkSolution();
+                    if (!correct) {
+                        System.out.println("your solution is wrong");
+                    } else {
+                        System.out.println("good job");
+                    }
                 }
                 else{
-                    System.out.println("good job");
+                    System.out.println("Sorry syntax is wrong");
                 }
             }
-            else{
-                System.out.println("Sorry syntax is wrong");
+            catch(Exception e){
+                System.out.println(" ");
             }
+
             System.out.println(showCurrentState().toUpperCase());
             System.out.println("_________________________________________");
         }
@@ -70,7 +77,21 @@ public class Game {
 
     //adding user input to the solution map
     private void enterLetter(Character a, Character b){
-        solution.put(b, a);
+        if(!cryptogram.contains(a.toString())){
+            System.out.println("Cryptogram does not contain this letter");
+        }
+        else if(solution.containsValue(a)){
+            for (Map.Entry<Character, Character> entry : solution.entrySet()) {
+                if (entry.getValue().equals(a)){
+                    solution.remove(entry.getKey());
+                }
+            }
+            solution.remove(b);
+            solution.put(b, a);
+        }
+        else {
+            solution.put(b, a);
+        }
     }
 
     //removing user input from the map
@@ -82,7 +103,10 @@ public class Game {
     //key set should be equal to the set of real characters in the cryptogram
     private boolean checkSolution(){
         answer =  newCryptogram.getMap();
+        answer.remove( ' ');
         Set<Character> solutionkeys = newCryptogram.getCryptogramCharacters();
+        //need to remove space from keys because user doesn't enter it but it is contained in the map
+        solutionkeys.remove(' ');
         Set<Character> keys = solution.keySet();
         boolean correct = true;
         if(!solutionkeys.containsAll(keys)){
@@ -118,11 +142,18 @@ public class Game {
                 for (Map.Entry<Character, Character> entry : solution.entrySet()) {
                     if (entry.getValue().equals(cryptogram.charAt(i))) {
                         currentState.append(entry.getKey());
+                        currentState.append(" ");
                     }
                 }
             }
             else{
-                currentState.append("_");
+                if(cryptogram.charAt(i) == ' ')
+                    currentState.append("   ");
+                else{
+                    currentState.append("_");
+                    currentState.append(" ");
+                }
+
             }
         }
         return currentState.toString();
