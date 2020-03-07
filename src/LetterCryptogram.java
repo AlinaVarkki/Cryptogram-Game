@@ -51,8 +51,8 @@ public class LetterCryptogram extends Cryptogram {
     }
 
     //changing letters in the cypher for the ones in the map
-    public String alphEncryptedCryptogram() {
-        String a = returnCryptogram();
+    public String EncryptedCryptogram() {
+        String a = returnPhrase();
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){
             encrypted_cryptogram.append(map.get(a.charAt(i)));

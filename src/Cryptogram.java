@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Cryptogram {
+    //stores real phrase for the cryptogram
     String phrase;
     List<Player> allPlayers = new ArrayList<>();
     private List<String> cryptograms = new ArrayList<>();
@@ -25,7 +26,7 @@ public class Cryptogram {
     }
 
     //return random Cryptogram(by now random)
-    public String returnCryptogram(){
+    public String returnPhrase(){
         populateCryptogramsArray();
         int random = rand.nextInt(cryptograms.size());
         return cryptograms.get(random);
@@ -33,10 +34,10 @@ public class Cryptogram {
 
     //method that returns letters in the Cryptogram as a set
     public Set<Character> getCryptogramCharacters(){
-        String a = returnCryptogram();
+        phrase = returnPhrase();
         Set<Character> cryptogramCharacters = new HashSet<>();
-        for(int i = 0; i < a.length(); i++){
-            cryptogramCharacters.add(a.charAt(i));
+        for(int i = 0; i < phrase.length(); i++){
+            cryptogramCharacters.add(phrase.charAt(i));
         }
         return cryptogramCharacters;
     }
@@ -45,7 +46,5 @@ public class Cryptogram {
     public String getFrequncies(){
         return "";
     }
-
-
 
 }
