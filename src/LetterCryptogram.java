@@ -1,10 +1,7 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class LetterCryptogram extends Cryptogram {
+public class LetterCryptogram extends Cryptogram <Character> {
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, Character> map;
@@ -13,13 +10,15 @@ public class LetterCryptogram extends Cryptogram {
 
     }
 
+    //map for cryptogram encryption generated every time when the object is created
     public LetterCryptogram(){
         encryptionMap();
     }
 
     //method that generates map for encyption
     //the output is a map that has real alphabet mapped to the letter for encryption
-    private HashMap<Character, Character> encryptionMap(){
+    @Override
+    public HashMap<Character, Character> encryptionMap(){
 
         map = new HashMap<>();
 
@@ -50,17 +49,30 @@ public class LetterCryptogram extends Cryptogram {
         return map;
     }
 
-    //changing letters in the cypher for the ones in the map
-    public String EncryptedCryptogram() {
-        String a = returnPhrase();
-        StringBuilder encrypted_cryptogram = new StringBuilder();
-        for(int i = 0; i < a.length(); i++){
-            encrypted_cryptogram.append(map.get(a.charAt(i)));
+    //adding user input to the solution map
+    @Override
+    public void enterLetter(Character a, Character b, String cryptogram, HashMap<Character, Character> user_solution){
+        //not letting user add letter to the solution if cryptogram doesn't contain this letter
+        if(!cryptogram.contains(a.toString())){
+            System.out.println("Cryptogram does not contain this letter");
         }
-        return encrypted_cryptogram.toString();
+        //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
+        else{
+            if(user_solution.containsValue(a)){
+                for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
+                    if (entry.getValue().equals(a)){
+                        user_solution.remove(entry.getKey());
+                    }
+                }
+                user_solution.remove(b);
+            }
+
+            user_solution.put(b, a);
+        }
     }
 
     //return map for the answer
+    @Override
     public HashMap<Character, Character> getMap(){
         return map;
     }

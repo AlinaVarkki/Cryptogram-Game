@@ -4,7 +4,7 @@ public class Game {
 
 
     Player currentPlayer;
-    private LetterCryptogram cryptogram_object = new LetterCryptogram();
+    private Cryptogram crypt_object;
     //map to store the encryption used
     private HashMap<Character, Character> soution_map;
     //map that stores the mapping that user enters
@@ -13,15 +13,33 @@ public class Game {
     private String[] tokens = {""};
     //current cryptogram
     private String cryptogram;
+    Scanner scanner = new Scanner(System.in);
+
 
     public Game(Player p, String cryptType){}
 
     public Game(Player p){}
 
     public Game(){
+        chooseCryptogram();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
         takeInput();
+    }
+
+    public void chooseCryptogram(){
+        System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n'");
+        String cryptChoice = scanner.nextLine();
+        tokens = cryptChoice.split(" ");
+        if(tokens[0].equals("l")){
+            crypt_object = new LetterCryptogram();
+        }
+        else if(tokens[0].equals("n")){
+            crypt_object = new NumberCryptogram();
+        }
+        else {
+            System.out.println("wtf");
+        }
     }
 
     //prints rules in console
@@ -30,7 +48,7 @@ public class Game {
         System.out.println("To remove set letter enter 'remove [encrypted letter]'");
         System.out.println("To check your solution, enter 'check'");
         System.out.println("To see the solution, type 'solution'");
-        System.out.println("To exit enter 'exit'");
+        System.out.println("To exit, enter 'exit'");
         System.out.println();
         System.out.println();
     }
@@ -41,14 +59,13 @@ public class Game {
         boolean shouldcontinue = true;
 
         while(shouldcontinue) {
-            Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
 
             tokens = input.split(" ");
 
             try {
                 if (tokens[0].equals("set") && tokens[1].length() == 1 && tokens[2].length() == 1 && tokens.length == 3) {
-                    enterLetter(tokens[1].charAt(0), tokens[2].charAt(0));
+                    crypt_object.enterLetter(tokens[1].charAt(0), tokens[2].charAt(0), cryptogram, user_solution);
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
                     undoLetter(tokens[1].charAt(0));
@@ -80,26 +97,7 @@ public class Game {
         }
     }
 
-    //adding user input to the solution map
-    private void enterLetter(Character a, Character b){
-        //not letting user add letter to the solution if cryptogram doesn't contain this letter
-        if(!cryptogram.contains(a.toString())){
-            System.out.println("Cryptogram does not contain this letter");
-        }
-        //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
-        else{
-            if(user_solution.containsValue(a)){
-            for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                if (entry.getValue().equals(a)){
-                    user_solution.remove(entry.getKey());
-                }
-            }
-            user_solution.remove(b);
-            }
 
-            user_solution.put(b, a);
-        }
-    }
 
     //removing user input from the map
     private void undoLetter(Character c){
@@ -114,9 +112,9 @@ public class Game {
 
     //method checks if current solution is correct
     private boolean checkSolution(){
-        soution_map =  cryptogram_object.getMap();
+        soution_map =  crypt_object.getMap();
         soution_map.remove( ' ');
-        Set<Character> solutionkeys = cryptogram_object.getCryptogramCharacters();
+        Set<Character> solutionkeys = crypt_object.getCryptogramCharacters();
         //need to remove space from keys because user doesn't enter it but it is contained in the map
         solutionkeys.remove(' ');
         Set<Character> input_keys = user_solution.keySet();
@@ -138,7 +136,7 @@ public class Game {
     }
 
     private String generateCryptogram(){
-        cryptogram = cryptogram_object.EncryptedCryptogram();
+        cryptogram = crypt_object.EncryptedCryptogram(crypt_object.getMap());
         return cryptogram;
     }
 
@@ -170,7 +168,7 @@ public class Game {
     }
 
     public void showSolution(){
-        System.out.println(cryptogram_object.returnPhrase());
+        System.out.println(crypt_object.returnPhrase());
     }
 
     public char getHint(){
