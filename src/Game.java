@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Game <T>{
@@ -20,7 +21,7 @@ public class Game <T>{
 
     public Game(Player p){}
 
-    public Game(){
+    public Game() throws FileNotFoundException {
         chooseCryptogram();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
@@ -121,7 +122,7 @@ public class Game <T>{
     }
 
     //method checks if current solution is correct
-    private boolean checkSolution(){
+    private boolean checkSolution() throws FileNotFoundException {
         solution_map =  crypt_object.getMap();
         solution_map.remove( ' ');
         Set<Character> solutionkeys = crypt_object.getCryptogramCharacters();
@@ -145,14 +146,14 @@ public class Game <T>{
         return correct;
     }
 
-    private String generateCryptogram(){
+    private String generateCryptogram() throws FileNotFoundException {
         cryptogram = crypt_object.EncryptedCryptogram();
         return cryptogram;
     }
 
 
 
-    private void showSolution(){
+    private void showSolution() throws FileNotFoundException {
         System.out.println(crypt_object.returnPhrase());
     }
 

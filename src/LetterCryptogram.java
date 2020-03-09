@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class LetterCryptogram extends Cryptogram <Character> {
@@ -53,7 +54,7 @@ public class LetterCryptogram extends Cryptogram <Character> {
     @Override
     public void enterLetter(String a, Character b, String cryptogram, HashMap<Character, Character> user_solution){
         //not letting user add letter to the solution if cryptogram doesn't contain this letter
-        if(!cryptogram.contains(a.toString())){
+        if(!cryptogram.contains(a)){
             System.out.println("Cryptogram does not contain this letter");
         }
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
@@ -103,7 +104,7 @@ public class LetterCryptogram extends Cryptogram <Character> {
 
     @Override
     //changing letters in the cypher for the ones in the map
-    public String EncryptedCryptogram() {
+    public String EncryptedCryptogram() throws FileNotFoundException {
         String a = returnPhrase();
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){

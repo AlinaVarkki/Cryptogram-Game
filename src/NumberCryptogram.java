@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class NumberCryptogram extends Cryptogram<String> {
@@ -21,7 +22,7 @@ public class NumberCryptogram extends Cryptogram<String> {
     @Override
     public HashMap<Character, String> encryptionMap(){
 
-        number_key_map = new HashMap<Character, String>();
+        number_key_map = new HashMap<>();
 
         //arraylist to add alphabet to the map as a key without changing this array
         //those values will be used as keys
@@ -56,7 +57,7 @@ public class NumberCryptogram extends Cryptogram<String> {
     }
 
     @Override
-    public String EncryptedCryptogram() {
+    public String EncryptedCryptogram() throws FileNotFoundException {
         String a = returnPhrase();
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){
@@ -75,7 +76,7 @@ public class NumberCryptogram extends Cryptogram<String> {
     @Override
     public void enterLetter(String a, Character b, String cryptogram, HashMap<Character, String> user_solution) {
         //not letting user add letter to the solution if cryptogram doesn't contain this letter
-        if(!cryptogram.contains(a.toString())){
+        if(!cryptogram.contains(a)){
             System.out.println("Cryptogram does not contain this letter");
         }
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
