@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -8,6 +9,11 @@ public class LetterCryptogram<pubic> extends Cryptogram <Character> {
     private HashMap<Character, Character> map;
     private int numGuesses = 0;
     private int numCorrectGuesses = 0;
+    private String[] tokens = {""};
+    private Scanner scanner = new Scanner(System.in);
+
+
+
 
     public LetterCryptogram(File String){
 
@@ -62,15 +68,30 @@ public class LetterCryptogram<pubic> extends Cryptogram <Character> {
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
         else{
             if(user_solution.containsValue(a.charAt(0))){
-                for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(a.charAt(0))){
-                        user_solution.remove(entry.getKey());
+//ask user if they want to change their solution
+                System.out.println("You have already mapped this letter, do you want to change the mapping?");
+                System.out.println("Enter 'Y' for yes and 'N' for no");
+                String input = scanner.nextLine();
+                tokens = input.split(" ");
+
+                if(tokens[0].equals("y")){
+                    for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
+                        if (entry.getValue().equals(a.charAt(0))){
+                            user_solution.remove(entry.getKey());
+                        }
                     }
+                    user_solution.remove(b);
+                    user_solution.put(b, a.charAt(0));
                 }
-                user_solution.remove(b);
+                else{
+                    return;
+                }
+
+            }
+            else{
+                user_solution.put(b, a.charAt(0));
             }
 
-            user_solution.put(b, a.charAt(0));
         }
     }
 
