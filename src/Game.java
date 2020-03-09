@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Game <T>{
 
-
     Player currentPlayer;
     private Cryptogram crypt_object;
     //map to store the encryption used
@@ -77,6 +76,8 @@ public class Game <T>{
             try {
                 if (tokens[0].equals("set") && tokens[2].length() == 1 && tokens.length == 3) {
                         crypt_object.enterLetter(tokens[1], tokens[2].charAt(0), cryptogram, user_solution);
+                        crypt_object.updateStats(tokens[1], tokens[2].charAt(0));
+
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
                     undoLetter(tokens[1].charAt(0));

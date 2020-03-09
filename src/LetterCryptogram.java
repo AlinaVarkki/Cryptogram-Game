@@ -2,10 +2,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class LetterCryptogram extends Cryptogram <Character> {
+public class LetterCryptogram<pubic> extends Cryptogram <Character> {
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, Character> map;
+    private int numGuesses = 0;
+    private int numCorrectGuesses = 0;
 
     public LetterCryptogram(File String){
 
@@ -101,6 +103,26 @@ public class LetterCryptogram extends Cryptogram <Character> {
         }
         return currentState.toString();
     }
+
+    @Override
+    public void updateStats(String setTo, Character key) {
+        numGuesses = numGuesses + 1;
+        if(map.get(key).equals(setTo.charAt(0))){
+            numCorrectGuesses= numCorrectGuesses + 1;
+        }
+    }
+
+    @Override
+    public Integer getNumGuesses(){
+        return numGuesses;
+    }
+
+    @Override
+    public Integer getNumCorrectGuesses() {
+        return numCorrectGuesses;
+    }
+
+
 
     @Override
     //changing letters in the cypher for the ones in the map

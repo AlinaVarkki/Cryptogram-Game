@@ -8,8 +8,9 @@ abstract class Cryptogram <T> {
     public abstract String EncryptedCryptogram() throws FileNotFoundException;
     public abstract void enterLetter(String charAt, Character charAt1, String cryptogram, HashMap<Character, T> user_solution);
     public abstract String showCurrentState(String cryptogram, HashMap<Character, T> user_solution);
-
-
+    public abstract void updateStats(String setTo, Character key);
+    public abstract Integer getNumGuesses();
+    public abstract Integer getNumCorrectGuesses();
     //stores real phrase for the cryptogram
 
     private String phrase;

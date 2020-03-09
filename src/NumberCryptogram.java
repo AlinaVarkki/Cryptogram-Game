@@ -6,6 +6,8 @@ public class NumberCryptogram extends Cryptogram<String> {
 
     List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> number_key_map;
+    private int numGuesses = 0;
+    private int numCorrectGuesses = 0;
 
 
     public NumberCryptogram(File String){
@@ -99,21 +101,20 @@ public class NumberCryptogram extends Cryptogram<String> {
         String[] tokens1 = cryptogram.split(" ");
 
         StringBuilder currentState = new StringBuilder();
-        for(int e = 0; e < tokens1.length; e++){
+        for (String s : tokens1) {
             //if the character in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
-            if(user_solution.containsValue(tokens1[e])){
+            if (user_solution.containsValue(s)) {
                 for (Map.Entry<Character, String> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(tokens1[e])) {
+                    if (entry.getValue().equals(s)) {
                         currentState.append(entry.getKey());
                         currentState.append(" ");
                     }
                 }
-            }
-            else{
-                if(tokens1[e].equals("   "))
+            } else {
+                if (s.equals("   "))
                     currentState.append("   ");
-                else{
-                   currentState.append("_");
+                else {
+                    currentState.append("_");
                     currentState.append(" ");
                 }
 
@@ -122,6 +123,26 @@ public class NumberCryptogram extends Cryptogram<String> {
         }
         return currentState.toString();
     }
+
+    @Override
+    public void updateStats(String setTo, Character key) {
+        numGuesses = numGuesses + 1;
+        if(number_key_map.get(key).equals(setTo)){
+            numCorrectGuesses= numCorrectGuesses + 1;
+        }
+    }
+
+    @Override
+    public Integer getNumGuesses(){
+        return numGuesses;
+    }
+
+    @Override
+    public Integer getNumCorrectGuesses() {
+        return numCorrectGuesses;
+    }
+
+
 
     @Override
     public HashMap<Character, String> getMap(){
