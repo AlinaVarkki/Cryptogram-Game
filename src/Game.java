@@ -13,7 +13,7 @@ public class Game <T>{
     private String[] tokens = {""};
     //current cryptogram
     private String cryptogram;
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
 
     public Game(Player p, String cryptType){}
@@ -27,18 +27,28 @@ public class Game <T>{
         takeInput();
     }
 
-    public void chooseCryptogram(){
+    private void chooseCryptogram(){
         System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n'");
-        String cryptChoice = scanner.nextLine();
-        tokens = cryptChoice.split(" ");
-        if(tokens[0].equals("l")){
-            crypt_object = new LetterCryptogram();
-        }
-        else if(tokens[0].equals("n")){
-            crypt_object = new NumberCryptogram();
-        }
-        else {
-            System.out.println("wtf");
+
+        boolean shouldContinueAsking = true;
+        while(shouldContinueAsking) {
+            String cryptChoice = scanner.nextLine();
+            tokens = cryptChoice.split(" ");
+            try {
+                if (tokens[0].equals("l")) {
+                    crypt_object = new LetterCryptogram();
+                    shouldContinueAsking = false;
+                } else if (tokens[0].equals("n")) {
+                    crypt_object = new NumberCryptogram();
+                    shouldContinueAsking = false;
+                }
+                else{
+                    System.out.println("Wrong syntax, type 'l' or 'n'");
+                }
+            }
+            catch(Exception e) {
+                System.out.println("Wrong syntax, type 'l' or 'n'");
+            }
         }
     }
 
@@ -142,7 +152,7 @@ public class Game <T>{
 
 
 
-    public void showSolution(){
+    private void showSolution(){
         System.out.println(crypt_object.returnPhrase());
     }
 
