@@ -5,7 +5,9 @@ import java.util.*;
 abstract class Cryptogram <T> {
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
-    public abstract void enterLetter(T charAt, Character charAt1, String cryptogram, HashMap<T, Character> user_solution);
+    public abstract String EncryptedCryptogram();
+    public abstract void enterLetter(String charAt, Character charAt1, String cryptogram, HashMap<Character, T> user_solution);
+    public abstract String showCurrentState(String cryptogram, HashMap<Character, T> user_solution);
 
 
     //stores real phrase for the cryptogram
@@ -48,20 +50,7 @@ abstract class Cryptogram <T> {
         return cryptogramCharacters;
     }
 
-    //changing letters in the cypher for the ones in the map
-    public String EncryptedCryptogram(HashMap map) {
-        String a = returnPhrase();
-        StringBuilder encrypted_cryptogram = new StringBuilder();
-        for(int i = 0; i < a.length(); i++){
-            if(a.charAt(i) == ' '){
-                encrypted_cryptogram.append(' ');
-            }
-            else{
-            encrypted_cryptogram.append(map.get(a.charAt(i)));
-            }
-        }
-        return encrypted_cryptogram.toString();
-    }
+
 
 
     //returns letter and it's frequency

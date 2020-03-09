@@ -1,14 +1,14 @@
 import java.util.*;
 
-public class Game {
+public class Game <T>{
 
 
     Player currentPlayer;
     private Cryptogram crypt_object;
     //map to store the encryption used
-    private HashMap<Character, Character> soution_map;
+    private Map solution_map;
     //map that stores the mapping that user enters
-    private HashMap<Character, Character> user_solution = new HashMap<>();
+    private HashMap<Character, T> user_solution = new HashMap<>();
     //initializing tokens of user input
     private String[] tokens = {""};
     //current cryptogram
@@ -64,8 +64,8 @@ public class Game {
             tokens = input.split(" ");
 
             try {
-                if (tokens[0].equals("set") && tokens[1].length() == 1 && tokens[2].length() == 1 && tokens.length == 3) {
-                    crypt_object.enterLetter(tokens[1].charAt(0), tokens[2].charAt(0), cryptogram, user_solution);
+                if (tokens[0].equals("set") && tokens[2].length() == 1 && tokens.length == 3) {
+                        crypt_object.enterLetter(tokens[1], tokens[2].charAt(0), cryptogram, user_solution);
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
                     undoLetter(tokens[1].charAt(0));
@@ -92,7 +92,7 @@ public class Game {
             catch(Exception e){
                 System.out.println(" ");
             }
-            System.out.println(showCurrentState().toUpperCase());
+            System.out.println(crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase());
             System.out.println("_________________________________________");
         }
     }
@@ -112,8 +112,8 @@ public class Game {
 
     //method checks if current solution is correct
     private boolean checkSolution(){
-        soution_map =  crypt_object.getMap();
-        soution_map.remove( ' ');
+        solution_map =  crypt_object.getMap();
+        solution_map.remove( ' ');
         Set<Character> solutionkeys = crypt_object.getCryptogramCharacters();
         //need to remove space from keys because user doesn't enter it but it is contained in the map
         solutionkeys.remove(' ');
@@ -128,7 +128,7 @@ public class Game {
         }
         //if every mapping of user is the same as the correct mapping, the answer if correct
         for(Character b: input_keys){
-            if(!soution_map.get(b).equals(user_solution.get(b))){
+            if(!solution_map.get(b).equals(user_solution.get(b))){
                 correct = false;
             }
         }
@@ -136,36 +136,11 @@ public class Game {
     }
 
     private String generateCryptogram(){
-        cryptogram = crypt_object.EncryptedCryptogram(crypt_object.getMap());
+        cryptogram = crypt_object.EncryptedCryptogram();
         return cryptogram;
     }
 
-//method to display current user solution
-    private String showCurrentState(){
-        StringBuilder currentState = new StringBuilder();
-        for(int i = 0; i < cryptogram.length(); i++){
-            //if the character in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
 
-            if(user_solution.containsValue(cryptogram.charAt(i))){
-                for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(cryptogram.charAt(i))) {
-                        currentState.append(entry.getKey());
-                        currentState.append(" ");
-                    }
-                }
-            }
-            else{
-                if(cryptogram.charAt(i) == ' ')
-                    currentState.append("   ");
-                else{
-                    currentState.append("_");
-                    currentState.append(" ");
-                }
-
-            }
-        }
-        return currentState.toString();
-    }
 
     public void showSolution(){
         System.out.println(crypt_object.returnPhrase());
