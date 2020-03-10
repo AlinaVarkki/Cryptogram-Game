@@ -14,7 +14,7 @@ public class Game <T>{
     //current cryptogram
     private String cryptogram;
     private Scanner scanner = new Scanner(System.in);
-
+    boolean complete = false;
 
     public Game(Player p, String cryptType){}
 
@@ -76,7 +76,15 @@ public class Game <T>{
             try {
                 if (tokens[0].equals("set") && tokens[2].length() == 1 && tokens.length == 3) {
                         crypt_object.enterLetter(tokens[1], tokens[2].charAt(0), cryptogram, user_solution);
-                        crypt_object.updateStats(tokens[1], tokens[2].charAt(0));
+//                    System.out.println(crypt_object.getNumCorrectGuesses());
+//                    System.out.println(crypt_object.getNumGuesses());
+                    complete = checkSolution();
+                    if(complete){
+                        System.out.println("Good job, your solution is correct");
+                        System.out.println(crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase());
+                        System.exit(1);
+                    }
+
 
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
@@ -104,8 +112,13 @@ public class Game <T>{
             catch(Exception e){
                 System.out.println(" ");
             }
-            System.out.println(crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase());
+            String currentSolution = crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase();
+            System.out.println(currentSolution);
             System.out.println("_________________________________________");
+            if(!currentSolution.contains("_")){
+                System.out.println("your solution is not right, try again");
+            }
+
         }
     }
 
@@ -157,6 +170,13 @@ public class Game <T>{
     private void showSolution() throws FileNotFoundException {
         System.out.println(crypt_object.returnPhrase());
     }
+
+//    public void setCryptKeys(){
+//        Set <Character> cryptogramKeys = new HashSet<>();
+//        for(int i = 0; i<cryptogram.length(); i++){
+//            cryptogramKeys
+//        }
+//    }
 
     public char getHint(){
         return 'a';}

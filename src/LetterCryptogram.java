@@ -67,29 +67,32 @@ public class LetterCryptogram<pubic> extends Cryptogram <Character> {
         }
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
         else{
-            if(user_solution.containsValue(a.charAt(0))){
-//ask user if they want to change their solution
+            if(user_solution.containsKey(b)) {
+                System.out.println("You already mapped this letter to another encrypted char, you need to remove it first");
+            }
+            else if (user_solution.containsValue(a.charAt(0))) {
+                //ask user if they want to change their solution
                 System.out.println("You have already mapped this letter, do you want to change the mapping?");
                 System.out.println("Enter 'Y' for yes and 'N' for no");
                 String input = scanner.nextLine();
                 tokens = input.split(" ");
 
-                if(tokens[0].equals("y")){
+                if (tokens[0].equals("y")) {
                     for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                        if (entry.getValue().equals(a.charAt(0))){
+                        if (entry.getValue().equals(a.charAt(0))) {
                             user_solution.remove(entry.getKey());
                         }
                     }
-                    user_solution.remove(b);
+                   // user_solution.remove(b);
                     user_solution.put(b, a.charAt(0));
-                }
-                else{
+                    updateStats(a, b);
+                } else {
                     return;
                 }
 
-            }
-            else{
+            } else {
                 user_solution.put(b, a.charAt(0));
+                updateStats(a, b);
             }
 
         }

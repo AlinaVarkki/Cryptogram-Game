@@ -8,6 +8,8 @@ public class NumberCryptogram extends Cryptogram<String> {
     private HashMap<Character, String> number_key_map;
     private int numGuesses = 0;
     private int numCorrectGuesses = 0;
+    private String[] tokens = {""};
+    private Scanner scanner = new Scanner(System.in);
 
 
     public NumberCryptogram(File String){
@@ -83,15 +85,35 @@ public class NumberCryptogram extends Cryptogram<String> {
         }
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
         else{
-            if(user_solution.containsValue(a)){
-                for (Map.Entry<Character, String> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(a)){
-                        user_solution.remove(entry.getKey());
-                    }
-                }
-                user_solution.remove(b);
+            if(user_solution.containsKey(b)) {
+                System.out.println("You already mapped this letter to another encrypted char, you need to remove it first");
             }
-            user_solution.put(b, a);
+            else if(user_solution.containsValue(a)){
+                //ask user if they want to change their solution
+                System.out.println("You have already mapped this letter, do you want to change the mapping?");
+                System.out.println("Enter 'Y' for yes and 'N' for no");
+                String input = scanner.nextLine();
+                tokens = input.split(" ");
+
+                if(tokens[0].equals("y")){
+                    for (Map.Entry<Character, String> entry : user_solution.entrySet()) {
+                        if (entry.getValue().equals(a)){
+                            user_solution.remove(entry.getKey());
+                        }
+                    }
+                    user_solution.remove(b);
+                    user_solution.put(b, a);
+                    updateStats(a, b);
+                }
+                else{
+                    return;
+                }
+
+            }
+            else{
+                user_solution.put(b, a);
+                updateStats(a, b);
+            }
         }
     }
 
@@ -131,6 +153,8 @@ public class NumberCryptogram extends Cryptogram<String> {
             numCorrectGuesses= numCorrectGuesses + 1;
         }
     }
+
+
 
     @Override
     public Integer getNumGuesses(){
