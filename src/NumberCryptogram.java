@@ -133,10 +133,11 @@ public class NumberCryptogram extends Cryptogram<String> {
                     }
                 }
             } else {
-                if (s.equals("   "))
-                    currentState.append("   ");
-                else {
+                if (getMap().containsValue(s))
                     currentState.append("_");
+//                    currentState.append("   ");
+                else {
+  //                  currentState.append("_");
                     currentState.append(" ");
                 }
 
