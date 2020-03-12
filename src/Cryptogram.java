@@ -107,11 +107,11 @@ abstract class Cryptogram {
                     }
                 }
             } else {
-                if (getMap().containsValue(s))
+                if (getMap().containsValue(s)){
                     currentState.append("_");
-//                    currentState.append("   ");
+                    currentState.append(" ");
+                }
                 else {
-                    //                  currentState.append("_");
                     currentState.append(" ");
                 }
 

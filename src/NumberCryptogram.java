@@ -6,10 +6,7 @@ public class NumberCryptogram extends Cryptogram {
 
     List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> number_key_map;
-    private int numGuesses = 0;
-    private int numCorrectGuesses = 0;
-    private String[] tokens = {""};
-    private Scanner scanner = new Scanner(System.in);
+
 
 
     public NumberCryptogram(File String){
