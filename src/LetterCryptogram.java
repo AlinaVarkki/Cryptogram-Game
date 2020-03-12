@@ -3,15 +3,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class LetterCryptogram<pubic> extends Cryptogram <Character> {
+public class LetterCryptogram<pubic> extends Cryptogram{
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
-    private HashMap<Character, Character> map;
-    private int numGuesses = 0;
-    private int numCorrectGuesses = 0;
-    private String[] tokens = {""};
-    private Scanner scanner = new Scanner(System.in);
-
+    private HashMap<Character, String> map;
 
 
 
@@ -27,7 +22,7 @@ public class LetterCryptogram<pubic> extends Cryptogram <Character> {
     //method that generates map for encyption
     //the output is a map that has real alphabet mapped to the letter for encryption
     @Override
-    public HashMap<Character, Character> encryptionMap(){
+    public HashMap<Character, String> encryptionMap(){
 
         map = new HashMap<>();
 
@@ -49,124 +44,25 @@ public class LetterCryptogram<pubic> extends Cryptogram <Character> {
             //random number to take one of array characters and put into the map
             Random rand = new Random();
             int random = rand.nextInt(alphabet.size());
-                map.put(alphabetNoChange.get(MAP_KEY_INDEX), alphabet.get(random));
+                map.put(alphabetNoChange.get(MAP_KEY_INDEX), alphabet.get(random).toString());
             MAP_KEY_INDEX ++;
             alphabet.remove(random);
         }
         //space should be mapped to space
-        map.put(' ', ' ');
+        map.put(' ', " ");
         return map;
     }
 
-    //adding user input to the solution map
-    @Override
-    public void enterLetter(String a, Character b, String cryptogram, HashMap<Character, Character> user_solution){
-        //not letting user add letter to the solution if cryptogram doesn't contain this letter
-        if(!cryptogram.contains(a)){
-            System.out.println("Cryptogram does not contain this letter");
-        }
-        //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
-        else{
-            if(user_solution.containsKey(b)) {
-                System.out.println("You already mapped this letter to another encrypted char, you need to remove it first");
-            }
-            else if (user_solution.containsValue(a.charAt(0))) {
-                //ask user if they want to change their solution
-                System.out.println("You have already mapped this letter, do you want to change the mapping?");
-                System.out.println("Enter 'Y' for yes and 'N' for no");
-                String input = scanner.nextLine();
-                tokens = input.split(" ");
-
-                if (tokens[0].equals("y")) {
-                    for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                        if (entry.getValue().equals(a.charAt(0))) {
-                            user_solution.remove(entry.getKey());
-                        }
-                    }
-                   // user_solution.remove(b);
-                    user_solution.put(b, a.charAt(0));
-                    updateStats(a, b);
-                } else {
-                    return;
-                }
-
-            } else {
-                user_solution.put(b, a.charAt(0));
-                updateStats(a, b);
-            }
-
-        }
-    }
-
-    @Override
-    //method to display current user solution
-    public String showCurrentState(String cryptogram, HashMap<Character, Character> user_solution){
-
-        StringBuilder currentState = new StringBuilder();
-        int e = 0;
-        for(int i = 0; i < cryptogram.length(); i++){
-            //if the character in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
-            if(user_solution.containsValue(cryptogram.charAt(i))){
-                for (Map.Entry<Character, Character> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(cryptogram.charAt(i))) {
-                        currentState.append(entry.getKey());
-                        currentState.append(" ");
-                    }
-                }
-            }
-            else{
-                if(cryptogram.charAt(i) == ' ')
-                    currentState.append("   ");
-                else{
-                    currentState.append("_");
-                    currentState.append(" ");
-                }
-
-            }
-
-        }
-        return currentState.toString();
-    }
-
-    @Override
-    public void updateStats(String setTo, Character key) {
-        numGuesses = numGuesses + 1;
-        if(map.get(key).equals(setTo.charAt(0))){
-            numCorrectGuesses= numCorrectGuesses + 1;
-        }
-    }
-
-    @Override
-    public Integer getNumGuesses(){
-        return numGuesses;
-    }
-
-    @Override
-    public Integer getNumCorrectGuesses() {
-        return numCorrectGuesses;
-    }
 
 
 
-    @Override
-    //changing letters in the cypher for the ones in the map
-    public String EncryptedCryptogram() throws FileNotFoundException {
-        String a = returnPhrase();
-        StringBuilder encrypted_cryptogram = new StringBuilder();
-        for(int i = 0; i < a.length(); i++){
-            if(a.charAt(i) == ' '){
-                encrypted_cryptogram.append(' ');
-            }
-            else{
-                encrypted_cryptogram.append(map.get(a.charAt(i)));
-            }
-        }
-        return encrypted_cryptogram.toString();
-    }
+
+
+
 
     //return map for the answer
     @Override
-    public HashMap<Character, Character> getMap(){
+    public HashMap<Character, String> getMap(){
         return map;
     }
 

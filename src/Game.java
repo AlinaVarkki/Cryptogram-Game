@@ -8,7 +8,7 @@ public class Game <T>{
     //map to store the encryption used
     private Map solution_map;
     //map that stores the mapping that user enters
-    private HashMap<Character, T> user_solution = new HashMap<>();
+    private HashMap<Character, String> user_solution = new HashMap<>();
     //initializing tokens of user input
     private String[] tokens = {""};
     //current cryptogram
