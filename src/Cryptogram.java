@@ -146,6 +146,16 @@ abstract class Cryptogram {
         }
     }
 
+    //removing user input from the map
+    public void undoLetter(Character c, HashMap<Character, String> user_solution){
+        //if user solution doesn't contain the key to be removed, nothing happens
+        if(!user_solution.containsKey(c)){
+            System.out.println("You do not have character '" + c + "' set up");
+        }
+        else{
+            user_solution.remove(c);
+        }
+    }
 
     public Integer getNumGuesses(){
         return numGuesses;

@@ -88,7 +88,7 @@ public class Game <T>{
 
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
-                    undoLetter(tokens[1].charAt(0));
+                    crypt_object.undoLetter(tokens[1].charAt(0), user_solution);
                 }
                 else if (tokens[0].equals("check")) {
                     boolean correct = checkSolution();
@@ -124,16 +124,7 @@ public class Game <T>{
 
 
 
-    //removing user input from the map
-    private void undoLetter(Character c){
-        //if user solution doesn't contain the key to be removed, nothing happens
-        if(!user_solution.containsKey(tokens[1].charAt(0))){
-            System.out.println("You do not have character '" + c + "' set up");
-        }
-        else{
-        user_solution.remove(c);
-        }
-    }
+
 
     //method checks if current solution is correct
     private boolean checkSolution() throws FileNotFoundException {
