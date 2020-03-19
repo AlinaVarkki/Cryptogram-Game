@@ -20,7 +20,7 @@ abstract class Cryptogram {
 
     //method to populate array with all the cryptograms
     private void populateCryptogramsArray() throws FileNotFoundException {
-            s = new Scanner(new File("C:\\Users\\USER\\Desktop\\cs207\\resources\\Cryptograms.txt"));
+            s = new Scanner(new File("resources\\Cryptograms.txt"));
 
             while (s.hasNextLine()) {
                 cryptograms.add(s.nextLine());
