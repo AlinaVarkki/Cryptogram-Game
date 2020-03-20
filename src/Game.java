@@ -18,7 +18,7 @@ public class Game <T>{
     private String cryptogram;
     private Scanner scanner = new Scanner(System.in);
     boolean complete = false;
-    private static final String directory = "resources\\saves\\";
+    private static final String cryptoDirectory = "resources\\saves\\";
     private static final String playerDirectory = "resources\\players\\";
     private String name;
     private String playerName;
@@ -230,7 +230,7 @@ public class Game <T>{
 
     public void saveGame(){
         try {
-            String tempname = directory + name + ".sav";
+            String tempname = cryptoDirectory + name + ".sav";
             FileOutputStream saveFile = new FileOutputStream(tempname);
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
             save.writeObject(crypt_object);
@@ -248,7 +248,7 @@ public class Game <T>{
     public void loadGame(String n){
         try {
             name = n;
-            String tempname = directory + n + ".sav";
+            String tempname = cryptoDirectory + n + ".sav";
             FileInputStream saveFile = new FileInputStream(tempname);
             ObjectInputStream restore = new ObjectInputStream(saveFile);
             crypt_object = (Cryptogram) restore.readObject();
