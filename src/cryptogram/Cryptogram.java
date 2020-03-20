@@ -1,14 +1,16 @@
+package cryptogram;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-abstract class Cryptogram {
+public abstract class Cryptogram {
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
     //stores real phrase for the cryptogram
 
     private String phrase;
-    List<Player> allPlayers = new ArrayList<>();
+    //List<Player> allPlayers = new ArrayList<>();
     private List<String> cryptograms = new ArrayList<>();
     private Scanner s;
     private Random rand = new Random();
@@ -29,7 +31,7 @@ abstract class Cryptogram {
 
     }
 
-    //return random Cryptogram(by now random)
+    //return random cryptogram.Cryptogram(by now random)
     public String returnPhrase() throws FileNotFoundException {
         populateCryptogramsArray();
         int random = 0;
@@ -42,7 +44,7 @@ abstract class Cryptogram {
         return cryptograms.get(random);
     }
 
-    //method that returns letters in the Cryptogram as a set
+    //method that returns letters in the cryptogram.Cryptogram as a set
     public Set<Character> getCryptogramCharacters() throws FileNotFoundException {
         phrase = returnPhrase();
         Set<Character> cryptogramCharacters = new HashSet<>();
@@ -57,7 +59,7 @@ abstract class Cryptogram {
     public void enterLetter(String a, Character b, String cryptogram, HashMap<Character, String> user_solution){
         //not letting user add letter to the solution if cryptogram doesn't contain this letter
         if(!cryptogram.contains(a)){
-            System.out.println("Cryptogram does not contain this letter");
+            System.out.println("cryptogram.Cryptogram does not contain this letter");
         }
         //if user has already set this letter, loop through values and remove it and it's key. Then put new value to the map
         else{

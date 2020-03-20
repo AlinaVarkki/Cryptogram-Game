@@ -1,14 +1,18 @@
 package controllers;
 
+import cryptogram.Cryptogram;
+import cryptogram.LetterCryptogram;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.io.FileNotFoundException;
+
 public class GameViewController {
 
 
-    String crypt = "DECRYPT THIS SENTENCE PLEASE LETS SEE HOW IT ALL WORKS";
+    String phrase;
 
 
     @FXML
@@ -17,7 +21,8 @@ public class GameViewController {
 
     //dynamically creating amount of textboxes
     @FXML
-    private void initialize() {
+    private void initialize() throws FileNotFoundException {
+        getCryptogram();
         createTextBoxes();
         addLetters();
     }
@@ -25,6 +30,7 @@ public class GameViewController {
 
     //dynamically create textboxes for every letter
     public void createTextBoxes(){
+
         int row = 1;
         //variable that gets incremented with every pass to change the row after it's at max(6 in a row)
         int c = 0;
@@ -32,9 +38,9 @@ public class GameViewController {
         //max of letters in a row
         int trashHold = enterLetters.getColumnCount();
         //adding textboxes to cells
-        for (int i = 0; i < crypt.length(); i++) {
+        for (int i = 0; i < phrase.length(); i++) {
             TextField e = new TextField();
-            if (crypt.charAt(i) != ' ') {
+            if (phrase.charAt(i) != ' ') {
                 enterLetters.add(e, column, row);
             }
             column = column + 1;
@@ -58,9 +64,9 @@ public class GameViewController {
         //max of letters in a row
         int trashHoldl = enterLetters.getColumnCount();
         //adding textboxes to cells
-        for (int i = 0; i < crypt.length(); i++) {
+        for (int i = 0; i < phrase.length(); i++) {
             Text e = new Text();
-            e.setText(String.valueOf(crypt.charAt(i)));
+            e.setText(String.valueOf(phrase.charAt(i)));
             enterLetters.add(e, columnl, rowl);
 
             columnl = columnl + 1;
@@ -75,8 +81,9 @@ public class GameViewController {
         }
     }
 
-    public void getCryptogram(){
-        
+    public void getCryptogram() throws FileNotFoundException {
+        Cryptogram cryptogram = new LetterCryptogram<>();
+        phrase = cryptogram.returnPhrase();
     }
 
 

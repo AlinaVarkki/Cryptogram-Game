@@ -1,6 +1,6 @@
-import javax.swing.*;
+package cryptogram;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 public class LetterCryptogram<pubic> extends Cryptogram{

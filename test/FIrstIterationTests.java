@@ -1,3 +1,6 @@
+import cryptogram.Cryptogram;
+import cryptogram.LetterCryptogram;
+import cryptogram.NumberCryptogram;
 import org.junit.Assert;
 import org.junit.Test;
 

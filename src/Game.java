@@ -1,3 +1,7 @@
+import cryptogram.Cryptogram;
+import cryptogram.LetterCryptogram;
+import cryptogram.NumberCryptogram;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 
