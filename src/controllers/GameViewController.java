@@ -2,6 +2,8 @@ package controllers;
 
 import cryptogram.Cryptogram;
 import cryptogram.LetterCryptogram;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -12,7 +14,10 @@ import java.io.FileNotFoundException;
 public class GameViewController {
 
 
-    String phrase;
+    private String phrase;
+    private TextField[] fields = new TextField[100];
+    private int maxChars = 1;
+    private String restictTo = "[a-z\\s]*";
 
 
     @FXML
@@ -25,6 +30,7 @@ public class GameViewController {
         getCryptogram();
         createTextBoxes();
         addLetters();
+        //setLimitToLetters();
     }
 
 
@@ -39,9 +45,26 @@ public class GameViewController {
         int trashHold = enterLetters.getColumnCount();
         //adding textboxes to cells
         for (int i = 0; i < phrase.length(); i++) {
-            TextField e = new TextField();
+            //create new textbox and override methods to only accept1 letter (and only letters)
+            fields[i] = new TextField(){
+                @Override
+                public void replaceText(int start, int end, String text) {
+                    if (matchTest(text)) {
+                        super.replaceText(start, end, text);
+                    }
+                }
+                @Override
+                public void replaceSelection(String text) {
+                    if (matchTest(text)) {
+                        super.replaceSelection(text);
+                    }
+                }
+                private boolean matchTest(String text) {
+                    return text.isEmpty() || (text.matches(restictTo) && getText().length() < maxChars);
+                }
+            };
             if (phrase.charAt(i) != ' ') {
-                enterLetters.add(e, column, row);
+                enterLetters.add(fields[i], column, row);
             }
             column = column + 1;
             c = c + 1;
@@ -86,5 +109,21 @@ public class GameViewController {
         phrase = cryptogram.returnPhrase();
     }
 
+
+
+//    public void setLimitToLetters(){
+//        for(TextField tx: fields){
+//
+//        }
+//    }
+//
+//    public static void addTextLimiter(final TextField tf, final int maxLength) {
+//        tf.textProperty().addListener((ov, oldValue, newValue) -> {
+//            if (tf.getText().length() > maxLength) {
+//                String s = tf.getText().substring(0, maxLength);
+//                tf.setText(s);
+//            }
+//        });
+//    }
 
 }
