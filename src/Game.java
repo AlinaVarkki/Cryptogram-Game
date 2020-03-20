@@ -18,6 +18,7 @@ public class Game <T>{
     private String cryptogram;
     private Scanner scanner = new Scanner(System.in);
     boolean complete = false;
+    private String directory = "resources\\saves\\";
     private String name;
 
     public Game(Player p, String cryptType){}
@@ -33,7 +34,7 @@ public class Game <T>{
     }
 
     private void chooseCryptogram(){
-        System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n' or to load type load");
+        System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n' or to load type 'load [savename]' ");
 
         boolean shouldContinueAsking = true;
         while(shouldContinueAsking) {
@@ -58,8 +59,7 @@ public class Game <T>{
 
     private void chooseName() {
         System.out.println("Please enter a save name: ");
-        String nameChoice = scanner.nextLine();
-        name = "resources\\saves\\" + nameChoice;
+        name = scanner.nextLine();
     }
 
     //prints rules in console
@@ -192,7 +192,7 @@ public class Game <T>{
 
     public void saveGame(){
         try {
-            String tempname = name + ".sav";
+            String tempname = directory + name + ".sav";
             FileOutputStream saveFile = new FileOutputStream(tempname);
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
             save.writeObject(crypt_object);
@@ -200,6 +200,7 @@ public class Game <T>{
             save.writeObject(user_solution);
             save.writeObject(cryptogram);
             save.close();
+            System.out.println("You have successfully saved the game as: " + tempname);
         }
         catch(IOException e) {
             System.out.println(e);
@@ -208,7 +209,8 @@ public class Game <T>{
 
     public void loadGame(String n){
         try {
-            String tempname = n + ".sav";
+            name = n;
+            String tempname = directory + n + ".sav";
             FileInputStream saveFile = new FileInputStream(tempname);
             ObjectInputStream restore = new ObjectInputStream(saveFile);
             crypt_object = (LetterCryptogram) restore.readObject();
