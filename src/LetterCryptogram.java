@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.*;
 
-public class LetterCryptogram<pubic> extends Cryptogram{
+public class LetterCryptogram<pubic> extends Cryptogram implements Serializable {
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> map;
+    private static final long serialVersionUID = -1892561327013038124L;
+
 
 
 

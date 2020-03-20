@@ -1,5 +1,8 @@
-import java.io.FileNotFoundException;
-import java.util.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Game <T>{
 
@@ -15,6 +18,7 @@ public class Game <T>{
     private String cryptogram;
     private Scanner scanner = new Scanner(System.in);
     boolean complete = false;
+    private String name;
 
     public Game(Player p, String cryptType){}
 
@@ -22,34 +26,40 @@ public class Game <T>{
 
     public Game() throws FileNotFoundException {
         chooseCryptogram();
+        chooseName();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
         takeInput();
     }
 
     private void chooseCryptogram(){
-        System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n'");
+        System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n' or to load type load");
 
         boolean shouldContinueAsking = true;
         while(shouldContinueAsking) {
             String cryptChoice = scanner.nextLine();
             tokens = cryptChoice.split(" ");
-            try {
                 if (tokens[0].equals("l")) {
                     crypt_object = new LetterCryptogram();
                     shouldContinueAsking = false;
                 } else if (tokens[0].equals("n")) {
                     crypt_object = new NumberCryptogram();
                     shouldContinueAsking = false;
+                } else if (tokens[0].equals("load")) {
+                    loadGame(tokens[1]);
+                    printRules();
+                    System.out.println(cryptogram.toUpperCase());
+                    takeInput();
+                    shouldContinueAsking = false;
                 }
-                else{
-                    System.out.println("Wrong syntax, type 'l' or 'n'");
-                }
-            }
-            catch(Exception e) {
-                System.out.println("Wrong syntax, type 'l' or 'n'");
-            }
+                else System.out.println("Please enter correct syntax");
         }
+    }
+
+    private void chooseName() {
+        System.out.println("Please enter a save name: ");
+        String nameChoice = scanner.nextLine();
+        name = "resources\\saves\\" + nameChoice;
     }
 
     //prints rules in console
@@ -82,6 +92,7 @@ public class Game <T>{
                     if(complete){
                         System.out.println("Good job, your solution is correct");
                         System.out.println(crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase());
+                        saveGame();
                         System.exit(1);
                     }
 
@@ -102,7 +113,11 @@ public class Game <T>{
                     showSolution();
                 }
                 else if (tokens[0].equals("exit")) {
+                    saveGame();
                     shouldcontinue = false;
+                }
+                else if (tokens[0].equals("save")) {
+                    saveGame();
                 }
                 else{
                     System.out.println("Sorry syntax is wrong");
@@ -121,8 +136,6 @@ public class Game <T>{
 
         }
     }
-
-
 
 
 
@@ -177,9 +190,37 @@ public class Game <T>{
 
     public void viewFrequencies(){}
 
-    public void saveGame(){}
+    public void saveGame(){
+        try {
+            String tempname = name + ".sav";
+            FileOutputStream saveFile = new FileOutputStream(tempname);
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+            save.writeObject(crypt_object);
+            save.writeObject(solution_map);
+            save.writeObject(user_solution);
+            save.writeObject(cryptogram);
+            save.close();
+        }
+        catch(IOException e) {
+            System.out.println(e);
+        }
+    }
 
-    public void loadGame(){}
+    public void loadGame(String n){
+        try {
+            String tempname = n + ".sav";
+            FileInputStream saveFile = new FileInputStream(tempname);
+            ObjectInputStream restore = new ObjectInputStream(saveFile);
+            crypt_object = (LetterCryptogram) restore.readObject();
+            solution_map = (Map) restore.readObject();
+            user_solution = (HashMap<Character, String>) restore.readObject();
+            cryptogram = (String) restore.readObject();
+            restore.close();
+        }
+        catch(IOException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+    }
 
 
 }
