@@ -18,7 +18,7 @@ public class Game <T>{
     private String cryptogram;
     private Scanner scanner = new Scanner(System.in);
     boolean complete = false;
-    private String directory = "resources\\saves\\";
+    private static final String directory = "resources\\saves\\";
     private String name;
 
     public Game(Player p, String cryptType){}
@@ -213,7 +213,7 @@ public class Game <T>{
             String tempname = directory + n + ".sav";
             FileInputStream saveFile = new FileInputStream(tempname);
             ObjectInputStream restore = new ObjectInputStream(saveFile);
-            crypt_object = (LetterCryptogram) restore.readObject();
+            crypt_object = (Cryptogram) restore.readObject();
             solution_map = (Map) restore.readObject();
             user_solution = (HashMap<Character, String>) restore.readObject();
             cryptogram = (String) restore.readObject();
