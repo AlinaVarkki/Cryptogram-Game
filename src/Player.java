@@ -1,33 +1,67 @@
 public class Player {
 
-    private String username;
-    private int accuracy;
-    private int totalGuesses;
-    private int cryptogramsPlayed;
-    private int cryptogramsCompleted;
+    public int totalGuesses;
+    public int correctGuesses;
+    public int cryptogramsPlayed;
+    public int cryptogramsCompleted;
 
-    public void updateAccuracy(){
+    public Player() {
+        totalGuesses = 0;
+        correctGuesses = 0;
+        cryptogramsCompleted = 0;
+        cryptogramsPlayed = 0;
+    }
 
+    public int updateAccuracy(){
+        return correctGuesses/totalGuesses;
     }
 
     public void incrementCryptogramsCompleted(){
-
+        cryptogramsCompleted++;
     }
 
     public void incrementCryptogramsPlayed(){
-
+        cryptogramsPlayed++;
     }
 
-    public void getAccuracy(){
-
+    public void incrementTotalGuesses() {
+        totalGuesses++;
     }
 
-    public void getNumCryptogramsCompleted(){
-
+    public void incrementCorrectGuesses() {
+        correctGuesses++;
     }
 
-    public void getNumCryptogramsPlayed(){
+    public int getNumCryptogramsCompleted(){
+        return cryptogramsCompleted;
+    }
 
+    public int getNumCryptogramsPlayed(){
+        return cryptogramsPlayed;
+    }
+
+    public int getTotalGuesses() {
+        return totalGuesses;
+    }
+
+    public int getCorrectGuesses() {
+        return correctGuesses;
+    }
+
+    public void setGuesses(int n) {
+        totalGuesses = n;
+    }
+
+    public void setCorrectGuesses(int n) {
+        correctGuesses = n;
+    }
+
+    public void setPlayed(int n) {
+        cryptogramsPlayed = n;
+    }
+
+    public void setCompleted(int n) {
+        cryptogramsCompleted = n;
     }
 
 

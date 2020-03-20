@@ -19,7 +19,9 @@ public class Game <T>{
     private Scanner scanner = new Scanner(System.in);
     boolean complete = false;
     private static final String directory = "resources\\saves\\";
+    private static final String playerDirectory = "resources\\players\\";
     private String name;
+    private String playerName;
 
     public Game(Player p, String cryptType){}
 
@@ -28,6 +30,7 @@ public class Game <T>{
     public Game() throws FileNotFoundException {
         chooseCryptogram();
         chooseName();
+        loadPlayer();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
         takeInput();
@@ -48,6 +51,7 @@ public class Game <T>{
                     shouldContinueAsking = false;
                 } else if (tokens[0].equals("load")) {
                     loadGame(tokens[1]);
+                    loadPlayer();
                     printRules();
                     System.out.println(cryptogram.toUpperCase());
                     takeInput();
@@ -58,7 +62,7 @@ public class Game <T>{
     }
 
     private void chooseName() {
-        System.out.println("Please enter a save name: ");
+        System.out.println("Please enter a save name for the cryptogram: ");
         name = scanner.nextLine();
     }
 
@@ -184,7 +188,41 @@ public class Game <T>{
 
     public char getHint(){
         return 'a';}
-    public void loadPlayer(){}
+
+    public void loadPlayer(){
+        try {
+            System.out.println("Enter the player name: ");
+            playerName = scanner.nextLine();
+            String tempname = playerDirectory + playerName + ".sav";
+            FileInputStream saveFile = new FileInputStream(tempname);
+            ObjectInputStream restore = new ObjectInputStream(saveFile);
+            Player player = new Player();
+            player.setGuesses((Integer) restore.readObject());
+            player.setCorrectGuesses((Integer) restore.readObject());
+            player.setPlayed((Integer) restore.readObject());
+            player.setCompleted((Integer) restore.readObject());
+            restore.close();
+            System.out.println(playerName + " loaded successfully");
+        }
+        catch(IOException | ClassNotFoundException e) {
+            try {
+                System.out.println("Player not found, adding new player");
+                String tempname = playerDirectory + playerName + ".sav";
+                FileOutputStream saveFile = new FileOutputStream(tempname);
+                ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                Player player = new Player();
+                save.writeObject(player.getTotalGuesses());
+                save.writeObject(player.getCorrectGuesses());
+                save.writeObject(player.getNumCryptogramsPlayed());
+                save.writeObject(player.getNumCryptogramsCompleted());
+                save.close();
+                System.out.println("Successfully added new player");
+            }
+            catch(IOException f) {
+                System.out.println("Player loading error");
+            }
+        }
+    }
 
     public void playGame(){}
 
