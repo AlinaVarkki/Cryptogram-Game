@@ -220,7 +220,8 @@ public class Game <T>{
             restore.close();
         }
         catch(IOException | ClassNotFoundException e) {
-            System.out.println(e);
+            System.out.println("There has been an error loading the file, make sure you entered the correct file name");
+            System.exit(1);
         }
     }
 
