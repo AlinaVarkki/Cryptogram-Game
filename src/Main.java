@@ -1,3 +1,5 @@
+import game.Game;
+
 import java.io.FileNotFoundException;
 
 public class Main {
