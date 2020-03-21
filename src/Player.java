@@ -1,6 +1,7 @@
 public class Player {
 
-    private String username;
+    public String username;
+    public String password;
     private int accuracy;
     private int totalGuesses;
     private int cryptogramsPlayed;

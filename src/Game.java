@@ -1,5 +1,5 @@
-import java.io.FileNotFoundException;
 import java.util.*;
+import java.io.*;
 
 public class Game <T>{
 
@@ -21,11 +21,94 @@ public class Game <T>{
     public Game(Player p){}
 
     public Game() throws FileNotFoundException {
+        login();
         chooseCryptogram();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
         takeInput();
     }
+
+    private void login() throws FileNotFoundException {
+        boolean unlogged = true;
+        boolean found = false;
+        boolean uFound = false;
+        String pass = "";
+
+        System.out.println("Please enter your username or type 'register' to create an account");
+        while (unlogged) {
+            String userEnter = scanner.nextLine();
+            tokens = userEnter.split(" ");
+            try {
+                if (tokens[0].equals("register")) {
+                    register();
+                }
+
+                else {
+                    File file = new File("D:\\Users\\mhair\\IdeaProjects\\cs207\\resources\\Logins.txt");
+                    Scanner s = new Scanner(file);
+                    s.useDelimiter("[,\n]");
+
+                    //System.out.println("trying to find username");
+                    while (s.hasNext() && !found) {
+                        String user = s.next().trim();
+
+                        if (tokens[0].equals(user)) {   //if the username exists in the file
+                            pass = s.next();
+                            System.out.println("Enter password for " + user);
+                            uFound = true;
+                        }
+                        else if (tokens[0].equals("exit")) {    //give the user the chance to exit if they want
+                            System.out.println("Exiting...");
+                            System.exit(0);
+                        }
+
+                        /*
+                        Issue occurs under here - says that the string held in the pass variable taken from the Logins txt file
+                        doesn't match the string entered by the user below into passEnter/tokens[0].
+                        Have a couple of redundant print statements that would be removed for submission just to check the
+                        strings are matching.
+                         */
+
+                        if (uFound) {           //once username has been found, take in password
+                            System.out.println(pass);                   //remove later; just to check pass holds the expected string
+                            String passEnter = scanner.nextLine();      //the password the user enters
+                            System.out.println(passEnter);              //remove later; just to check passEnter matches pass
+
+                            if (passEnter.equals(pass)) {             //password validation - I'm probably missing something obvious but can't see it sorry!
+                                System.out.println("Logged in!");   //should happen but doesn't
+                                found = true;
+                            }
+                            else {
+                                System.out.println("Wrong password");   //this prints even if the passwords seem to match
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Invalid username or command, please try entering your username or 'register' again");
+            }
+        }
+    }
+
+
+    //Appends the Logins .txt file with the newly registered username and password (though password validation isn't currently working when logging in)
+    private void register() throws IOException {
+        FileWriter fw = new FileWriter("D:\\Users\\mhair\\IdeaProjects\\cs207\\resources\\Logins.txt", true);
+        String user, pass;
+
+        System.out.println("Enter a username to register with");
+        Player newUser = new Player();
+        newUser.username = scanner.nextLine();
+        System.out.println("Please enter password for " + newUser.username);
+        newUser.password = scanner.nextLine();
+
+        fw.write("\n" + newUser.username + "," + newUser.password);
+        System.out.println("Registered!");
+        fw.close();
+    }
+
 
     private void chooseCryptogram(){
         System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n'");
