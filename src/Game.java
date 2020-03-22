@@ -40,7 +40,21 @@ public class Game <T>{
             tokens = userEnter.split(" ");
             try {
                 if (tokens[0].equals("register")) {
-                    register();
+                    //Appends the Logins .txt file with the newly registered username and personal stats
+                    FileWriter fw = new FileWriter("resources/Logins.txt", true);
+                    String user;
+
+                    System.out.println("Enter a username to register with");
+                    Player newUser = new Player();
+                    newUser.username = scanner.nextLine();
+
+                    System.out.println("Enter a password");
+                    newUser.password = scanner.nextLine();
+
+                    fw.write("\n" + newUser.username + "," + newUser.password + ",0,0,0");   //0s for tracking no. of ciphers played, completed and no. of correct guesses
+                    System.out.println("Registered!");
+                    fw.close();
+                    unlogged = false;
                 }
 
                 else {
@@ -62,24 +76,21 @@ public class Game <T>{
                             System.exit(0);
                         }
 
-                        /*
-                        Issue occurs under here - says that the string held in the pass variable taken from the Logins txt file
-                        doesn't match the string entered by the user below into passEnter/tokens[0].
-                        Have a couple of redundant print statements that would be removed for submission just to check the
-                        strings are matching.
-                         */
+                        if (!s.hasNext()) {
+                            System.out.println("Username not found, please re-enter");
+                        }
 
-                        if (uFound) {           //once username has been found, take in password
-                            System.out.println(pass);                   //remove later; just to check pass holds the expected string
+                         while (uFound) {           //once username has been found, take in password
                             String passEnter = scanner.nextLine();      //the password the user enters
-                            System.out.println(passEnter);              //remove later; just to check passEnter matches pass
 
-                            if (passEnter.equals(pass)) {             //password validation - I'm probably missing something obvious but can't see it sorry!
-                                System.out.println("Logged in!");   //should happen but doesn't
+                            if (passEnter.equals(pass)) {             //password validation
+                                System.out.println("Logged in!");
                                 found = true;
+                                unlogged = false;
+                                uFound = false;
                             }
                             else {
-                                System.out.println("Wrong password");   //this prints even if the passwords seem to match
+                                System.out.println("Wrong password, please re-enter");   //this prints even if the passwords seem to match
                             }
 
                         }
@@ -91,24 +102,6 @@ public class Game <T>{
             }
         }
     }
-
-
-    //Appends the Logins .txt file with the newly registered username and password (though password validation isn't currently working when logging in)
-    private void register() throws IOException {
-        FileWriter fw = new FileWriter("D:\\Users\\mhair\\IdeaProjects\\cs207\\resources\\Logins.txt", true);
-        String user, pass;
-
-        System.out.println("Enter a username to register with");
-        Player newUser = new Player();
-        newUser.username = scanner.nextLine();
-        System.out.println("Please enter password for " + newUser.username);
-        newUser.password = scanner.nextLine();
-
-        fw.write("\n" + newUser.username + "," + newUser.password);
-        System.out.println("Registered!");
-        fw.close();
-    }
-
 
     private void chooseCryptogram(){
         System.out.println("To play letter cryptogram, type 'l', to play number cryptogram, type'n'");
