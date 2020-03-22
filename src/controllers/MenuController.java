@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Builder;
+import javafx.util.BuilderFactory;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class MenuController {
 
@@ -24,30 +27,36 @@ public class MenuController {
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
 
         Scene scene = LetterCryptButton.getScene();
-        ScreenController contoller = new ScreenController(scene);
+//        ScreenController contoller = new ScreenController(scene);
 
         try {
-            contoller.addScreen("letterCryptogram", FXMLLoader.load(getClass().getResource("/view/gameView.fxml")));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
+            loader.setController(new GameViewController(false));
+//            contoller.addScreen("numberCryptogram", loader.load());
+            scene.setRoot(loader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        contoller.activate("letterCryptogram");
+   //     contoller.activate("letterCryptogram");
     }
 
     @FXML
     public void numberCryptogramButtonClicked(ActionEvent actionEvent) {
         Scene scene = numberCryptButton.getScene();
-        ScreenController contoller = new ScreenController(scene);
+//        ScreenController contoller = new ScreenController(scene);
 
         try {
-            contoller.addScreen("numberCryptogram", FXMLLoader.load(getClass().getResource("/view/gameView.fxml")));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
+            loader.setController(new GameViewController(true));
+//            contoller.addScreen("numberCryptogram", loader.load());
+            scene.setRoot(loader.load());
 
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        contoller.activate("numberCryptogram");
+    //    contoller.activate("numberCryptogram");
     }
 }
 

@@ -3,6 +3,7 @@ package controllers;
 import cryptogram.Cryptogram;
 import cryptogram.LetterCryptogram;
 import cryptogram.NumberCryptogram;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,16 +32,8 @@ public class GameViewController {
     @FXML
     private GridPane enterLetters;
 
-    public GameViewController() {
-        cryptogram = new LetterCryptogram();
-        encrypted_phrase = cryptogram.encryptedCryptogram();
-        phrase = cryptogram.returnPhrase();
-        System.out.println(encrypted_phrase);
-        System.out.println(phrase);
-    }
-
-    public GameViewController(String a) {
-        cryptogram = new NumberCryptogram();
+    public GameViewController(Boolean isNumeric) {
+        cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
         encrypted_phrase = cryptogram.encryptedCryptogram();
         phrase = cryptogram.returnPhrase();
         System.out.println(encrypted_phrase);
@@ -59,7 +52,7 @@ public class GameViewController {
 
     //dynamically creating amount of textboxes
     @FXML
-    private void initialize() throws FileNotFoundException {
+    private void initialize() {
         createTextBoxes();
         addLetters();
     }
@@ -96,24 +89,51 @@ public class GameViewController {
 
             };
 
-            Character letter = encrypted_phrase.charAt(i);
             String s = (String) cryptogram.getMap().get(phrase.charAt(i));
-            int finalI = i;
 
             fields[i].textProperty().addListener((observable, oldValue, newValue) -> {
+
                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
-               if(!newValue.equals("")){
-                   cryptogram.enterLetter(s, newValue.charAt(0));
-                   fillBoxes();
-                   System.out.println("here");
-                    if(cryptogram.checkSolution()){
-                      showGoodJobPopUp();
+
+                if(!newValue.equals("")) {
+
+                    if(newValue.equals(" ")) {
+                        ((StringProperty)observable).setValue("");
+                    } else {
+
+                        if (!cryptogram.getUser_solution().containsKey(newValue.charAt(0)) || cryptogram.getUser_solution().get(newValue.charAt(0)).equals(s)) {
+
+                            cryptogram.enterLetter(s, newValue.charAt(0));
+                            fillBoxes();
+
+
+                            System.out.println("here?");
+                            if (cryptogram.checkSolution()) {
+                                showGoodJobPopUp();
+                            }
+
+
+                            if (!oldValue.equals("")) {
+                                cryptogram.undoLetter(oldValue.charAt(0));
+                                System.out.println("hehe");
+                                fillBoxes();
+                            }
+                        } else {
+                            System.out.println("lol");
+                            ((StringProperty) observable).setValue(" ");
+
+                            System.out.println("lolo");
+                        }
                     }
                 }
-                if(!oldValue.equals("")) {
-                 cryptogram.undoLetter(oldValue.charAt(0));
-                 fillBoxes();
+                else{
+                    if (!oldValue.equals(" ")) {
+                        cryptogram.undoLetter(oldValue.charAt(0));
+                        System.out.println("lolololol");
+                        fillBoxes();
+                    }
                 }
+
             });
 
 
