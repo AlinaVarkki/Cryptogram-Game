@@ -10,7 +10,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/gameView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/menuView.fxml"));
         primaryStage.setTitle("Hello World");
 
         primaryStage.setScene(new Scene(root, 800, 530));

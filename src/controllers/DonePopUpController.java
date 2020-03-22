@@ -27,11 +27,7 @@ public class DonePopUpController extends AnchorPane {
 //        closeStage(event);
 //    }
 
-    private void closeStage(ActionEvent event) {
-        Node source = (Node)  event.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
+
 
 
 }

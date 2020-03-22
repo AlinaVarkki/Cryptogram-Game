@@ -3,7 +3,7 @@ package cryptogram;
 import java.io.File;
 import java.util.*;
 
-public class LetterCryptogram<pubic> extends Cryptogram{
+public class LetterCryptogram extends Cryptogram{
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> map;

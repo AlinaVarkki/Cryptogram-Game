@@ -2,6 +2,7 @@ package controllers;
 
 import cryptogram.Cryptogram;
 import cryptogram.LetterCryptogram;
+import cryptogram.NumberCryptogram;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 public class GameViewController {
 
-    private Cryptogram cryptogram = new LetterCryptogram<>();
+    private Cryptogram cryptogram;
     private String phrase;
     private String encrypted_phrase;
     private TextField[] fields = new TextField[100];
@@ -27,18 +28,34 @@ public class GameViewController {
 
 
 
-
     @FXML
     private GridPane enterLetters;
 
     public GameViewController() {
+        cryptogram = new LetterCryptogram();
         encrypted_phrase = cryptogram.encryptedCryptogram();
-
         phrase = cryptogram.returnPhrase();
         System.out.println(encrypted_phrase);
         System.out.println(phrase);
     }
 
+    public GameViewController(String a) {
+        cryptogram = new NumberCryptogram();
+        encrypted_phrase = cryptogram.encryptedCryptogram();
+        phrase = cryptogram.returnPhrase();
+        System.out.println(encrypted_phrase);
+        System.out.println(phrase);
+    }
+
+//    public void startLetterGame(){
+//        cryptogram = new LetterCryptogram();
+//
+//    }
+//
+//    public void startNumberGame(){
+//        cryptogram = new NumberCryptogram();
+//        System.out.println("gets here");
+//    }
 
     //dynamically creating amount of textboxes
     @FXML
@@ -80,7 +97,7 @@ public class GameViewController {
             };
 
             Character letter = encrypted_phrase.charAt(i);
-            String s = letter.toString();
+            String s = (String) cryptogram.getMap().get(phrase.charAt(i));
             int finalI = i;
 
             fields[i].textProperty().addListener((observable, oldValue, newValue) -> {
@@ -117,17 +134,17 @@ public class GameViewController {
 
     //fill all needed boxes with the letter when entered
     public void fillBoxes() {
-        for (int i = 0; i < encrypted_phrase.length(); i++) {
-            //if the character in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
-            if (cryptogram.getUser_solution().containsValue(Character.toString(encrypted_phrase.charAt(i)))) {
+        for (int i = 0; i < phrase.length(); i++) {
+            //if the character or number in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
+            if (cryptogram.getUser_solution().containsValue(cryptogram.getMap().get(phrase.charAt(i)))) {
                 for (Map.Entry<Character, String> entry : cryptogram.getUser_solution().entrySet()) {
-                    if (entry.getValue().equals(Character.toString(encrypted_phrase.charAt(i)))) {
+                    if (entry.getValue().equals(cryptogram.getMap().get(phrase.charAt(i)))) {
                         fields[i].setText(String.valueOf(entry.getKey()));
                     }
 
                 }
             }
-            if(!cryptogram.getUser_solution().containsValue(Character.toString(encrypted_phrase.charAt(i)))){
+            if(!cryptogram.getUser_solution().containsValue(cryptogram.getMap().get(phrase.charAt(i)))){
                 fields[i].clear();
             }
 
@@ -146,10 +163,11 @@ public class GameViewController {
                 //max of letters in a row
                 int trashHoldl = enterLetters.getColumnCount();
                 //adding textboxes to cells
-                for (int i = 0; i < encrypted_phrase.length(); i++) {
+                for (int i = 0; i < phrase.length(); i++) {
                     Text e = new Text();
 
-                    e.setText(String.valueOf(encrypted_phrase.charAt(i)).toUpperCase());
+                   // e.setText(String.valueOf(encrypted_phrase.charAt(i)).toUpperCase());
+                    e.setText(String.valueOf(cryptogram.getMap().get(phrase.charAt(i))));
                     enterLetters.add(e, columnl, rowl);
 
                     columnl = columnl + 1;

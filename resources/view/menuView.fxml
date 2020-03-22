@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+    <children>
+        <AnchorPane layoutX="357.0" prefHeight="530.0" prefWidth="446.0" style="-fx-background-color: #FFFFFF; -fx-background-size: contain;">
+            <effect>
+                <DropShadow />
+            </effect>
+            <children>
+                <ImageView fitHeight="277.0" fitWidth="334.0" layoutX="74.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/images/Logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="-5.0" prefHeight="530.0" prefWidth="362.0" style="-fx-background-color: #7ae7c7;">
+            <children>
+                <AnchorPane prefHeight="530.0" prefWidth="99.0" style="-fx-background-color: #58355e;">
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </AnchorPane>
+                <Button layoutY="335.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Log Out" />
+                <Button layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Stats" />
+                <Button layoutY="240.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Continue game" />
+                <Button fx:id="numberCryptButton" layoutY="190.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Number Cryptogram" />
+                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+<!--                        <Image url= "/images/toy.png" />-->
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+<!--                        <Image url="/images/reload.png" />-->
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+<!--                        <Image url="/images/graph.png" />-->
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+<!--                        <Image url="/images/logout.png" />-->
+                    </image>
+                </ImageView>
+            <Button fx:id="LetterCryptButton" layoutY="140.0" mnemonicParsing="false" onAction="#newLetterCrptButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Letter Cryptogram" />
+            </children>
+            <effect>
+                <DropShadow />
+            </effect>
+        </AnchorPane>
+    </children>
+</AnchorPane>

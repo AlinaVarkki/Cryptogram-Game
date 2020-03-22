@@ -1,0 +1,10 @@
+.button
+{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-family: -apple-system;
+}
+.button:hover{
+    -fx-background-color: #fff689;
+    -fx-opacity: 0.8;
+}
