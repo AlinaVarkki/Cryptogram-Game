@@ -14,7 +14,7 @@
             <DropShadow />
          </effect>
       </TextField>
-      <Label layoutX="78.0" layoutY="33.0" prefHeight="35.0" prefWidth="285.0" style="-fx-background-color: #ed3456;" text="                    Please enter save name" textFill="WHITE">
+      <Label fx:id="enterNameLabel" layoutX="78.0" layoutY="33.0" prefHeight="35.0" prefWidth="285.0" style="-fx-background-color: #ed3456;" text="                    Please enter save name" textFill="WHITE">
          <effect>
             <DropShadow />
          </effect>

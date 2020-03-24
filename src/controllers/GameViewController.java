@@ -19,14 +19,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.Buffer;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameViewController {
+public class GameViewController implements Serializable {
 
     private Cryptogram cryptogram;
     private String phrase;
@@ -34,7 +33,10 @@ public class GameViewController {
     private TextField[] fields = new TextField[100];
     private int maxChars = 1;
     private String restictTo = "[a-z\\s]*";
-
+    private GetInputPopUpController input = new GetInputPopUpController();
+    private static final String cryptoDirectory = "resources\\savedGames\\";
+    //name to save the game
+    private String name;
     private boolean done = false;
 
     @FXML
@@ -43,6 +45,16 @@ public class GameViewController {
     private Label deleteFirst;
     @FXML
     private Button saveButton;
+
+    public GameViewController(Cryptogram cryptogram){
+        this.cryptogram = cryptogram;
+        this.phrase = cryptogram.returnPhrase();
+        encrypted_phrase = cryptogram.encryptedCryptogram();
+  //      initialize();
+//        createTextBoxes();
+//        addLetters();
+//        fillBoxes();
+    }
 
     public GameViewController(Boolean isNumeric) {
         cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
@@ -78,7 +90,21 @@ public class GameViewController {
     //method called when user wants to save the game
     public void saveGame(){
         getSaveNamePopUp();
+        try{
+            String tempname = cryptoDirectory + name + ".sav";
+            FileOutputStream saveFile = new FileOutputStream(tempname);
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+
+            save.writeObject(cryptogram);
+            save.close();
+            saveFile.close();
+        }
+        catch(IOException e){
+
+        }
     }
+
+
 
     //pop up to get save name from user
     public void getSaveNamePopUp(){
@@ -87,15 +113,18 @@ public class GameViewController {
 
         try {
             Parent parent = loader.load();
-            GetInputPopUpController input = loader.<GetInputPopUpController>getController();
+            input = loader.<GetInputPopUpController>getController();
             Scene scene = new Scene(parent, 440, 241);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
+            name = input.getName();
+            System.out.println(name);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

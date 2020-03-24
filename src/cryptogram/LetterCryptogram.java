@@ -1,9 +1,10 @@
 package cryptogram;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class LetterCryptogram extends Cryptogram{
+public class LetterCryptogram extends Cryptogram implements Serializable {
 
     private List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> map;

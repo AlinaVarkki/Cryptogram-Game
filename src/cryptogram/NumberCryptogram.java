@@ -1,12 +1,14 @@
 package cryptogram;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class NumberCryptogram extends Cryptogram {
+public class NumberCryptogram extends Cryptogram implements Serializable {
 
     List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> number_key_map;
+    private static final long serialVersionUID = -1892561327013038124L;
 
 
 

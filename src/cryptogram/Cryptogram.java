@@ -4,9 +4,10 @@ import game.Game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Cryptogram {
+public abstract class Cryptogram{
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
     //stores real phrase for the cryptogram
@@ -17,7 +18,6 @@ public abstract class Cryptogram {
     private List<String> cryptograms = new ArrayList<>();
     private Scanner s;
     private Random rand = new Random();
-    private Scanner scanner = new Scanner(System.in);
     private String[] tokens = {""};
     private int numGuesses = 0;
     private int numCorrectGuesses = 0;
@@ -162,13 +162,13 @@ public abstract class Cryptogram {
         a = phrase;
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){
-//            if(a.charAt(i) == ' '){
-//                encrypted_cryptogram.append("   ");
-//            }
-//            else{
+            if(a.charAt(i) == ' '){
+                encrypted_cryptogram.append(" ");
+            }
+            else{
                 encrypted_cryptogram.append(getMap().get(a.charAt(i)));
 //                encrypted_cryptogram.append(' ');
-//            }
+            }
         }
         encrypted_puzzle = encrypted_cryptogram.toString();
         return encrypted_puzzle;

@@ -2,6 +2,9 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
 
 public class GetInputPopUpController {
 
@@ -9,9 +12,18 @@ public class GetInputPopUpController {
     private String name;
 
     @FXML
+    private Label enterNameLabel;
+
+    @FXML
     public void saveGame(ActionEvent actionEvent) {
         name = enterName.getText();
-        System.out.println(name);
+        Stage stage = (Stage) enterNameLabel.getScene().getWindow();
+        stage.close();
     }
-    
+
+    public String getName(){
+        return name;
+    }
+
+
 }
