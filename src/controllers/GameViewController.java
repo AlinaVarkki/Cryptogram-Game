@@ -5,10 +5,13 @@ import cryptogram.LetterCryptogram;
 import cryptogram.NumberCryptogram;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -18,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +41,8 @@ public class GameViewController {
     private GridPane enterLetters;
     @FXML
     private Label deleteFirst;
+    @FXML
+    private Button saveButton;
 
     public GameViewController(Boolean isNumeric) {
         cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
@@ -60,7 +66,39 @@ public class GameViewController {
     private void initialize() {
         createTextBoxes();
         addLetters();
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                saveGame();
+            }
+        });
     }
+
+
+    //method called when user wants to save the game
+    public void saveGame(){
+        getSaveNamePopUp();
+    }
+
+    //pop up to get save name from user
+    public void getSaveNamePopUp(){
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/getInputPopUp.fxml"));
+
+        try {
+            Parent parent = loader.load();
+            GetInputPopUpController input = loader.<GetInputPopUpController>getController();
+            Scene scene = new Scene(parent, 440, 241);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 
     //dynamically create textboxes for every letter

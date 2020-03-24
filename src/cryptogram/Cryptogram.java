@@ -238,6 +238,9 @@ public abstract class Cryptogram {
         for(int i = 0; i<phrase.length(); i++){
             phraseLetters.add(phrase.charAt(i));
         }
+        if(phraseLetters.contains(' ')){
+            phraseLetters.remove(' ');
+        }
         if(user_solution.keySet().size() == phraseLetters.size()){
             return true;
         }
