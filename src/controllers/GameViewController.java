@@ -3,11 +3,13 @@ package controllers;
 import cryptogram.Cryptogram;
 import cryptogram.LetterCryptogram;
 import cryptogram.NumberCryptogram;
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -17,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameViewController {
 
@@ -27,28 +31,29 @@ public class GameViewController {
     private int maxChars = 1;
     private String restictTo = "[a-z\\s]*";
 
-
+    private boolean done = false;
 
     @FXML
     private GridPane enterLetters;
+    @FXML
+    private Label deleteFirst;
 
     public GameViewController(Boolean isNumeric) {
         cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
+        try {
+            phrase = cryptogram.returnPhrase();
+        }
+        catch(Exception e){
+            System.out.println("oops");
+            noPhrasesPopUp();
+            System.exit(0);
+        }
         encrypted_phrase = cryptogram.encryptedCryptogram();
-        phrase = cryptogram.returnPhrase();
+
         System.out.println(encrypted_phrase);
         System.out.println(phrase);
     }
 
-//    public void startLetterGame(){
-//        cryptogram = new LetterCryptogram();
-//
-//    }
-//
-//    public void startNumberGame(){
-//        cryptogram = new NumberCryptogram();
-//        System.out.println("gets here");
-//    }
 
     //dynamically creating amount of textboxes
     @FXML
@@ -96,6 +101,7 @@ public class GameViewController {
                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
 
                 if(!newValue.equals("")) {
+                    deleteFirst.setText("");
 
                     if(newValue.equals(" ")) {
                         ((StringProperty)observable).setValue("");
@@ -108,8 +114,17 @@ public class GameViewController {
 
 
                             System.out.println("here?");
-                            if (cryptogram.checkSolution()) {
+                            if (cryptogram.checkSolution() && !done) {
+                                System.out.println("sdfsdfdsf" );
+                                System.out.println("textfield changed from " + oldValue + " to " + newValue);
+                                done = true;
                                 showGoodJobPopUp();
+                                //after game is correctly completed, go back to the menu
+
+                                goToMenu();
+                            }
+                            if(cryptogram.allPlacesFilled()){
+                                deleteFirst.setText("Your solution is not correct, try again");
                             }
 
 
@@ -121,15 +136,16 @@ public class GameViewController {
                         } else {
                             System.out.println("lol");
                             ((StringProperty) observable).setValue(" ");
-
+                            deleteFirst.setText("You should remove letter before setting it again");
                             System.out.println("lolo");
                         }
                     }
                 }
                 else{
+                    deleteFirst.setText("");
+
                     if (!oldValue.equals(" ")) {
                         cryptogram.undoLetter(oldValue.charAt(0));
-                        System.out.println("lolololol");
                         fillBoxes();
                     }
                 }
@@ -208,6 +224,7 @@ public class GameViewController {
                 try {
                     Parent parent = loader.load();
                     DonePopUpController pop = loader.<DonePopUpController>getController();
+                    pop.setText("Good job, your solution is correct");
                     Scene scene = new Scene(parent, 300, 200);
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -217,6 +234,49 @@ public class GameViewController {
                     e.printStackTrace();
                 }
             }
+
+            public void noPhrasesPopUp(){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+                try {
+                    Parent parent = loader.load();
+                    DonePopUpController pop = loader.<DonePopUpController>getController();
+                    pop.setText("Sorry, there are no phrases to play");
+                    Scene scene = new Scene(parent, 300, 200);
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setScene(scene);
+                    stage.showAndWait();
+                    //stage.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            public void goToMenu() {
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
+//
+//                try {
+//                    Parent parent = loader.load();
+//                    MenuController menu = loader.<MenuController>getController();
+//                    Scene scene = new Scene(parent, 800, 530);
+//                    Stage stage = new Stage();
+//                    stage.initModality(Modality.APPLICATION_MODAL);
+//                    stage.setScene(scene);
+//                    stage.show();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+                Scene scene = enterLetters.getScene();
+                ScreenController cont = new ScreenController(scene);
+                try {
+                    cont.addScreen("menu", FXMLLoader.load(getClass().getResource("/view/menuView.fxml")));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                cont.activate("menu");
+    }
 
 }
 

@@ -27,17 +27,14 @@ public class MenuController {
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
 
         Scene scene = LetterCryptButton.getScene();
-//        ScreenController contoller = new ScreenController(scene);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
             loader.setController(new GameViewController(false));
-//            contoller.addScreen("numberCryptogram", loader.load());
             scene.setRoot(loader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
-   //     contoller.activate("letterCryptogram");
     }
 
     @FXML

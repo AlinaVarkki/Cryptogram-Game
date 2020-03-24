@@ -23,6 +23,7 @@ public abstract class Cryptogram {
     private int numCorrectGuesses = 0;
     //map that stores the mapping that user enters
     private HashMap<Character, String> user_solution = new HashMap<>();
+    private HashSet phraseLetters = new HashSet();
 
 
 
@@ -61,19 +62,19 @@ public abstract class Cryptogram {
     public String returnPhrase()  {
         populateCryptogramsArray();
         int random = 0;
-        try{
+//        try{
         random = rand.nextInt(cryptograms.size());
-        }catch(Exception e){
-            System.out.println("Sorry there are no phrases");
-            System.exit(1);
-        }
+//        }catch(Exception e){
+//            System.out.println("Sorry there are no phrases");
+//            System.exit(1);
+//        }
         phrase = cryptograms.get(random);
         return phrase;
     }
 
     //method that returns letters in the cryptogram.Cryptogram as a set
     public Set<Character> getCryptogramCharacters() {
-        phrase = returnPhrase();
+        //phrase = returnPhrase();
         Set<Character> cryptogramCharacters = new HashSet<>();
         for(int i = 0; i < phrase.length(); i++){
             cryptogramCharacters.add(phrase.charAt(i));
@@ -158,7 +159,7 @@ public abstract class Cryptogram {
 
     public String encryptedCryptogram() {
         String a;
-        a = returnPhrase();
+        a = phrase;
         StringBuilder encrypted_cryptogram = new StringBuilder();
         for(int i = 0; i < a.length(); i++){
 //            if(a.charAt(i) == ' '){
@@ -232,4 +233,15 @@ public abstract class Cryptogram {
         }
         return correct;
     }
+
+    public boolean allPlacesFilled(){
+        for(int i = 0; i<phrase.length(); i++){
+            phraseLetters.add(phrase.charAt(i));
+        }
+        if(user_solution.keySet().size() == phraseLetters.size()){
+            return true;
+        }
+        return false;
+    }
+
 }

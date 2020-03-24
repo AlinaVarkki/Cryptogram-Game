@@ -70,7 +70,7 @@ public class Game <T>{
 
     //takes user input and calls methods accordingly
    //loops until user enters exit
-    private void takeInput() throws FileNotFoundException {
+    private void takeInput()  {
         boolean shouldcontinue = true;
 
         while(shouldcontinue) {
@@ -134,7 +134,7 @@ public class Game <T>{
 //    }
 
 
-    private void showSolution() throws FileNotFoundException {
+    private void showSolution()  {
         System.out.println(crypt_object.returnPhrase());
     }
 
@@ -144,6 +144,9 @@ public class Game <T>{
 //            cryptogramKeys
 //        }
 //    }
+
+
+
 
     public char getHint(){
         return 'a';}
