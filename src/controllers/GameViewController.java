@@ -49,8 +49,8 @@ public class GameViewController implements Serializable {
     public GameViewController(Cryptogram cryptogram){
         this.cryptogram = cryptogram;
         this.phrase = cryptogram.returnPhrase();
-        encrypted_phrase = cryptogram.encryptedCryptogram();
-  //      initialize();
+        this.encrypted_phrase = cryptogram.encryptedCryptogram();
+
 //        createTextBoxes();
 //        addLetters();
 //        fillBoxes();
@@ -84,6 +84,7 @@ public class GameViewController implements Serializable {
                 saveGame();
             }
         });
+        fillBoxes();
     }
 
 

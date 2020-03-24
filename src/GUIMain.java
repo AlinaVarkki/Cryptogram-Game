@@ -10,6 +10,8 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+
         Parent root = FXMLLoader.load(getClass().getResource("/view/menuView.fxml"));
         primaryStage.setTitle("Encryption Game");
 

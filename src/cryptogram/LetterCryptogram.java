@@ -55,12 +55,6 @@ public class LetterCryptogram extends Cryptogram implements Serializable {
     }
 
 
-
-
-
-
-
-
     //return map for the answer
     @Override
     public HashMap<Character, String> getMap(){

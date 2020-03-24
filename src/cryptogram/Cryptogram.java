@@ -7,24 +7,22 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.*;
 
-public abstract class Cryptogram{
+public abstract class Cryptogram implements Serializable{
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
     //stores real phrase for the cryptogram
 
-    private String phrase;
+    //private String phrase = CryptLoader.returnPhrase();
+    private String phrase = "hey you";
     private String encrypted_puzzle;
     //List<player.Player> allPlayers = new ArrayList<>();
-    private List<String> cryptograms = new ArrayList<>();
-    private Scanner s;
-    private Random rand = new Random();
     private String[] tokens = {""};
     private int numGuesses = 0;
     private int numCorrectGuesses = 0;
     //map that stores the mapping that user enters
     private HashMap<Character, String> user_solution = new HashMap<>();
     private HashSet phraseLetters = new HashSet();
-
+ //   private CryptLoader loader = new CryptLoader();
 
 
     public void setNumGuesses(int numGuesses) {
@@ -43,38 +41,13 @@ public abstract class Cryptogram{
         this.user_solution = user_solution;
     }
 
-    //method to populate array with all the cryptograms
-    private void populateCryptogramsArray()  {
-        try {
-            s = new Scanner(new File("C:\\Users\\USER\\Desktop\\cs207\\resources\\Cryptograms.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        while (s.hasNextLine()) {
-                cryptograms.add(s.nextLine());
-            }
-            s.close();
 
-    }
 
-    //return random cryptogram.Cryptogram(by now random)
-    public String returnPhrase()  {
-        populateCryptogramsArray();
-        int random = 0;
-//        try{
-        random = rand.nextInt(cryptograms.size());
-//        }catch(Exception e){
-//            System.out.println("Sorry there are no phrases");
-//            System.exit(1);
-//        }
-        phrase = cryptograms.get(random);
-        return phrase;
-    }
 
     //method that returns letters in the cryptogram.Cryptogram as a set
     public Set<Character> getCryptogramCharacters() {
-        //phrase = returnPhrase();
+//        phrase = CryptLoader.returnPhrase();
         Set<Character> cryptogramCharacters = new HashSet<>();
         for(int i = 0; i < phrase.length(); i++){
             cryptogramCharacters.add(phrase.charAt(i));
@@ -247,4 +220,7 @@ public abstract class Cryptogram{
         return false;
     }
 
+    public String returnPhrase(){
+        return phrase;
+    }
 }

@@ -65,7 +65,7 @@ public class MenuController {
         Scene scene = numberCryptButton.getScene();
 
         try {
-            FileInputStream saveFile = new FileInputStream("C:\\Users\\USER\\Desktop\\cs207\\resources\\savedGames\\1.sav");
+            FileInputStream saveFile = new FileInputStream("C:\\Users\\USER\\Desktop\\cs207\\resources\\savedGames\\2.sav");
             ObjectInputStream restore = new ObjectInputStream(saveFile);
             Cryptogram cryptogram = (Cryptogram) restore.readObject();
             restore.close();
