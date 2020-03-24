@@ -44,7 +44,7 @@ public class Game <T>{
                 }
 
                 else {
-                    File file = new File("D:\\Users\\mhair\\IdeaProjects\\cs207\\resources\\Logins.txt");
+                    File file = new File("resources/Logins.txt");
                     Scanner s = new Scanner(file);
                     s.useDelimiter("[,\n]");
 
@@ -70,7 +70,7 @@ public class Game <T>{
                          */
 
                         if (uFound) {           //once username has been found, take in password
-                            System.out.println(pass);                   //remove later; just to check pass holds the expected string
+                           System.out.println(pass);                   //remove later; just to check pass holds the expected string
                             String passEnter = scanner.nextLine();      //the password the user enters
                             System.out.println(passEnter);              //remove later; just to check passEnter matches pass
 
@@ -95,7 +95,7 @@ public class Game <T>{
 
     //Appends the Logins .txt file with the newly registered username and password (though password validation isn't currently working when logging in)
     private void register() throws IOException {
-        FileWriter fw = new FileWriter("D:\\Users\\mhair\\IdeaProjects\\cs207\\resources\\Logins.txt", true);
+        FileWriter fw = new FileWriter("resources/Logins.txt", true);
         String user, pass;
 
         System.out.println("Enter a username to register with");
