@@ -4,11 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import player.Player;
 
 import java.io.*;
@@ -53,9 +56,10 @@ public class LogInController {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                String existingUsername = usernameLogIn.getText();
+                String existingPassword = passwordLogIn.getText();
                 try {
-                    String existingUsername = usernameLogIn.getText();
-                    String existingPassword = passwordLogIn.getText();
+
                     String tempname = playerDirectory + existingUsername + ".sav";
                     FileInputStream saveFile = new FileInputStream(tempname);
                     ObjectInputStream restore = new ObjectInputStream(saveFile);
@@ -63,11 +67,42 @@ public class LogInController {
 
                     //after logging in go to menu
                     goToMenu();
-                } catch (IOException | ClassNotFoundException e) {
-                    label1.setText("User with this username doesn't exist");
+                } catch (FileNotFoundException | ClassNotFoundException e) {
+
+                    try {
+
+                        String tempname = playerDirectory + existingUsername + ".sav";
+                        File file = new File(tempname);
+                        //if user name already exists, don't register
+                        boolean exists = file.exists();
+                        if(!exists) {
+                            Player player = new Player(existingUsername);
+                            currentPlayer = player;
+                            System.out.println(existingUsername + existingPassword);
+                            //later add pop up if username exists
+
+
+                            FileOutputStream saveFile = new FileOutputStream(tempname);
+                            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+
+                            save.writeObject(player);
+
+                            save.close();
+
+                            //show popup that new user is created
+                            newUserPopUp();
+                            //after user is signed in, move to the menu
+                            goToMenu();
+                        }
+                        else{
+                            label.setText("This username is taken");
+                        }
+
+                         }catch(IOException f){}
+
+                } catch (IOException e) {
+                    somethingWrong();
                 }
-
-
 
 
             }
@@ -117,6 +152,40 @@ public class LogInController {
         ScreenController screenController = new ScreenController(scene);
         screenController.addScreen("menu", FXMLLoader.load(getClass().getResource("/view/menuView.fxml")));
         screenController.activate("menu");
+    }
+
+    public void newUserPopUp(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+        try {
+            Parent parent = loader.load();
+            DonePopUpController pop = loader.<DonePopUpController>getController();
+            pop.setText(" Account with this username not found, new account was created");
+            Scene scene = new Scene(parent, 388, 216);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void somethingWrong(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+        try {
+            Parent parent = loader.load();
+            DonePopUpController pop = loader.<DonePopUpController>getController();
+            pop.setText(" File is corrupted");
+            Scene scene = new Scene(parent, 388, 216);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Player getCurrentPlayer(){
