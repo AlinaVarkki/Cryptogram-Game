@@ -1,6 +1,8 @@
 package player;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     public int totalGuesses;
     public int correctGuesses;
@@ -10,9 +12,8 @@ public class Player {
     public String password;
 
     //constructor for newly registered user
-    public Player(String username, String password) {
+    public Player(String username) {
         this.username = username;
-        this.password = password;
         totalGuesses = 0;
         correctGuesses = 0;
         cryptogramsCompleted = 0;

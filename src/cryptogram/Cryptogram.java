@@ -1,6 +1,8 @@
 package cryptogram;
 
+import controllers.LogInController;
 import game.Game;
+import player.Player;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ public abstract class Cryptogram implements Serializable{
     public abstract HashMap encryptionMap();
     //stores real phrase for the cryptogram
 
+
     private String phrase = "sd lol";
     private String encrypted_puzzle;
     //List<player.Player> allPlayers = new ArrayList<>();
@@ -21,7 +24,11 @@ public abstract class Cryptogram implements Serializable{
     //map that stores the mapping that user enters
     private HashMap<Character, String> user_solution = new HashMap<>();
     private HashSet phraseLetters = new HashSet();
- //   private CryptLoader loader = new CryptLoader();
+    //instance of login controller to get current user
+    private LogInController loginController = new LogInController();
+    //getting current player
+    private Player player = loginController.getCurrentPlayer();
+    // private CryptLoader loader = new CryptLoader();
 
 
     public void setNumGuesses(int numGuesses) {
