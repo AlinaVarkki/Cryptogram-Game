@@ -129,22 +129,24 @@ public class GameViewController implements Serializable {
     //pop up to get save name from user
     public void overridePopUp(){
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/getInputPopUp.fxml"));
-
         try {
-            Parent parent = loader.load();
-            input = loader.<GetInputPopUpController>getController();
-            Scene scene = new Scene(parent, 440, 241);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.showAndWait();
-            change = input.getAnswer();
-            System.out.println(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/getInputPopUp.fxml"));
 
+            try {
+                Parent parent = loader.load();
+                input = loader.<GetInputPopUpController>getController();
+                Scene scene = new Scene(parent, 440, 241);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+                change = input.getAnswer();
+                System.out.println(name);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        catch(Exception e){}
 
     }
 

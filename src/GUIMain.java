@@ -12,7 +12,7 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) throws Exception{
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/menuView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
         primaryStage.setTitle("Encryption Game");
 
         primaryStage.setScene(new Scene(root, 800, 530));

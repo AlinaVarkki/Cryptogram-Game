@@ -31,27 +31,32 @@
                 <Button layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Stats" />
                 <Button fx:id="continueButton" layoutY="240.0" mnemonicParsing="false" onAction="#continueGameButton" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Continue game" />
                 <Button fx:id="numberCryptButton" layoutY="190.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Number Cryptogram" />
-                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-<!--                        <Image url= "/images/toy.png" />-->
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-<!--                        <Image url="/images/reload.png" />-->
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-<!--                        <Image url="/images/graph.png" />-->
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="19.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-<!--                        <Image url="/images/logout.png" />-->
-                    </image>
-                </ImageView>
             <Button fx:id="LetterCryptButton" layoutY="140.0" mnemonicParsing="false" onAction="#newLetterCrptButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Letter Cryptogram" />
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/toy.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/toy.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/reload.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/graph.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logout.png" />
+               </image>
+            </ImageView>
             </children>
             <effect>
                 <DropShadow />

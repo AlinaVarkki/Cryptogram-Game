@@ -8,7 +8,8 @@ public class NumberCryptogram extends Cryptogram implements Serializable {
 
     List<Character> cryptogramAlphabet = new ArrayList<>();
     private HashMap<Character, String> number_key_map;
-    private static final long serialVersionUID = -1892561327013038124L;
+    private String phrase = "sd lol";
+
 
 
 
