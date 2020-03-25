@@ -10,19 +10,28 @@ public class GetInputPopUpController {
 
     public javafx.scene.control.TextField enterName;
     private String name;
+    private Boolean change;
+
 
     @FXML
     private Label enterNameLabel;
 
     @FXML
     public void saveGame(ActionEvent actionEvent) {
-        name = enterName.getText();
+        change = true;
         Stage stage = (Stage) enterNameLabel.getScene().getWindow();
         stage.close();
     }
 
-    public String getName(){
-        return name;
+    public Boolean getAnswer(){
+        return change;
+    }
+
+    @FXML
+    public void dontSave(ActionEvent actionEvent) {
+        Stage stage = (Stage) enterNameLabel.getScene().getWindow();
+        change = false;
+        stage.close();
     }
 
 

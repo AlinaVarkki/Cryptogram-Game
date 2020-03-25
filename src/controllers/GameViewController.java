@@ -38,6 +38,7 @@ public class GameViewController implements Serializable {
     //name to save the game
     private String name;
     private boolean done = false;
+    private boolean change = true;
 
     @FXML
     private GridPane enterLetters;
@@ -45,6 +46,8 @@ public class GameViewController implements Serializable {
     private Label deleteFirst;
     @FXML
     private Button saveButton;
+    @FXML
+    private Button menuButton;
 
     public GameViewController(Cryptogram cryptogram){
         this.cryptogram = cryptogram;
@@ -84,31 +87,47 @@ public class GameViewController implements Serializable {
                 saveGame();
             }
         });
+
+        menuButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                goToMenu();
+            }
+        });
         fillBoxes();
     }
 
 
     //method called when user wants to save the game
     public void saveGame(){
-        getSaveNamePopUp();
-        try{
-            String tempname = cryptoDirectory + name + ".sav";
-            FileOutputStream saveFile = new FileOutputStream(tempname);
-            ObjectOutputStream save = new ObjectOutputStream(saveFile);
-
-            save.writeObject(cryptogram);
-            save.close();
-            saveFile.close();
+        File tmpDir = new File("resources\\savedGames\\savedGame.sav");
+        boolean exists = tmpDir.exists();
+        if(exists){
+            overridePopUp();
         }
-        catch(IOException e){
+        else{
+            deleteFirst.setText("Cryptogram is saved");
+        }
 
+        if(change = true) {
+            try {
+                String tempname = "resources\\savedGames\\savedGame.sav";
+                FileOutputStream saveFile = new FileOutputStream(tempname);
+                ObjectOutputStream save = new ObjectOutputStream(saveFile);
+
+                save.writeObject(cryptogram);
+                save.close();
+                saveFile.close();
+            } catch (IOException e) {
+
+            }
         }
     }
 
 
 
     //pop up to get save name from user
-    public void getSaveNamePopUp(){
+    public void overridePopUp(){
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/getInputPopUp.fxml"));
 
@@ -120,7 +139,7 @@ public class GameViewController implements Serializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
-            name = input.getName();
+            change = input.getAnswer();
             System.out.println(name);
         } catch (IOException e) {
             e.printStackTrace();
@@ -270,8 +289,12 @@ public class GameViewController implements Serializable {
                 for (int i = 0; i < phrase.length(); i++) {
                     Text e = new Text();
 
-                   // e.setText(String.valueOf(encrypted_phrase.charAt(i)).toUpperCase());
-                    e.setText(String.valueOf(cryptogram.getMap().get(phrase.charAt(i))));
+                    if (phrase.charAt(i) == ' ') {
+                        e.setText(" ");
+                    }
+                    else {
+                        e.setText(String.valueOf(cryptogram.getMap().get(phrase.charAt(i))));
+                    }
                     enterLetters.add(e, columnl, rowl);
 
                     columnl = columnl + 1;
@@ -293,7 +316,7 @@ public class GameViewController implements Serializable {
                     Parent parent = loader.load();
                     DonePopUpController pop = loader.<DonePopUpController>getController();
                     pop.setText("Good job, your solution is correct");
-                    Scene scene = new Scene(parent, 300, 200);
+                    Scene scene = new Scene(parent, 388, 216);
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.setScene(scene);
@@ -310,7 +333,7 @@ public class GameViewController implements Serializable {
                     Parent parent = loader.load();
                     DonePopUpController pop = loader.<DonePopUpController>getController();
                     pop.setText("Sorry, there are no phrases to play");
-                    Scene scene = new Scene(parent, 300, 200);
+                    Scene scene = new Scene(parent, 388, 216);
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.setScene(scene);

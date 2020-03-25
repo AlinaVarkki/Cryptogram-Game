@@ -13,7 +13,7 @@
    <children>
       <AnchorPane prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #58355e;">
          <children>
-            <Button contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Menu" />
+            <Button fx:id="menuButton" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Menu" />
             <Button fx:id="saveButton" layoutX="672.0" layoutY="1.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Save" />
          </children>
          <effect>

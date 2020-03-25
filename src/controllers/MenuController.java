@@ -62,10 +62,10 @@ public class MenuController {
 
     @FXML
     public void continueGameButton(ActionEvent actionEvent) {
-        Scene scene = numberCryptButton.getScene();
+        Scene scene1 = numberCryptButton.getScene();
 
         try {
-            FileInputStream saveFile = new FileInputStream("C:\\Users\\USER\\Desktop\\cs207\\resources\\savedGames\\2.sav");
+            FileInputStream saveFile = new FileInputStream("C:\\Users\\USER\\Desktop\\cs207\\resources\\savedGames\\savedGame.sav");
             ObjectInputStream restore = new ObjectInputStream(saveFile);
             Cryptogram cryptogram = (Cryptogram) restore.readObject();
             restore.close();
@@ -73,11 +73,43 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
             loader.setController(new GameViewController(cryptogram));
 //            contoller.addScreen("numberCryptogram", loader.load());
-            scene.setRoot(loader.load());
+            scene1.setRoot(loader.load());
 
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | ClassNotFoundException e){
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+            try {
+                Parent parent = loader.load();
+                DonePopUpController pop = loader.<DonePopUpController>getController();
+                pop.setText("You don't have any cryptograms stored");
+                Scene scene = new Scene(parent, 388, 216);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException a) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+            try {
+                Parent parent = loader.load();
+                DonePopUpController pop = loader.<DonePopUpController>getController();
+                pop.setText("Something is wrong with the file");
+                Scene scene = new Scene(parent, 388, 216);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException a) {
+                e.printStackTrace();
+            }
+
         }
+
 
     }
 }
