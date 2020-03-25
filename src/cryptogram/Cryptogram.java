@@ -19,25 +19,15 @@ public abstract class Cryptogram implements Serializable{
     private String encrypted_puzzle;
     //List<player.Player> allPlayers = new ArrayList<>();
     private String[] tokens = {""};
-    private int numGuesses = 0;
-    private int numCorrectGuesses = 0;
+
     //map that stores the mapping that user enters
     private HashMap<Character, String> user_solution = new HashMap<>();
     private HashSet phraseLetters = new HashSet();
     //instance of login controller to get current user
-    private LogInController loginController = new LogInController();
     //getting current player
-    private Player player = loginController.getCurrentPlayer();
+    private Player player = LogInController.currentPlayer;
     // private CryptLoader loader = new CryptLoader();
 
-
-    public void setNumGuesses(int numGuesses) {
-        this.numGuesses = numGuesses;
-    }
-
-    public void setNumCorrectGuesses(int numCorrectGuesses) {
-        this.numCorrectGuesses = numCorrectGuesses;
-    }
 
     public HashMap<Character, String> getUser_solution() {
         return user_solution;
@@ -64,8 +54,18 @@ public abstract class Cryptogram implements Serializable{
 
     //adding user input to the solution map
     public void enterLetter(String a, Character b) {
-                    user_solution.put(b, a);
-                    updateStats(a, b);
+        int mapSize = user_solution.size();
+        user_solution.put(b, a);
+        HashMap solution_map = getMap();
+        if(mapSize != user_solution.size()) {
+            player.incrementTotalGuesses();
+            System.out.println("total guesses " + player.getTotalGuesses());
+            if (solution_map.get(b).equals(a)) {
+                player.incrementCorrectGuesses();
+                System.out.println("correct " + player.getCorrectGuesses());
+            }
+        }
+
     }
 
 
@@ -110,7 +110,6 @@ public abstract class Cryptogram implements Serializable{
             }
             else{
                 encrypted_cryptogram.append(getMap().get(a.charAt(i)));
-//                encrypted_cryptogram.append(' ');
             }
         }
         encrypted_puzzle = encrypted_cryptogram.toString();
@@ -118,28 +117,13 @@ public abstract class Cryptogram implements Serializable{
     }
 
 
-    public void updateStats(String setTo, Character key) {
-        numGuesses = numGuesses + 1;
-        if(getMap().get(key).equals(setTo.charAt(0))){
-            numCorrectGuesses= numCorrectGuesses + 1;
-        }
-    }
 
     //removing user input from the map
     public void undoLetter(Character c){
             user_solution.remove(c);
     }
 
-    public Integer getNumGuesses(){
-        return numGuesses;
-    }
 
-
-    public Integer getNumCorrectGuesses() {
-        return numCorrectGuesses;
-    }
-
-    //returns letter and it's frequency
     public String getFrequncies(){
         return "";
     }

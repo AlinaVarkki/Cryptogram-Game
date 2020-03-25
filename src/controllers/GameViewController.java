@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import player.Player;
 
 import java.io.*;
 import java.nio.Buffer;
@@ -40,6 +41,12 @@ public class GameViewController implements Serializable {
     private boolean done = false;
     private boolean change = true;
 
+    //instance of login controller to get current user
+    private LogInController loginController = new LogInController();
+    //getting current player
+    private Player player = LogInController.currentPlayer;
+
+
     @FXML
     private GridPane enterLetters;
     @FXML
@@ -60,6 +67,9 @@ public class GameViewController implements Serializable {
     }
 
     public GameViewController(Boolean isNumeric) {
+        //user starts new game, amount of games updated
+//        player.incrementCryptogramsPlayed();
+
         cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
         try {
             phrase = cryptogram.returnPhrase();
@@ -79,6 +89,8 @@ public class GameViewController implements Serializable {
     //dynamically creating amount of textboxes
     @FXML
     private void initialize() {
+player.incrementCryptogramsPlayed();
+        System.out.println(player.getNumCryptogramsPlayed());
         createTextBoxes();
         addLetters();
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,14 +125,17 @@ public class GameViewController implements Serializable {
             try {
                 String tempname = "resources\\savedGames\\savedGame.sav";
                 FileOutputStream saveFile = new FileOutputStream(tempname);
-                ObjectOutputStream save = new ObjectOutputStream(saveFile);
-
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
                 save.writeObject(cryptogram);
                 save.close();
                 saveFile.close();
-            } catch (IOException e) {
 
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+
+
         }
     }
 
@@ -154,6 +169,7 @@ public class GameViewController implements Serializable {
 
     //dynamically create textboxes for every letter
     public void createTextBoxes(){
+
 
         int row = 1;
         //variable that gets incremented with every pass to change the row after it's at max(6 in a row)
@@ -202,7 +218,6 @@ public class GameViewController implements Serializable {
                             fillBoxes();
 
 
-                            System.out.println("here?");
                             if (cryptogram.checkSolution() && !done) {
                                 System.out.println("sdfsdfdsf" );
                                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
@@ -223,10 +238,8 @@ public class GameViewController implements Serializable {
                                 fillBoxes();
                             }
                         } else {
-                            System.out.println("lol");
                             ((StringProperty) observable).setValue(" ");
                             deleteFirst.setText("You should remove letter before setting it again");
-                            System.out.println("lolo");
                         }
                     }
                 }
@@ -312,6 +325,9 @@ public class GameViewController implements Serializable {
             }
 
             public void showGoodJobPopUp(){
+            //if this appears, user completed cryptogram successfully
+            player.incrementCryptogramsCompleted();
+                System.out.println(player.getNumCryptogramsCompleted());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
 
                 try {

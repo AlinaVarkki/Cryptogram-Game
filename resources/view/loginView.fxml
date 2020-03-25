@@ -23,7 +23,7 @@
             <DropShadow />
          </effect>
       </AnchorPane>
-      <AnchorPane layoutX="402.0" prefHeight="530.0" prefWidth="398.0" style="-fx-background-color: #ed3456;">
+      <AnchorPane layoutX="395.0" prefHeight="530.0" prefWidth="405.0" style="-fx-background-color: #7ae7c7;">
          <effect>
             <DropShadow />
          </effect>
@@ -33,7 +33,7 @@
                   <DropShadow />
                </effect>
             </TextField>
-            <Label layoutX="31.0" layoutY="227.0" prefHeight="50.0" prefWidth="324.0" text="                           OR" textFill="WHITE">
+            <Label layoutX="31.0" layoutY="227.0" prefHeight="50.0" prefWidth="324.0" text="                           OR" textFill="#58355e">
                <font>
                   <Font name="Calibri Light" size="24.0" />
                </font>

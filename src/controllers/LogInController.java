@@ -16,7 +16,7 @@ import java.io.*;
 
 public class LogInController {
     private static final String playerDirectory = "resources\\players\\";
-    private Player currentPlayer;
+    public static Player currentPlayer;
 
 
 
@@ -92,10 +92,8 @@ public class LogInController {
 
                         FileOutputStream saveFile = new FileOutputStream(tempname);
                         ObjectOutputStream save = new ObjectOutputStream(saveFile);
-                        System.out.println("gets here");
 
                         save.writeObject(player);
-                        System.out.println("gets here2");
 
                         save.close();
                         //after user is signed in, move to the menu
@@ -123,5 +121,6 @@ public class LogInController {
 
     public Player getCurrentPlayer(){
         return currentPlayer;
+
     }
 }

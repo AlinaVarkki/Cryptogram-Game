@@ -20,8 +20,26 @@ public class Player implements Serializable {
         cryptogramsPlayed = 0;
     }
 
-    public int updateAccuracy(){
-        return correctGuesses/totalGuesses;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    //percentage that shows how accurate you are
+    public int returnAccuracy(){
+        return correctGuesses/totalGuesses*100;
     }
 
     public void incrementCryptogramsCompleted(){

@@ -11,14 +11,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Builder;
 import javafx.util.BuilderFactory;
+import player.Player;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ResourceBundle;
 
 public class MenuController {
+
+
+    //current player
+    private Player player = LogInController.currentPlayer;
+    private static final String playerDirectory = "resources\\players\\";
 
 
     @FXML
@@ -26,6 +29,14 @@ public class MenuController {
 
     @FXML
     private Button numberCryptButton;
+
+    @FXML
+    private Button logOutButton;
+
+//    public MenuController(Player player){
+//        this.player = player;
+//    }
+
 
     @FXML
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
@@ -108,6 +119,29 @@ public class MenuController {
                 e.printStackTrace();
             }
 
+        }
+
+
+    }
+
+    public void logOutButtonClicked(ActionEvent actionEvent) {
+        try {
+        String username = player.getUsername();
+        String tempname = playerDirectory + username + ".sav";
+        FileOutputStream saveFile = new FileOutputStream(tempname);
+        ObjectOutputStream save = new ObjectOutputStream(saveFile);
+        save.writeObject(player);
+        save.close();
+        System.out.println("Successfully saved player data");
+
+        //go back to login screen
+        Scene scene = logOutButton.getScene();
+        ScreenController screenController = new ScreenController(scene);
+        screenController.addScreen("login", FXMLLoader.load(getClass().getResource("/view/loginView.fxml")));
+        screenController.activate("login");
+        }
+        catch(IOException f) {
+            System.out.println("Player loading error");
         }
 
 

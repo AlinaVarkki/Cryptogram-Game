@@ -27,7 +27,7 @@
                         <DropShadow />
                     </effect>
                 </AnchorPane>
-                <Button layoutY="335.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Log Out" />
+                <Button fx:id="logOutButton" layoutY="335.0" mnemonicParsing="false" onAction="#logOutButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Log Out" />
                 <Button layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Stats" />
                 <Button fx:id="continueButton" layoutY="240.0" mnemonicParsing="false" onAction="#continueGameButton" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Continue game" />
                 <Button fx:id="numberCryptButton" layoutY="190.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Number Cryptogram" />
