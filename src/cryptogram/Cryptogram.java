@@ -22,7 +22,6 @@ public abstract class Cryptogram implements Serializable{
     //instance of login controller to get current user
     //getting current player
     private Player player = LogInController.currentPlayer;
-    // private CryptLoader loader = new CryptLoader();
 
 
     public HashMap<Character, String> getUser_solution() {
@@ -114,5 +113,13 @@ public abstract class Cryptogram implements Serializable{
 
     public String returnPhrase(){
         return phrase;
+    }
+
+    //methods just for testing
+    public void setPhrase(String a){
+        phrase = a;
+    }
+    public void setEncyptedPhrase(String a){
+        encrypted_puzzle = a;
     }
 }

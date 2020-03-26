@@ -21,7 +21,10 @@ import java.io.*;
 
 public class LogInController {
     private static final String playerDirectory = "resources\\players\\";
-    public static Player currentPlayer;
+
+    //Player has initial value only for testing, otherwise it is equal to null in other classes and nothing can be tested
+    private static Player a = new Player("test");
+    public static Player currentPlayer = a;
 
     @FXML
     private TextField usernameLogIn;
@@ -185,8 +188,4 @@ public class LogInController {
         }
     }
 
-    public Player getCurrentPlayer(){
-        return currentPlayer;
-
-    }
 }

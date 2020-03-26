@@ -95,20 +95,24 @@ public class GameViewController implements Serializable {
 
     //method called when user wants to save the game
     public void saveGame(){
-        File tmpDir = new File("resources\\savedGames\\savedGame.sav");
+        File tmpDir = new File("resources\\savedGames\\" + player.username + "savedGame.sav");
         boolean exists = tmpDir.exists();
         if(exists){
             //if there is a cryptogram saved, ask user if they want to override it
             overridePopUp();
         }
         else{
-            deleteFirst.setText("Cryptogram is saved");
+            //need empty catch block for testing, only in tests it is equal to null because Label is from fxml file and it is not seen in tests
+            try {
+                deleteFirst.setText("Cryptogram is saved");
+            }
+            catch (Exception e){}
         }
 
         //otherwise just save
         if(change = true) {
             try {
-                String tempname = "resources\\savedGames\\savedGame.sav";
+                String tempname = "resources\\savedGames\\"+ player.username +"savedGame.sav";
                 FileOutputStream saveFile = new FileOutputStream(tempname);
                 ObjectOutputStream save = new ObjectOutputStream(saveFile);
                 save.writeObject(cryptogram);
@@ -305,6 +309,7 @@ public class GameViewController implements Serializable {
             public void showGoodJobPopUp(){
             //if this appears, user completed cryptogram successfully
             player.incrementCryptogramsCompleted();
+            try {
                 System.out.println(player.getNumCryptogramsCompleted());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
 
@@ -320,6 +325,7 @@ public class GameViewController implements Serializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } catch (Exception e){}
             }
 
 
