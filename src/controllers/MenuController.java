@@ -1,5 +1,6 @@
 package controllers;
 
+import cryptogram.CryptLoader;
 import cryptogram.Cryptogram;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +41,8 @@ public class MenuController {
 
     @FXML
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
+        CryptLoader newLoader = new CryptLoader();
+        newLoader.generatePhrase();
 
         Scene scene = LetterCryptButton.getScene();
 
@@ -54,6 +57,9 @@ public class MenuController {
 
     @FXML
     public void numberCryptogramButtonClicked(ActionEvent actionEvent) {
+        CryptLoader newLoader = new CryptLoader();
+        newLoader.generatePhrase();
+
         Scene scene = numberCryptButton.getScene();
 //        ScreenController contoller = new ScreenController(scene);
 
@@ -94,7 +100,7 @@ public class MenuController {
                 Parent parent = loader.load();
                 DonePopUpController pop = loader.<DonePopUpController>getController();
                 pop.setText("You don't have any cryptograms stored");
-                Scene scene = new Scene(parent, 388, 216);
+                Scene scene = new Scene(parent, 450, 270);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
@@ -110,7 +116,7 @@ public class MenuController {
                 Parent parent = loader.load();
                 DonePopUpController pop = loader.<DonePopUpController>getController();
                 pop.setText("Something is wrong with the file");
-                Scene scene = new Scene(parent, 388, 216);
+                Scene scene = new Scene(parent, 450, 270);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);

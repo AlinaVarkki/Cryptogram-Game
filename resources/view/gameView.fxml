@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #58355e;">
+      <AnchorPane prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #58355e;">
          <children>
             <Button fx:id="menuButton" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Menu" />
-            <Button fx:id="saveButton" layoutX="672.0" layoutY="1.0" mnemonicParsing="false"  prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Save" />
+            <Button fx:id="saveButton" layoutX="872.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Save" />
          </children>
          <effect>
             <DropShadow>
@@ -24,9 +24,9 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <AnchorPane layoutY="50.0" prefHeight="484.0" prefWidth="800.0" style="-fx-background-color: #7ae7c7;">
+      <AnchorPane layoutY="50.0" prefHeight="580.0" prefWidth="1000.0" style="-fx-background-color: #7ae7c7;">
          <children>
-            <GridPane fx:id="enterLetters" alignment="CENTER" layoutX="20.0" layoutY="33.0" prefHeight="331.0" prefWidth="765.0">
+            <GridPane fx:id="enterLetters" alignment="CENTER" layoutX="41.0" layoutY="38.0" prefHeight="413.0" prefWidth="927.0">
 
               <columnConstraints>
 
@@ -55,24 +55,24 @@
                   <RowConstraints maxHeight="113.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Button layoutX="712.0" layoutY="432.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Start Again">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Button>
-            <Button layoutX="712.0" layoutY="389.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Hint">
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Button>
-            <AnchorPane layoutY="390.0" prefHeight="91.0" prefWidth="715.0" style="-fx-background-color: #fff;">
+            <AnchorPane layoutX="-3.0" layoutY="485.0" prefHeight="95.0" prefWidth="914.0" style="-fx-background-color: #fff;">
                <effect>
                   <DropShadow />
                </effect>
                <children>
-                  <Label fx:id="deleteFirst" layoutX="59.0" layoutY="29.0" prefHeight="36.0" prefWidth="605.0" textAlignment="JUSTIFY" />
+                  <Label fx:id="deleteFirst" layoutX="99.0" layoutY="30.0" prefHeight="36.0" prefWidth="605.0" textAlignment="JUSTIFY" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
+      <Button layoutX="912.0" layoutY="580.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Start Again">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
+      <Button layoutX="912.0" layoutY="531.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Hint">
+         <effect>
+            <InnerShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

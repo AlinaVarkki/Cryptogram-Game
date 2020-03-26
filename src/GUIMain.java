@@ -15,7 +15,7 @@ public class GUIMain extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
         primaryStage.setTitle("Encryption Game");
 
-        primaryStage.setScene(new Scene(root, 800, 530));
+        primaryStage.setScene(new Scene(root, 1000, 630));
         primaryStage.show();
     }
 

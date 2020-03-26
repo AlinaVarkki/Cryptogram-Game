@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="388.0" style="-fx-background-color: #d6ffb7;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DonePopUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="450.0" style="-fx-background-color: #d6ffb7;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DonePopUpController">
    <children>
-      <AnchorPane layoutY="-3.0" prefHeight="111.0" prefWidth="388.0" style="-fx-background-color: #58355e;">
+      <AnchorPane layoutY="-3.0" prefHeight="150.0" prefWidth="450.0" style="-fx-background-color: #58355e;">
          <effect>
             <DropShadow />
          </effect>
          <children>
-            <Label fx:id="label" layoutX="26.0" layoutY="11.0" prefHeight="90.0" prefWidth="335.0" style="-fx-alignment: center;" textFill="WHITE">
+            <Label fx:id="label" layoutX="19.0" layoutY="11.0" prefHeight="108.0" prefWidth="417.0" style="-fx-alignment: center;" textFill="WHITE">
                <font>
-                  <Font size="11.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="closeButton" layoutX="133.0" layoutY="137.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="122.0" style="-fx-background-color: #58355e;" text="OK" textFill="WHITE" />
+      <Button fx:id="closeButton" layoutX="138.0" layoutY="180.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="55.0" prefWidth="175.0" style="-fx-background-color: #58355e;" text="OK" textFill="WHITE" />
    </children>
 </AnchorPane>

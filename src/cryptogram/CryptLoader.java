@@ -10,12 +10,10 @@ import java.util.Scanner;
 public class CryptLoader {
 
 
-
-
-
+    public static String gamePhrase;
 
     //return random cryptogram.Cryptogram(by now random)
-    public static String returnPhrase()  {
+    public void generatePhrase()  {
         Scanner s = null;
         Random rand = new Random();
         String phrase;
@@ -34,15 +32,14 @@ public class CryptLoader {
             s.close();
             
         
-        int random = 0;
+        int random;
 //        try{
         random = rand.nextInt(cryptograms.size());
 //        }catch(Exception e){
 //            System.out.println("Sorry there are no phrases");
 //            System.exit(1);
 //        }
-        phrase = cryptograms.get(random);
-        return phrase;
+        gamePhrase = cryptograms.get(random);
     }
     
     

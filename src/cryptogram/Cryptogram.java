@@ -15,7 +15,7 @@ public abstract class Cryptogram implements Serializable{
     //stores real phrase for the cryptogram
 
 
-    private String phrase = "sd lol";
+    private String phrase = CryptLoader.gamePhrase;
     private String encrypted_puzzle;
     //List<player.Player> allPlayers = new ArrayList<>();
     private String[] tokens = {""};

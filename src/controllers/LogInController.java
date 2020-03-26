@@ -53,7 +53,7 @@ public class LogInController {
         usernameSignIn.setPromptText("username");
         passwordSignIn.setPromptText("password");
 
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+        loginButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String existingUsername = usernameLogIn.getText();
@@ -161,7 +161,7 @@ public class LogInController {
             Parent parent = loader.load();
             DonePopUpController pop = loader.<DonePopUpController>getController();
             pop.setText(" Account with this username not found, new account was created");
-            Scene scene = new Scene(parent, 388, 216);
+            Scene scene = new Scene(parent, 450, 270);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
@@ -178,7 +178,7 @@ public class LogInController {
             Parent parent = loader.load();
             DonePopUpController pop = loader.<DonePopUpController>getController();
             pop.setText(" File is corrupted");
-            Scene scene = new Scene(parent, 388, 216);
+            Scene scene = new Scene(parent, 450, 270);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);

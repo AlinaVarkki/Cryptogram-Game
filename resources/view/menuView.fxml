@@ -6,53 +6,53 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
     <children>
-        <AnchorPane layoutX="357.0" prefHeight="530.0" prefWidth="446.0" style="-fx-background-color: #FFFFFF; -fx-background-size: contain;">
+        <AnchorPane layoutX="520.0" prefHeight="630.0" prefWidth="483.0" style="-fx-background-color: #FFFFFF; -fx-background-size: contain;">
             <effect>
                 <DropShadow />
             </effect>
-            <children>
-                <ImageView fitHeight="277.0" fitWidth="334.0" layoutX="74.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@/images/Logo.png" />
-                    </image>
-                </ImageView>
-            </children>
+         <children>
+            <ImageView fitHeight="253.0" fitWidth="268.0" layoutX="109.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Logo.png" />
+               </image>
+            </ImageView>
+         </children>
         </AnchorPane>
-        <AnchorPane layoutX="-5.0" prefHeight="530.0" prefWidth="362.0" style="-fx-background-color: #7ae7c7;">
+        <AnchorPane layoutX="-5.0" prefHeight="630.0" prefWidth="522.0" style="-fx-background-color: #7ae7c7;">
             <children>
-                <AnchorPane prefHeight="530.0" prefWidth="99.0" style="-fx-background-color: #58355e;">
+                <AnchorPane prefHeight="630.0" prefWidth="120.0" style="-fx-background-color: #58355e;">
                     <effect>
                         <DropShadow />
                     </effect>
                 </AnchorPane>
-                <Button fx:id="logOutButton" layoutY="335.0" mnemonicParsing="false" onAction="#logOutButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Log Out" />
-                <Button layoutY="285.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Stats" />
-                <Button fx:id="continueButton" layoutY="240.0" mnemonicParsing="false" onAction="#continueGameButton" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="Continue game" />
-                <Button fx:id="numberCryptButton" layoutY="190.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Number Cryptogram" />
-            <Button fx:id="LetterCryptButton" layoutY="140.0" mnemonicParsing="false" onAction="#newLetterCrptButtonClicked" prefHeight="50.0" prefWidth="364.0" stylesheets="/css/styles.css" text="New Letter Cryptogram" />
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+                <Button fx:id="logOutButton" layoutX="8.0" layoutY="375.0" mnemonicParsing="false" onAction="#logOutButtonClicked" prefHeight="50.0" prefWidth="514.0" stylesheets="/css/styles.css" text="                  Log Out" />
+                <Button layoutX="8.0" layoutY="326.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="514.0" stylesheets="/css/styles.css" text="                 Stats" />
+                <Button fx:id="continueButton" layoutY="276.0" mnemonicParsing="false" onAction="#continueGameButton" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                      Continue game" />
+                <Button fx:id="numberCryptButton" layoutY="226.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                        New Number Cryptogram" />
+            <Button fx:id="LetterCryptButton" layoutY="176.0" mnemonicParsing="false" onAction="#newLetterCrptButtonClicked" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                      New Letter Cryptogram" />
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="46.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/toy.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="46.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/toy.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="46.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/reload.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="46.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/graph.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="41.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="46.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/logout.png" />
                </image>

@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LogInController">
+<AnchorPane prefHeight="630.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LogInController">
    <children>
-      <AnchorPane prefHeight="530.0" prefWidth="398.0" style="-fx-background-color: #fff;">
+      <AnchorPane prefHeight="630.0" prefWidth="514.0" style="-fx-background-color: #fff;">
          <children>
-            <ImageView fx:id="Logo" fitHeight="230.0" fitWidth="223.0" layoutX="88.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Logo" fitHeight="230.0" fitWidth="223.0" layoutX="146.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Logo.png" />
                </image></ImageView>
@@ -23,27 +23,27 @@
             <DropShadow />
          </effect>
       </AnchorPane>
-      <AnchorPane layoutX="395.0" prefHeight="530.0" prefWidth="405.0" style="-fx-background-color: #7ae7c7;">
+      <AnchorPane layoutX="510.0" prefHeight="630.0" prefWidth="490.0" style="-fx-background-color: #7ae7c7;">
          <effect>
             <DropShadow />
          </effect>
          <children>
-            <TextField fx:id="usernameLogIn" layoutX="44.0" layoutY="71.0" prefHeight="36.0" prefWidth="311.0">
+            <TextField fx:id="usernameLogIn" layoutX="90.0" layoutY="103.0" prefHeight="36.0" prefWidth="311.0">
                <effect>
                   <DropShadow />
                </effect>
             </TextField>
-            <Label layoutX="31.0" layoutY="227.0" prefHeight="50.0" prefWidth="324.0" text="                           OR" textFill="#58355e">
+            <Label layoutX="83.0" layoutY="277.0" prefHeight="50.0" prefWidth="324.0" text="                           OR" textFill="#58355e">
                <font>
                   <Font name="Calibri Light" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameSignIn" layoutX="44.0" layoutY="290.0" prefHeight="36.0" prefWidth="311.0">
+            <TextField fx:id="usernameSignIn" layoutX="90.0" layoutY="354.0" prefHeight="36.0" prefWidth="311.0">
                <effect>
                   <DropShadow />
                </effect>
             </TextField>
-            <Button fx:id="loginButton" layoutX="44.0" layoutY="185.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="311.0" style="-fx-background-color: #58355e;" text="Log In" textFill="WHITE">
+            <Button fx:id="loginButton" layoutX="90.0" layoutY="226.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="311.0" style="-fx-background-color: #58355e;" text="Log In" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
@@ -51,7 +51,7 @@
                   <Font name="Candara Light" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="registerButton" layoutX="38.0" layoutY="400.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="311.0" style="-fx-background-color: #58355e;" text="Sign In" textFill="WHITE">
+            <Button fx:id="registerButton" layoutX="90.0" layoutY="482.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="311.0" style="-fx-background-color: #58355e;" text="Sign In" textFill="WHITE">
                <effect>
                   <DropShadow />
                </effect>
@@ -59,18 +59,18 @@
                   <Font name="Candara Light" size="18.0" />
                </font>
             </Button>
-            <PasswordField fx:id="passwordLogIn" layoutX="44.0" layoutY="130.0" prefHeight="36.0" prefWidth="311.0">
+            <PasswordField fx:id="passwordLogIn" layoutX="90.0" layoutY="167.0" prefHeight="36.0" prefWidth="311.0">
                <effect>
                   <DropShadow />
                </effect>
             </PasswordField>
-            <PasswordField fx:id="passwordSignIn" layoutX="44.0" layoutY="347.0" prefHeight="36.0" prefWidth="311.0">
+            <PasswordField fx:id="passwordSignIn" layoutX="90.0" layoutY="416.0" prefHeight="36.0" prefWidth="311.0">
                <effect>
                   <DropShadow />
                </effect>
             </PasswordField>
-            <Label fx:id="label" layoutX="60.0" layoutY="464.0" prefHeight="36.0" prefWidth="286.0" />
-            <Label fx:id="label1" layoutX="50.0" layoutY="21.0" prefHeight="36.0" prefWidth="286.0" />
+            <Label fx:id="label" layoutX="102.0" layoutY="535.0" prefHeight="36.0" prefWidth="286.0" />
+            <Label fx:id="label1" layoutX="102.0" layoutY="45.0" prefHeight="36.0" prefWidth="286.0" />
          </children>
       </AnchorPane>
    </children>
