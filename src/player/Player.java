@@ -1,3 +1,5 @@
+//user stats are stored in this class
+
 package player;
 
 import java.io.Serializable;

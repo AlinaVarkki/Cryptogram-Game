@@ -1,3 +1,11 @@
+//OLD TESTS, WRITTEN FOR THE VERSION BEFORE GUI
+
+
+
+
+
+
+
 //import cryptogram.Cryptogram;
 //import cryptogram.LetterCryptogram;
 //import cryptogram.NumberCryptogram;

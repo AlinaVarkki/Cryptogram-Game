@@ -1,3 +1,5 @@
+//pop up to ask if user wants to override a cryptogram
+
 package controllers;
 
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ public class GetInputPopUpController {
     @FXML
     private Label enterNameLabel;
 
+    //if user chooses to override saved cryptogram, boolean is changed to true
     @FXML
     public void saveGame(ActionEvent actionEvent) {
         change = true;
@@ -23,10 +26,7 @@ public class GetInputPopUpController {
         stage.close();
     }
 
-    public Boolean getAnswer(){
-        return change;
-    }
-
+    //if user chooses to not override saved cryptogram, boolean is false
     @FXML
     public void dontSave(ActionEvent actionEvent) {
         Stage stage = (Stage) enterNameLabel.getScene().getWindow();
@@ -34,5 +34,8 @@ public class GetInputPopUpController {
         stage.close();
     }
 
+    public Boolean getAnswer(){
+        return change;
+    }
 
 }

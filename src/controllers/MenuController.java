@@ -10,12 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Builder;
-import javafx.util.BuilderFactory;
 import player.Player;
 
 import java.io.*;
-import java.util.ResourceBundle;
 
 public class MenuController {
 
@@ -23,7 +20,6 @@ public class MenuController {
     //current player
     private Player player = LogInController.currentPlayer;
     private static final String playerDirectory = "resources\\players\\";
-
 
     @FXML
     private Button LetterCryptButton;
@@ -34,18 +30,12 @@ public class MenuController {
     @FXML
     private Button logOutButton;
 
-//    public MenuController(Player player){
-//        this.player = player;
-//    }
-
-
+    //difference between choosing number vs letter cryptogram is that they pass different boolean values into constructor
     @FXML
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
         CryptLoader newLoader = new CryptLoader();
         newLoader.generatePhrase();
-
         Scene scene = LetterCryptButton.getScene();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
             loader.setController(new GameViewController(false));
@@ -61,22 +51,18 @@ public class MenuController {
         newLoader.generatePhrase();
 
         Scene scene = numberCryptButton.getScene();
-//        ScreenController contoller = new ScreenController(scene);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
             loader.setController(new GameViewController(true));
-//            contoller.addScreen("numberCryptogram", loader.load());
             scene.setRoot(loader.load());
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    //    contoller.activate("numberCryptogram");
     }
 
+    //restoring Cryptogram object from the file if user wants to continue unfinished game
     @FXML
     public void continueGameButton(ActionEvent actionEvent) {
         Scene scene1 = numberCryptButton.getScene();
@@ -89,7 +75,6 @@ public class MenuController {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gameView.fxml"));
             loader.setController(new GameViewController(cryptogram));
-//            contoller.addScreen("numberCryptogram", loader.load());
             scene1.setRoot(loader.load());
 
         } catch (FileNotFoundException | ClassNotFoundException e){
@@ -98,7 +83,7 @@ public class MenuController {
 
             try {
                 Parent parent = loader.load();
-                DonePopUpController pop = loader.<DonePopUpController>getController();
+                PopUpController pop = loader.getController();
                 pop.setText("You don't have any cryptograms stored");
                 Scene scene = new Scene(parent, 450, 270);
                 Stage stage = new Stage();
@@ -114,7 +99,7 @@ public class MenuController {
 
             try {
                 Parent parent = loader.load();
-                DonePopUpController pop = loader.<DonePopUpController>getController();
+                PopUpController pop = loader.getController();
                 pop.setText("Something is wrong with the file");
                 Scene scene = new Scene(parent, 450, 270);
                 Stage stage = new Stage();
@@ -130,6 +115,7 @@ public class MenuController {
 
     }
 
+    //when user logs out, user object file is overridden
     public void logOutButtonClicked(ActionEvent actionEvent) {
         try {
         String username = player.getUsername();

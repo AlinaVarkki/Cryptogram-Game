@@ -1,9 +1,10 @@
+//view for the game itself, window where user solves the cryptogram
+
 package controllers;
 
 import cryptogram.Cryptogram;
 import cryptogram.LetterCryptogram;
 import cryptogram.NumberCryptogram;
-import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,28 +22,21 @@ import javafx.stage.Stage;
 import player.Player;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameViewController implements Serializable {
 
     private Cryptogram cryptogram;
+
     private String phrase;
     private String encrypted_phrase;
     private TextField[] fields = new TextField[100];
     private int maxChars = 1;
     private String restictTo = "[a-z\\s]*";
     private GetInputPopUpController input = new GetInputPopUpController();
-    private static final String cryptoDirectory = "resources\\savedGames\\";
-    //name to save the game
-    private String name;
     private boolean done = false;
     private boolean change = true;
 
-    //instance of login controller to get current user
-    private LogInController loginController = new LogInController();
     //getting current player
     private Player player = LogInController.currentPlayer;
 
@@ -56,27 +50,25 @@ public class GameViewController implements Serializable {
     @FXML
     private Button menuButton;
 
+    //constructor for restored cryptograms, passing in restored cryptogram
     public GameViewController(Cryptogram cryptogram){
         this.cryptogram = cryptogram;
         this.phrase = cryptogram.returnPhrase();
         this.encrypted_phrase = cryptogram.encryptedCryptogram();
-
-//        createTextBoxes();
-//        addLetters();
-//        fillBoxes();
     }
 
+    //constructor for newly started games
     public GameViewController(Boolean isNumeric) {
         //user starts new game, amount of games updated
-//        player.incrementCryptogramsPlayed();
+        player.incrementCryptogramsPlayed();
 
+        //if passed boolean is true, numeric cryptogram starts, if it's false, letter one
         cryptogram = isNumeric ? new NumberCryptogram() : new LetterCryptogram();
         try {
             phrase = cryptogram.returnPhrase();
         }
         catch(Exception e){
             System.out.println("oops");
-            noPhrasesPopUp();
             System.exit(0);
         }
         encrypted_phrase = cryptogram.encryptedCryptogram();
@@ -89,53 +81,42 @@ public class GameViewController implements Serializable {
     //dynamically creating amount of textboxes
     @FXML
     private void initialize() {
-player.incrementCryptogramsPlayed();
+        //player.incrementCryptogramsPlayed();
         System.out.println(player.getNumCryptogramsPlayed());
         createTextBoxes();
         addLetters();
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                saveGame();
-            }
-        });
+        saveButton.setOnAction(actionEvent -> saveGame());
 
-        menuButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                goToMenu();
-            }
-        });
+        menuButton.setOnAction(actionEvent -> goToMenu());
+
+        //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
         fillBoxes();
     }
-
 
     //method called when user wants to save the game
     public void saveGame(){
         File tmpDir = new File("resources\\savedGames\\savedGame.sav");
         boolean exists = tmpDir.exists();
         if(exists){
+            //if there is a cryptogram saved, ask user if they want to override it
             overridePopUp();
         }
         else{
             deleteFirst.setText("Cryptogram is saved");
         }
 
+        //otherwise just save
         if(change = true) {
             try {
                 String tempname = "resources\\savedGames\\savedGame.sav";
                 FileOutputStream saveFile = new FileOutputStream(tempname);
-            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+                ObjectOutputStream save = new ObjectOutputStream(saveFile);
                 save.writeObject(cryptogram);
                 save.close();
                 saveFile.close();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
         }
     }
 
@@ -143,25 +124,25 @@ player.incrementCryptogramsPlayed();
 
     //pop up to get save name from user
     public void overridePopUp(){
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/getInputPopUp.fxml"));
 
             try {
                 Parent parent = loader.load();
-                input = loader.<GetInputPopUpController>getController();
+                input = loader.getController();
                 Scene scene = new Scene(parent, 440, 241);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(scene);
                 stage.showAndWait();
                 change = input.getAnswer();
-                System.out.println(name);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        catch(Exception e){}
+        catch(Exception e){
+
+        }
 
     }
 
@@ -201,6 +182,7 @@ player.incrementCryptogramsPlayed();
 
             String s = (String) cryptogram.getMap().get(phrase.charAt(i));
 
+            //listener for cells
             fields[i].textProperty().addListener((observable, oldValue, newValue) -> {
 
                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
@@ -219,7 +201,6 @@ player.incrementCryptogramsPlayed();
 
 
                             if (cryptogram.checkSolution() && !done) {
-                                System.out.println("sdfsdfdsf" );
                                 System.out.println("textfield changed from " + oldValue + " to " + newValue);
                                 done = true;
                                 showGoodJobPopUp();
@@ -289,9 +270,6 @@ player.incrementCryptogramsPlayed();
         }
     }
 
-
-
-
             //dynamically allocate letters to the right cells
             public void addLetters(){
                 int rowl = 0;
@@ -332,7 +310,7 @@ player.incrementCryptogramsPlayed();
 
                 try {
                     Parent parent = loader.load();
-                    DonePopUpController pop = loader.<DonePopUpController>getController();
+                    PopUpController pop = loader.getController();
                     pop.setText("Good job, your solution is correct");
                     Scene scene = new Scene(parent, 450, 270);
                     Stage stage = new Stage();
@@ -344,38 +322,9 @@ player.incrementCryptogramsPlayed();
                 }
             }
 
-            public void noPhrasesPopUp(){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
 
-                try {
-                    Parent parent = loader.load();
-                    DonePopUpController pop = loader.<DonePopUpController>getController();
-                    pop.setText("Sorry, there are no phrases to play");
-                    Scene scene = new Scene(parent, 450, 270);
-                    Stage stage = new Stage();
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setScene(scene);
-                    stage.showAndWait();
-                    //stage.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
             public void goToMenu() {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/menuView.fxml"));
-//
-//                try {
-//                    Parent parent = loader.load();
-//                    MenuController menu = loader.<MenuController>getController();
-//                    Scene scene = new Scene(parent, 800, 530);
-//                    Stage stage = new Stage();
-//                    stage.initModality(Modality.APPLICATION_MODAL);
-//                    stage.setScene(scene);
-//                    stage.show();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
                 Scene scene = enterLetters.getScene();
                 ScreenController cont = new ScreenController(scene);

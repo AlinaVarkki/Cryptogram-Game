@@ -1,3 +1,5 @@
+//class to easier switch between screens, only used if nothing needs to be passed to the constructor
+
 package controllers;
 
 import javafx.scene.Scene;
@@ -17,9 +19,6 @@ public class ScreenController {
         screenMap.put(name, pane);
     }
 
-    protected void removeScreen(String name){
-        screenMap.remove(name);
-    }
 
     protected void activate(String name){
         main.setRoot( screenMap.get(name) );

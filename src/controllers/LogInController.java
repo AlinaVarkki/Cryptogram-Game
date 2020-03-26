@@ -1,3 +1,5 @@
+//first, login view controller
+
 package controllers;
 
 import javafx.event.ActionEvent;
@@ -21,11 +23,10 @@ public class LogInController {
     private static final String playerDirectory = "resources\\players\\";
     public static Player currentPlayer;
 
-
-
     @FXML
     private TextField usernameLogIn;
 
+    //password are actually there for looking better, they don't do anything, not actually needed for our user stories, usernames do all the needed job
     @FXML
     private PasswordField passwordLogIn;
 
@@ -41,8 +42,7 @@ public class LogInController {
     private Button registerButton;
     @FXML
     private Label label;
-    @FXML
-    private Label label1;
+
 
 
 
@@ -53,75 +53,32 @@ public class LogInController {
         usernameSignIn.setPromptText("username");
         passwordSignIn.setPromptText("password");
 
-        loginButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String existingUsername = usernameLogIn.getText();
-                String existingPassword = passwordLogIn.getText();
+        loginButton.setOnAction(actionEvent -> {
+            String existingUsername = usernameLogIn.getText();
+            String existingPassword = passwordLogIn.getText();
+            //when user wants to login, first try to load the file
+            try {
+
+                String tempname = playerDirectory + existingUsername + ".sav";
+                FileInputStream saveFile = new FileInputStream(tempname);
+                ObjectInputStream restore = new ObjectInputStream(saveFile);
+                currentPlayer = (Player)restore.readObject();
+
+                //after logging in go to menu
+                goToMenu();
+                //if file doesn't exist, create new one
+            } catch (FileNotFoundException | ClassNotFoundException e) {
+
                 try {
 
                     String tempname = playerDirectory + existingUsername + ".sav";
-                    FileInputStream saveFile = new FileInputStream(tempname);
-                    ObjectInputStream restore = new ObjectInputStream(saveFile);
-                    currentPlayer = (Player)restore.readObject();
-
-                    //after logging in go to menu
-                    goToMenu();
-                } catch (FileNotFoundException | ClassNotFoundException e) {
-
-                    try {
-
-                        String tempname = playerDirectory + existingUsername + ".sav";
-                        File file = new File(tempname);
-                        //if user name already exists, don't register
-                        boolean exists = file.exists();
-                        if(!exists) {
-                            Player player = new Player(existingUsername);
-                            currentPlayer = player;
-                            System.out.println(existingUsername + existingPassword);
-                            //later add pop up if username exists
-
-
-                            FileOutputStream saveFile = new FileOutputStream(tempname);
-                            ObjectOutputStream save = new ObjectOutputStream(saveFile);
-
-                            save.writeObject(player);
-
-                            save.close();
-
-                            //show popup that new user is created
-                            newUserPopUp();
-                            //after user is signed in, move to the menu
-                            goToMenu();
-                        }
-                        else{
-                            label.setText("This username is taken");
-                        }
-
-                         }catch(IOException f){}
-
-                } catch (IOException e) {
-                    somethingWrong();
-                }
-
-
-            }
-        });
-//if user wants to register, new file is created for them
-        registerButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    String newUsername = usernameSignIn.getText();
-                    String newPassword = passwordSignIn.getText();
-                    String tempname = playerDirectory + newUsername + ".sav";
                     File file = new File(tempname);
                     //if user name already exists, don't register
                     boolean exists = file.exists();
                     if(!exists) {
-                        Player player = new Player(newUsername);
+                        Player player = new Player(existingUsername);
                         currentPlayer = player;
-                        System.out.println(newUsername + newPassword);
+                        System.out.println(existingUsername + existingPassword);
                         //later add pop up if username exists
 
 
@@ -131,6 +88,9 @@ public class LogInController {
                         save.writeObject(player);
 
                         save.close();
+
+                        //show popup that new user is created
+                        newUserPopUp();
                         //after user is signed in, move to the menu
                         goToMenu();
                     }
@@ -138,11 +98,47 @@ public class LogInController {
                         label.setText("This username is taken");
                     }
 
-                }
-                catch(IOException f){
+                     }catch(IOException f){}
 
+                //if file is not readable, show user pop up saying something is wrong with the file
+            } catch (IOException e) {
+                somethingWrong();
+            }
+
+
+        });
+
+        //if user wants to register, new file is created for them
+        registerButton.setOnAction(actionEvent -> {
+            try {
+                String newUsername = usernameSignIn.getText();
+                String newPassword = passwordSignIn.getText();
+                String tempname = playerDirectory + newUsername + ".sav";
+                File file = new File(tempname);
+                //if user name already exists, don't register
+                boolean exists = file.exists();
+                if(!exists) {
+                    Player player = new Player(newUsername);
+                    currentPlayer = player;
+                    System.out.println(newUsername + newPassword);
+                    //later add pop up if username exists
+
+                    FileOutputStream saveFile = new FileOutputStream(tempname);
+                    ObjectOutputStream save = new ObjectOutputStream(saveFile);
+
+                    save.writeObject(player);
+
+                    save.close();
+                    //after user is signed in, move to the menu
+                    goToMenu();
+                }
+                else{
+                    label.setText("This username is taken");
                 }
 
+            }
+            catch(IOException f){
+            somethingWrong();
             }
         });
     }
@@ -154,12 +150,13 @@ public class LogInController {
         screenController.activate("menu");
     }
 
+    //if user tried to login, but this username does not exist, let them know new user was created
     public void newUserPopUp(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
 
         try {
             Parent parent = loader.load();
-            DonePopUpController pop = loader.<DonePopUpController>getController();
+            PopUpController pop = loader.getController();
             pop.setText(" Account with this username not found, new account was created");
             Scene scene = new Scene(parent, 450, 270);
             Stage stage = new Stage();
@@ -176,7 +173,7 @@ public class LogInController {
 
         try {
             Parent parent = loader.load();
-            DonePopUpController pop = loader.<DonePopUpController>getController();
+            PopUpController pop = loader.getController();
             pop.setText(" File is corrupted");
             Scene scene = new Scene(parent, 450, 270);
             Stage stage = new Stage();

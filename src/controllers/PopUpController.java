@@ -1,3 +1,6 @@
+//controller for pop up window
+//used in different parts of the game with changed pop up message
+
 package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,9 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class DonePopUpController extends AnchorPane {
+public class PopUpController extends AnchorPane {
 
-    public DonePopUpController(){
+    public PopUpController(){
 
     }
 

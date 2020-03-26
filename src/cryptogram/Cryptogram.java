@@ -1,11 +1,7 @@
 package cryptogram;
 
 import controllers.LogInController;
-import game.Game;
 import player.Player;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -33,14 +29,6 @@ public abstract class Cryptogram implements Serializable{
         return user_solution;
     }
 
-    public void setUser_solution(HashMap<Character, String> user_solution) {
-        this.user_solution = user_solution;
-    }
-
-
-
-
-
     //method that returns letters in the cryptogram.Cryptogram as a set
     public Set<Character> getCryptogramCharacters() {
 //        phrase = CryptLoader.returnPhrase();
@@ -65,41 +53,9 @@ public abstract class Cryptogram implements Serializable{
                 System.out.println("correct " + player.getCorrectGuesses());
             }
         }
-
     }
 
-
-    //method to display current user solution
-    public String showCurrentState(){
-
-        String[] tokens1 = encrypted_puzzle.split(" ");
-
-        StringBuilder currentState = new StringBuilder();
-        for (String s : tokens1) {
-            //if the character in the cryptogram is the value of a key in the map solution, it prints it out at the correct place
-            if (user_solution.containsValue(s)) {
-                for (Map.Entry<Character, String> entry : user_solution.entrySet()) {
-                    if (entry.getValue().equals(s)) {
-                        currentState.append(entry.getKey());
-                        currentState.append(" ");
-                    }
-                }
-            } else {
-                if (getMap().containsValue(s)){
-                    currentState.append("_");
-                    currentState.append(" ");
-                }
-                else {
-                    currentState.append(" ");
-                }
-
-            }
-
-        }
-        return currentState.toString();
-    }
-
-
+    //ecrypting current played phrase using the map generated in lettercryptogram and numbercryptogram
     public String encryptedCryptogram() {
         String a;
         a = phrase;
@@ -116,16 +72,9 @@ public abstract class Cryptogram implements Serializable{
         return encrypted_puzzle;
     }
 
-
-
-    //removing user input from the map
+    //removing user input from the map if they delete letter
     public void undoLetter(Character c){
             user_solution.remove(c);
-    }
-
-
-    public String getFrequncies(){
-        return "";
     }
 
 
@@ -138,7 +87,7 @@ public abstract class Cryptogram implements Serializable{
         solutionkeys.remove(' ');
         Set<Character> input_keys = getUser_solution().keySet();
         boolean correct = true;
-        //if keys in slution and answer are not the same, the answer is incorrect
+        //if keys in solution and answer are not the same, the answer is incorrect
         if(!solutionkeys.containsAll(input_keys)){
             correct = false;
         }
@@ -154,17 +103,13 @@ public abstract class Cryptogram implements Serializable{
         return correct;
     }
 
+    //checks if user doesn't have any free input fields
     public boolean allPlacesFilled(){
         for(int i = 0; i<phrase.length(); i++){
             phraseLetters.add(phrase.charAt(i));
         }
-        if(phraseLetters.contains(' ')){
-            phraseLetters.remove(' ');
-        }
-        if(user_solution.keySet().size() == phraseLetters.size()){
-            return true;
-        }
-        return false;
+        phraseLetters.remove(' ');
+        return user_solution.keySet().size() == phraseLetters.size();
     }
 
     public String returnPhrase(){
