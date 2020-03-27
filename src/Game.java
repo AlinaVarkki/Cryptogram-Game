@@ -22,6 +22,7 @@ public class Game <T>{
     private static final String playerDirectory = "resources\\players\\";
     private String name;
     private String playerName;
+    private Player player;
 
     public Game(Player p, String cryptType){}
 
@@ -29,7 +30,7 @@ public class Game <T>{
 
     public Game() throws FileNotFoundException {
         chooseCryptogram();
-        loadPlayer();
+        player = loadPlayer();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
         takeInput();
@@ -87,18 +88,19 @@ public class Game <T>{
 
             try {
                 if (tokens[0].equals("set") && tokens[2].length() == 1 && tokens.length == 3) {
-                        crypt_object.enterLetter(tokens[1], tokens[2].charAt(0), cryptogram, user_solution);
-//                    System.out.println(crypt_object.getNumCorrectGuesses());
-//                    System.out.println(crypt_object.getNumGuesses());
+                    crypt_object.enterLetter(tokens[1], tokens[2].charAt(0), cryptogram, user_solution);
                     complete = checkSolution();
+                    player.incrementTotalGuesses();
                     if(complete){
                         System.out.println("Good job, your solution is correct");
                         System.out.println(crypt_object.showCurrentState(cryptogram, user_solution).toUpperCase());
+                        player.incrementCorrectGuesses();
+                        player.incrementCryptogramsCompleted();
                         saveGame();
+                        savePlayer(player);
+                        System.out.println("Number of cryptogramss completed as " + playerName + ": " + player.getNumCryptogramsCompleted());
                         System.exit(1);
                     }
-
-
                 }
                 else if (tokens[0].equals("remove") &&  tokens.length == 2) {
                     crypt_object.undoLetter(tokens[1].charAt(0), user_solution);
@@ -116,10 +118,12 @@ public class Game <T>{
                 }
                 else if (tokens[0].equals("exit")) {
                     saveGame();
+                    savePlayer(player);
                     shouldcontinue = false;
                 }
                 else if (tokens[0].equals("save")) {
                     saveGame();
+                    savePlayer(player);
                 }
                 else{
                     System.out.println("Sorry syntax is wrong");
@@ -187,7 +191,7 @@ public class Game <T>{
     public char getHint(){
         return 'a';}
 
-    public void loadPlayer(){
+    public Player loadPlayer(){
         try {
             System.out.println("Enter the player name: ");
             playerName = scanner.nextLine();
@@ -201,6 +205,7 @@ public class Game <T>{
             player.setCompleted((Integer) restore.readObject());
             restore.close();
             System.out.println(playerName + " loaded successfully");
+            return player;
         }
         catch(IOException | ClassNotFoundException e) {
             try {
@@ -215,10 +220,27 @@ public class Game <T>{
                 save.writeObject(player.getNumCryptogramsCompleted());
                 save.close();
                 System.out.println("Successfully added new player");
+                return player;
             }
             catch(IOException f) {
                 System.out.println("Player loading error");
             }
+        }
+        return null;
+    }
+
+    public void savePlayer(Player player) {
+        try {
+            String tempname = playerDirectory + playerName + ".sav";
+            FileOutputStream saveFile = new FileOutputStream(tempname);
+            ObjectOutputStream save = new ObjectOutputStream(saveFile);
+            save.writeObject(player.getTotalGuesses());
+            save.writeObject(player.getCorrectGuesses());
+            save.writeObject(player.getNumCryptogramsPlayed());
+            save.writeObject(player.getNumCryptogramsCompleted());
+        }
+        catch(IOException e) {
+            System.out.println("Unable to save player");
         }
     }
 

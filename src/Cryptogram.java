@@ -167,7 +167,7 @@ abstract class Cryptogram {
     }
 
     //returns letter and it's frequency
-    public String getFrequncies(){
+    public String getFreqeuncies(){
         return "";
     }
 
