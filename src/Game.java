@@ -99,6 +99,8 @@ public class Game <T>{
                         saveGame();
                         savePlayer(player);
                         System.out.println("Number of cryptogramss completed as " + playerName + ": " + player.getNumCryptogramsCompleted());
+                        System.out.println("Guess accuracy: " + player.updateAccuracy());
+                        System.out.println("Number of guesses: " + player.getTotalGuesses());
                         System.exit(1);
                     }
                 }
@@ -154,7 +156,7 @@ public class Game <T>{
         solutionkeys.remove(' ');
         Set<Character> input_keys = user_solution.keySet();
         boolean correct = true;
-        //if keys in slution and answer are not the same, the answer is incorrect
+        //if keys in solution and answer are not the same, the answer is incorrect
         if(!solutionkeys.containsAll(input_keys)){
             correct = false;
         }

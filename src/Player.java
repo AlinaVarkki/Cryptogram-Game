@@ -13,7 +13,7 @@ public class Player {
     }
 
     public int updateAccuracy(){
-        return correctGuesses/totalGuesses;
+        return (correctGuesses/totalGuesses) * 100;
     }
 
     public void incrementCryptogramsCompleted(){
