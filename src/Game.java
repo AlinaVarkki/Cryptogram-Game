@@ -29,7 +29,6 @@ public class Game <T>{
 
     public Game() throws FileNotFoundException {
         chooseCryptogram();
-        chooseName();
         loadPlayer();
         printRules();
         System.out.println(generateCryptogram().toUpperCase());
@@ -45,21 +44,20 @@ public class Game <T>{
             tokens = cryptChoice.split(" ");
                 if (tokens[0].equals("l")) {
                     crypt_object = new LetterCryptogram();
+                    chooseName();
                     shouldContinueAsking = false;
                 } else if (tokens[0].equals("n")) {
                     crypt_object = new NumberCryptogram();
+                    chooseName();
                     shouldContinueAsking = false;
                 } else if (tokens[0].equals("load")) {
                     loadGame(tokens[1]);
-                    loadPlayer();
-                    printRules();
-                    System.out.println(cryptogram.toUpperCase());
-                    takeInput();
                     shouldContinueAsking = false;
                 }
                 else System.out.println("Please enter correct syntax");
         }
     }
+
 
     private void chooseName() {
         System.out.println("Please enter a save name for the cryptogram: ");
@@ -262,6 +260,5 @@ public class Game <T>{
             System.exit(1);
         }
     }
-
 
 }
