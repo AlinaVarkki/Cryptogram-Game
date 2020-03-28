@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import player.Player;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.Map;
 
 public class GameViewController implements Serializable {
@@ -49,6 +50,8 @@ public class GameViewController implements Serializable {
     private Button saveButton;
     @FXML
     private Button menuButton;
+    @FXML
+    private Button showSolutionButton;
 
     //constructor for restored cryptograms, passing in restored cryptogram
     public GameViewController(Cryptogram cryptogram){
@@ -89,9 +92,14 @@ public class GameViewController implements Serializable {
 
         menuButton.setOnAction(actionEvent -> goToMenu());
 
+        showSolutionButton.setOnAction(actionEvent -> showSolution());
+
+
+
         //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
         fillBoxes();
     }
+
 
     //method called when user wants to save the game
     public void saveGame(){
@@ -330,17 +338,87 @@ public class GameViewController implements Serializable {
 
 
 
-            public void goToMenu() {
+    public void goToMenu() {
 
-                Scene scene = enterLetters.getScene();
-                ScreenController cont = new ScreenController(scene);
-                try {
-                    cont.addScreen("menu", FXMLLoader.load(getClass().getResource("/view/menuView.fxml")));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                cont.activate("menu");
+        Scene scene = enterLetters.getScene();
+        ScreenController cont = new ScreenController(scene);
+        try {
+            cont.addScreen("menu", FXMLLoader.load(getClass().getResource("/view/menuView.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        cont.activate("menu");
     }
+
+
+    //when user wants to see solution
+    //method creates new textfields on the same places (because if we fill old ones, listener will call certain methods and all statistics will get updated)
+    //after filling textboxes, they get disabled and user cannot do anything with textboxes
+    //save button is not longer working, you cannot save game that is solved
+    public void showSolution() {
+
+        int row = 1;
+        //variable that gets incremented with every pass to change the row after it's at max(6 in a row)
+        int c = 0;
+        int column = 0;
+        //max of letters in a row
+        int trashHold = enterLetters.getColumnCount();
+        //adding textboxes to cells
+        for (int i = 0; i < phrase.length(); i++) {
+            //create new textbox and override methods to only accept1 letter (and only letters)
+            fields[i] = new TextField();
+
+            String s = (String) cryptogram.getMap().get(phrase.charAt(i));
+
+            if (phrase.charAt(i) != ' ') {
+                enterLetters.add(fields[i], column, row);
+            }
+
+            column = column + 1;
+            c = c + 1;
+            if (c >= trashHold) {
+                row = row + 2;
+                trashHold = trashHold + enterLetters.getColumnCount();
+            }
+            if (column > 9) {
+                column = 0;
+            }
+        }
+
+        for(int i = 0; i < phrase.length(); i++){
+            fields[i].clear();
+            fields[i].setText(String.valueOf(phrase.charAt(i)));
+        }
+
+
+        for(int i = 0; i < phrase.length(); i++){
+            fields[i].setEditable(false);
+        }
+
+        saveButton.setOnAction(actionEvent ->cantSavePopUp());
+
+    }
+
+    private void cantSavePopUp() {
+        try {
+            System.out.println(player.getNumCryptogramsCompleted());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+            try {
+                Parent parent = loader.load();
+                PopUpController pop = loader.getController();
+                pop.setText("You can't save solved cryptogram");
+                Scene scene = new Scene(parent, 450, 270);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e){}
+    }
+
 
 }
 

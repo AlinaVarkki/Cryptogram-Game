@@ -8,11 +8,9 @@ import cryptogram.NumberCryptogram;
 import org.junit.Test;
 import player.Player;
 
-import javax.swing.*;
 import java.io.*;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class Tests2Iteration {
 
@@ -59,7 +57,7 @@ public class Tests2Iteration {
             ObjectInputStream restore = new ObjectInputStream(saveFile);
             Cryptogram cryptogram = (Cryptogram) restore.readObject();
             restore.close();
-             assertTrue(cryptogram != null);
+            assertNotNull(cryptogram);
     }
 
 //    o Given a player has been created
@@ -71,7 +69,7 @@ public class Tests2Iteration {
         ObjectInputStream restore = new ObjectInputStream(saveFile);
         Player player = (Player) restore.readObject();
         restore.close();
-        assertTrue(player != null);
+        assertNotNull(player);
     }
 
 //    user statistics get updated

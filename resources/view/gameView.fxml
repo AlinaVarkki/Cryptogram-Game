@@ -64,12 +64,12 @@
                </children>
             </AnchorPane>
          </children></AnchorPane>
-      <Button layoutX="912.0" layoutY="580.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Start Again">
+      <Button fx:id="showSolutionButton" layoutX="892.0" layoutY="580.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="108.0" style="-fx-background-color: #ed3456;" text="Show solution">
          <effect>
             <InnerShadow />
          </effect>
       </Button>
-      <Button layoutX="912.0" layoutY="531.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="88.0" style="-fx-background-color: #ed3456;" text="Hint">
+      <Button layoutX="892.0" layoutY="531.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="108.0" style="-fx-background-color: #ed3456;" text="Hint">
          <effect>
             <InnerShadow />
          </effect>
