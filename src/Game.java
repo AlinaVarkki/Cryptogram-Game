@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Game <T>{
+public class Game <T> {
 
     Player currentPlayer;
     private Cryptogram crypt_object;
@@ -292,6 +292,11 @@ public class Game <T>{
                 names.add(file.getName());
             }
         }
+
+        System.out.println("test " + names);
+        String users[] = new String[20];
+        int scores[] = new int [20];
+        int a = 0;
         try {
             for (String n : names) {
                 FileInputStream saveFile = new FileInputStream(playerDirectory + n);
@@ -303,10 +308,55 @@ public class Game <T>{
                 System.out.println(n);
                 System.out.println(completed);
                 hiScore.put(n, completed);
+                users[a] = n;
+                scores[a] = completed;
+                a++;
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Something went wrong");
         }
+
+        //remove .sav from name for display
+        for (int y = 0; y < users.length; y++) {
+            if (users[y] == null) {
+
+            }
+            else {
+                users[y] = users[y].substring(0, users[y].length() -4);
+            }
+        }
+
+        //sorting
+        int l = scores.length;
+        for (int t = 1; t < l; ++t) {
+            int key = scores[t];
+            int j = t - 1;
+
+            /* Move elements of arr[0..i-1], that are
+               greater than key, to one position ahead
+               of their current position */
+            while (j >= 0 && scores[j] < key) {
+                scores[j + 1] = scores[j];
+                users[j + 1] = users[j];
+                j = j - 1;
+            }
+            scores[j + 1] = key;
+        }
+
+        //printing
+        System.out.println("-----------------");
+        System.out.println("Top 10 scoreboard");
+        System.out.println("-----------------");
+        for (int b = 0; b < 10; b++) {
+            if (users[b] == null) {
+                System.out.println("empty 0");
+            }
+            else {
+                System.out.println(users[b] + " " + scores[b]);
+            }
+        }
+        System.out.println("-----------------");
+        System.out.println();
     }
 
 }
