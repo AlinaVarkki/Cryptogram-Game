@@ -319,6 +319,8 @@ public class Game <T>{
         for (String key : sorted.keySet()) {
             System.out.println(count + ". " + key + ": " + hiScore.get(key));
             count++;
+            if (count == 11)
+                break;
         }
     }
 
