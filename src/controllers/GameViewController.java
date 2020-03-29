@@ -30,7 +30,7 @@ public class GameViewController implements Serializable {
     private Cryptogram cryptogram;
 
     private String phrase;
-    private String encrypted_phrase;
+    public static String encrypted_phrase;
     private TextField[] fields = new TextField[100];
     private int maxChars = 1;
     private String restictTo = "[a-z\\s]*";

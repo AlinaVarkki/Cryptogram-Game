@@ -7,15 +7,21 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class FrequenciesContoller {
     HashMap<Character, Double> englishAlphabetMap = new HashMap<>();
+    TreeMap<Character, Integer> cryptogramAlphabetMap = new TreeMap<>();
     @FXML
     private GridPane alphabetFrequencies;
 
     @FXML
+    private GridPane cryptogramFrequencies;
+
+    @FXML
     private void initialize(){
         fillAplhabetGrid();
+        fillCryptogramGrid();
     }
 
     public void fillAplhabetGrid() {
@@ -61,6 +67,46 @@ public class FrequenciesContoller {
         englishAlphabetMap.put('J',0.1965);
         englishAlphabetMap.put('Q',0.1962);
     }
+
+
+    public void fillCryptogramGrid() {
+        fillCryptogramAlphabet();
+        List<String> keys = new ArrayList(cryptogramAlphabetMap.keySet());
+
+        for(int i = 0; i < cryptogramAlphabetMap.keySet().size(); i++) {
+            Text e = new Text();
+            e.setText(String.valueOf(keys.get(i)));
+            cryptogramFrequencies.add(e, 0, i);
+            Text a = new Text();
+            a.setText(String.valueOf(cryptogramAlphabetMap.get(keys.get(i))) + " %");
+            cryptogramFrequencies.add(a, 1, i);
+
+        }
+    }
+
+    public void fillCryptogramAlphabet() {
+        List<Character> keys = new ArrayList(cryptogramAlphabetMap.keySet());
+
+        int counter = 0;
+        String s = GameViewController.encrypted_phrase;
+        for(int i = 0; i < s.length(); i++){
+            counter++;
+            Character curr = (Character) s.charAt(i);
+            if(cryptogramAlphabetMap.get(curr) == null){
+                cryptogramAlphabetMap.put(curr, 1);
+            }else{
+                cryptogramAlphabetMap.put(curr, cryptogramAlphabetMap.get(curr) +1);
+            }
+        }
+
+        for(int i = 0; i < keys.size(); i++){
+            Character curre = keys.get(i);;
+            Integer a = cryptogramAlphabetMap.get(curre)/counter * 100;
+        cryptogramAlphabetMap.put(curre, a);
+        }
+    }
+
+
 
 
 
