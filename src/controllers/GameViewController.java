@@ -44,6 +44,7 @@ public class GameViewController implements Serializable {
 
     @FXML
     private GridPane enterLetters;
+
     @FXML
     private Label deleteFirst;
     @FXML
@@ -52,6 +53,8 @@ public class GameViewController implements Serializable {
     private Button menuButton;
     @FXML
     private Button showSolutionButton;
+    @FXML
+    private Button frequenciesButton;
 
     //constructor for restored cryptograms, passing in restored cryptogram
     public GameViewController(Cryptogram cryptogram){
@@ -94,6 +97,7 @@ public class GameViewController implements Serializable {
 
         showSolutionButton.setOnAction(actionEvent -> showSolution());
 
+        frequenciesButton.setOnAction(actionEvent -> showFrequncies());
 
 
         //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
@@ -419,6 +423,24 @@ public class GameViewController implements Serializable {
         } catch (Exception e){}
     }
 
+    private void showFrequncies() {
+        try {
+            System.out.println(player.getNumCryptogramsCompleted());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/frequenciesView.fxml"));
+
+            try {
+                Parent parent = loader.load();
+                FrequenciesContoller controller = loader.getController();
+                Scene scene = new Scene(parent, 565, 589);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e){}
+    }
 
 }
 

@@ -14,7 +14,15 @@
       <AnchorPane prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #58355e;">
          <children>
             <Button fx:id="menuButton" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Menu" />
-            <Button fx:id="saveButton" layoutX="872.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Save" />
+            <Button fx:id="saveButton" layoutX="872.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Save">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="frequenciesButton" layoutX="744.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="128.0" style="-fx-background-color: #ed3456;" text="Letter frequencies">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
          <effect>
             <DropShadow>
