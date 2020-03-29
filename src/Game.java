@@ -295,7 +295,7 @@ public class Game <T>{
         HashMap<String,Integer> hiScore = new HashMap<>();
         for (File file : files) {
             if (!file.getName().equals(".gitkeep")) {
-                names.add(file.getName());
+                names.add(file.getName()); //adding all player names to an array
             }
         }
         try {
@@ -306,7 +306,7 @@ public class Game <T>{
                 for (int i = 0; i < 4; i++) { //looping through the data 4 times to get the right field
                     completed = (Integer) restore.readObject();
                 }
-                n = n.substring(0, n.length() - 4);
+                n = n.substring(0, n.length() - 4); //removes .sav from names
                 hiScore.put(n, completed);
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -314,7 +314,7 @@ public class Game <T>{
         }
         Map<String, Integer> sorted = hiScore.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new)); //sorting the map
         int count = 1;
         for (String key : sorted.keySet()) {
             System.out.println(count + ". " + key + ": " + hiScore.get(key));
