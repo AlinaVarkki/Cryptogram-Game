@@ -40,8 +40,11 @@ public class Player implements Serializable {
 
 
     //percentage that shows how accurate you are
-    public int returnAccuracy(){
-        return correctGuesses/totalGuesses*100;
+    public double returnAccuracy(){
+        if(correctGuesses == 0){
+            return 0.00;
+        }
+        return ((double) correctGuesses/(double) totalGuesses)*100.00;
     }
 
     public void incrementCryptogramsCompleted(){

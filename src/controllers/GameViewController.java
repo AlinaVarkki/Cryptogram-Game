@@ -453,6 +453,9 @@ public class GameViewController implements Serializable {
         Random rand = new Random();
         int random = 0;
         random = rand.nextInt(phrase.length());
+
+
+
         if(fields[random].getText().equals("")) {
             fields[random].setText(String.valueOf(phrase.charAt(random)));
         }

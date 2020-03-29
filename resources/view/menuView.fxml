@@ -28,7 +28,7 @@
                     </effect>
                 </AnchorPane>
                 <Button fx:id="logOutButton" layoutX="8.0" layoutY="375.0" mnemonicParsing="false" onAction="#logOutButtonClicked" prefHeight="50.0" prefWidth="514.0" stylesheets="/css/styles.css" text="                  Log Out" />
-                <Button layoutX="8.0" layoutY="326.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="514.0" stylesheets="/css/styles.css" text="                 Stats" />
+                <Button fx:id="statsButton" layoutX="8.0" layoutY="326.0" mnemonicParsing="false" onAction="#goToStats" prefHeight="50.0" prefWidth="514.0" stylesheets="/css/styles.css" text="                 Stats" />
                 <Button fx:id="continueButton" layoutY="276.0" mnemonicParsing="false" onAction="#continueGameButton" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                      Continue game" />
                 <Button fx:id="numberCryptButton" layoutY="226.0" mnemonicParsing="false" onAction="#numberCryptogramButtonClicked" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                        New Number Cryptogram" />
             <Button fx:id="LetterCryptButton" layoutY="176.0" mnemonicParsing="false" onAction="#newLetterCrptButtonClicked" prefHeight="50.0" prefWidth="522.0" stylesheets="/css/styles.css" text="                      New Letter Cryptogram" />

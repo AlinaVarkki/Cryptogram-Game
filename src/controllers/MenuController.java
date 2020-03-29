@@ -30,6 +30,9 @@ public class MenuController {
     @FXML
     private Button logOutButton;
 
+    @FXML
+    private Button statsButton;
+
     //difference between choosing number vs letter cryptogram is that they pass different boolean values into constructor
     @FXML
     public void newLetterCrptButtonClicked(ActionEvent actionEvent){
@@ -137,6 +140,18 @@ public class MenuController {
         }
 
 
+    }
+
+    @FXML
+    public void goToStats(ActionEvent actionEvent) {
+        Scene scene = statsButton.getScene();
+        ScreenController cont = new ScreenController(scene);
+        try {
+            cont.addScreen("stats", FXMLLoader.load(getClass().getResource("/view/statsView.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        cont.activate("stats");
     }
 }
 
