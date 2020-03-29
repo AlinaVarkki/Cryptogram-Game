@@ -23,7 +23,10 @@ import player.Player;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameViewController implements Serializable {
 
@@ -51,6 +54,8 @@ public class GameViewController implements Serializable {
     private Button saveButton;
     @FXML
     private Button menuButton;
+    @FXML
+    private Button hintButton;
     @FXML
     private Button showSolutionButton;
     @FXML
@@ -99,6 +104,7 @@ public class GameViewController implements Serializable {
 
         frequenciesButton.setOnAction(actionEvent -> showFrequncies());
 
+        hintButton.setOnAction(actionEvent -> giveHint());
 
         //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
         fillBoxes();
@@ -442,5 +448,36 @@ public class GameViewController implements Serializable {
         } catch (Exception e){}
     }
 
+    private void giveHint() {
+        List<String> keys = new ArrayList(Cryptogram.usedMapping.keySet());
+        Random rand = new Random();
+        int random = 0;
+        random = rand.nextInt(phrase.length());
+        if(fields[random].getText().equals("")) {
+            fields[random].setText(String.valueOf(phrase.charAt(random)));
+        }
+        else{
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/finishPopUpView.fxml"));
+
+            try {
+                Parent parent = loader.load();
+                PopUpController pop = loader.getController();
+                pop.setText("Mapping was changed from " + fields[random].getText() + " to " + String.valueOf(phrase.charAt(random)));
+                Scene scene = new Scene(parent, 450, 270);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fields[random].clear();
+            fields[random].setText(String.valueOf(phrase.charAt(random)));
+        }
+        //if user used the button, guesses should not be counted to their stats
+        LogInController.currentPlayer.decrementCorrectGuesses();
+        LogInController.currentPlayer.decrementTotalGuesses();
+    }
 }
 

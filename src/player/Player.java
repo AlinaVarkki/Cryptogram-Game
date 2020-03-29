@@ -60,6 +60,15 @@ public class Player implements Serializable {
         correctGuesses++;
     }
 
+    //decrementing when user used hint. When something is entered to textboxes, It is automatically incremented because of the listener
+    public void decrementTotalGuesses() {
+        totalGuesses--;
+    }
+
+    public void decrementCorrectGuesses() {
+        correctGuesses--;
+    }
+
     public int getNumCryptogramsCompleted(){
         return cryptogramsCompleted;
     }
