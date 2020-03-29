@@ -293,7 +293,7 @@ public class Game <T> {
             }
         }
 
-        System.out.println("test " + names);
+        System.out.println(names);
         String users[] = new String[20];
         int scores[] = new int [20];
         int a = 0;
@@ -330,6 +330,7 @@ public class Game <T> {
         int l = scores.length;
         for (int t = 1; t < l; ++t) {
             int key = scores[t];
+            String key2 = users[t];
             int j = t - 1;
 
             /* Move elements of arr[0..i-1], that are
@@ -341,6 +342,7 @@ public class Game <T> {
                 j = j - 1;
             }
             scores[j + 1] = key;
+            users[j + 1] = key2;
         }
 
         //printing
