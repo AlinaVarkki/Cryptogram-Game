@@ -285,14 +285,28 @@ public class Game <T>{
 
     public void topScores() {
         File[] files = new File(playerDirectory).listFiles();
-        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<>();
+        HashMap<String,Integer> hiScore = new HashMap<>();
         for (File file : files) {
             if (!file.getName().equals(".gitkeep")) {
                 names.add(file.getName());
             }
         }
-        System.out.println(names);
-
+        try {
+            for (String n : names) {
+                FileInputStream saveFile = new FileInputStream(playerDirectory + n);
+                ObjectInputStream restore = new ObjectInputStream(saveFile);
+                int completed = 0;
+                for (int i = 0; i < 4; i++) { //looping through the data 4 times to get the right field
+                    completed = (Integer) restore.readObject();
+                }
+                System.out.println(n);
+                System.out.println(completed);
+                hiScore.put(n, completed);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Something went wrong");
+        }
     }
 
 }
