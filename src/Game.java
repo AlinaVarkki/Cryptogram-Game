@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Game <T>{
 
@@ -29,6 +26,7 @@ public class Game <T>{
     public Game(Player p){}
 
     public Game() throws FileNotFoundException {
+        topScores();
         chooseCryptogram();
         player = loadPlayer();
         printRules();
@@ -283,6 +281,18 @@ public class Game <T>{
             System.out.println("There has been an error loading the file, make sure you entered the correct file name");
             System.exit(1);
         }
+    }
+
+    public void topScores() {
+        File[] files = new File(playerDirectory).listFiles();
+        ArrayList<String> names = new ArrayList<String>();
+        for (File file : files) {
+            if (!file.getName().equals(".gitkeep")) {
+                names.add(file.getName());
+            }
+        }
+        System.out.println(names);
+
     }
 
 }
