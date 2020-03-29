@@ -1,5 +1,11 @@
 import java.io.*;
 import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static java.util.stream.Collectors.*;
+import static java.util.Map.Entry.*;
 
 public class Game <T>{
 
@@ -300,14 +306,20 @@ public class Game <T>{
                 for (int i = 0; i < 4; i++) { //looping through the data 4 times to get the right field
                     completed = (Integer) restore.readObject();
                 }
-                System.out.println(n);
-                System.out.println(completed);
+                n = n.substring(0, n.length() - 4);
                 hiScore.put(n, completed);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Something went wrong");
         }
-        hiScore.forEach((k,v) -> System.out.println("Player = " + k + ", Score = " + v));
+        Map<String, Integer> sorted = hiScore.entrySet().stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        int count = 1;
+        for (String key : sorted.keySet()) {
+            System.out.println(count + ". " + key + ": " + hiScore.get(key));
+            count++;
+        }
     }
 
 }
