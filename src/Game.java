@@ -307,6 +307,7 @@ public class Game <T>{
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Something went wrong");
         }
+        hiScore.forEach((k,v) -> System.out.println("Player = " + k + ", Score = " + v));
     }
 
 }
