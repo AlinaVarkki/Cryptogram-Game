@@ -8,8 +8,9 @@ import java.util.*;
 public abstract class Cryptogram implements Serializable{
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
-    //stores real phrase for the cryptogram
 
+    //stores real phrase for the cryptogram
+    public static HashMap<Character, String> usedMapping;
 
     private String phrase = CryptLoader.gamePhrase;
     private String encrypted_puzzle;
@@ -56,6 +57,8 @@ public abstract class Cryptogram implements Serializable{
 
     //ecrypting current played phrase using the map generated in lettercryptogram and numbercryptogram
     public String encryptedCryptogram() {
+        fillUsedMap();
+
         String a;
         a = phrase;
         StringBuilder encrypted_cryptogram = new StringBuilder();
@@ -121,5 +124,13 @@ public abstract class Cryptogram implements Serializable{
     }
     public void setEncyptedPhrase(String a){
         encrypted_puzzle = a;
+    }
+
+    //returns letters in cryptogram and mapping
+    public void fillUsedMap(){
+        usedMapping = new HashMap<>();
+        for(int i = 0; i < phrase.length(); i++){
+            usedMapping.put(phrase.charAt(i), (String) getMap().get(phrase.charAt(i)));
+        }
     }
 }

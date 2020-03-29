@@ -29,7 +29,7 @@ public class GameViewController implements Serializable {
 
     private Cryptogram cryptogram;
 
-    private String phrase;
+    public static String phrase;
     public static String encrypted_phrase;
     private TextField[] fields = new TextField[100];
     private int maxChars = 1;

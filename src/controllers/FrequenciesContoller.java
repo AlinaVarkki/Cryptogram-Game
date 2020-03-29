@@ -1,9 +1,11 @@
 package controllers;
 
+import cryptogram.Cryptogram;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.TreeMap;
 
 public class FrequenciesContoller {
     HashMap<Character, Double> englishAlphabetMap = new HashMap<>();
-    TreeMap<Character, Integer> cryptogramAlphabetMap = new TreeMap<>();
+//    HashMap<Character, String> encryption_map = Cryptogram.get;
+    TreeMap<String, Double> cryptogramAlphabetMap = new TreeMap<>();
+
     @FXML
     private GridPane alphabetFrequencies;
 
@@ -84,25 +88,42 @@ public class FrequenciesContoller {
         }
     }
 
-    public void fillCryptogramAlphabet() {
-        List<Character> keys = new ArrayList(cryptogramAlphabetMap.keySet());
 
+    public void fillCryptogramAlphabet() {
         int counter = 0;
-        String s = GameViewController.encrypted_phrase;
+        String s = GameViewController.phrase;
         for(int i = 0; i < s.length(); i++){
             counter++;
-            Character curr = (Character) s.charAt(i);
+            String curr = Character.toString(s.charAt(i));
             if(cryptogramAlphabetMap.get(curr) == null){
-                cryptogramAlphabetMap.put(curr, 1);
+                cryptogramAlphabetMap.put(curr, 1.00);
             }else{
                 cryptogramAlphabetMap.put(curr, cryptogramAlphabetMap.get(curr) +1);
             }
         }
+//this is all here because some map is String so char, not idea, but deadlines are short
+        List<String> keys = new ArrayList(cryptogramAlphabetMap.keySet());
+        List<Character>keys1 = new ArrayList<>();
+        for(int i = 0; i<keys.size(); i++){
+            keys1.add(keys.get(i).charAt(0));
+        }
 
-        for(int i = 0; i < keys.size(); i++){
-            Character curre = keys.get(i);;
-            Integer a = cryptogramAlphabetMap.get(curre)/counter * 100;
-        cryptogramAlphabetMap.put(curre, a);
+        //replace actual values with mapped ones
+        for(int i = 0; i<keys.size();i++){
+            cryptogramAlphabetMap.put(Cryptogram.usedMapping.get(keys1.get(i)), cryptogramAlphabetMap.get(keys.get(i)));
+            cryptogramAlphabetMap.remove(keys.get(i));
+        }
+
+        if(cryptogramAlphabetMap.containsKey(" ")){
+            cryptogramAlphabetMap.remove(" ");
+        }
+
+        List<String> keys2 = new ArrayList(cryptogramAlphabetMap.keySet());
+
+        for(int i = 0; i < keys2.size(); i++){
+            Double a = cryptogramAlphabetMap.get(keys2.get(i))/counter * 100;
+            DecimalFormat df = new DecimalFormat("#.##");
+        cryptogramAlphabetMap.put(keys2.get(i), Double.parseDouble(df.format(a)));
         }
     }
 

@@ -12,7 +12,6 @@ public class NumberCryptogram extends Cryptogram implements Serializable {
 
 
 
-
     public NumberCryptogram(File String){
 
     }
