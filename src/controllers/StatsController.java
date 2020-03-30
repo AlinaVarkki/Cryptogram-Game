@@ -6,14 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import player.Player;
 
 import java.io.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class StatsController {
 
@@ -36,6 +36,7 @@ public class StatsController {
 
     @FXML
     private void initialize() {
+        playersTop.setStyle("-fx-font-size: 20px;");
         addNumbers();
         fillTop();
         fillTopGrid();
@@ -76,29 +77,39 @@ public class StatsController {
     }
 
     public void fillTopGrid(){
-        //array from keys
-        List<String> keys = new ArrayList<>(hiScore.keySet());
-//        //order array by score
-//        for(int i = 1; i < keys.size(); i++){
-//            for(int j = i; j > 0; j--){
-//                if(hiScore.get(keys.get(j)) < hiScore.get(keys.get(j-1))){
-//                    String temp = keys.get(j);
-//                    keys.add(j, keys.get(j-1));
-//                    keys.add(j-1, temp);
-//                }
-//            }
-//        }
+        Map<String, Integer> sortedMap = sortByValue(hiScore);
+        List<String> keys = new ArrayList<>(sortedMap.keySet());
+        Collections.reverse(keys);
         int j = 0;
         for (int i = 0; i < hiScore.keySet().size(); i++) {
             j++;
             Text e = new Text();
-            e.setText(keys.get(i) + " " + hiScore.get(keys.get(i)));
+            e.setFont(Font.font("Verdana", 20));
+            e.setText(keys.get(i) + "     Score: " + sortedMap.get(keys.get(i)));
             playersTop.add(e, 1, i);
             if(j>10){
                 break;
             }
         }
 
+    }
+
+    //function to sort list map by value
+    public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)
+    {
+        // Create a list from elements of HashMap
+        List<Map.Entry<String, Integer> > list =
+                new LinkedList<>(hm.entrySet());
+
+        // Sort the list
+        Collections.sort(list, Comparator.comparing(Map.Entry::getValue));
+
+        // put data from sorted list to hashmap
+        HashMap<String, Integer> temp = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 
     public void addNumbers(){
