@@ -11,7 +11,9 @@ import player.Player;
 
 import java.io.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class StatsController {
 
@@ -74,7 +76,29 @@ public class StatsController {
     }
 
     public void fillTopGrid(){
-        
+        //array from keys
+        List<String> keys = new ArrayList<>(hiScore.keySet());
+//        //order array by score
+//        for(int i = 1; i < keys.size(); i++){
+//            for(int j = i; j > 0; j--){
+//                if(hiScore.get(keys.get(j)) < hiScore.get(keys.get(j-1))){
+//                    String temp = keys.get(j);
+//                    keys.add(j, keys.get(j-1));
+//                    keys.add(j-1, temp);
+//                }
+//            }
+//        }
+        int j = 0;
+        for (int i = 0; i < hiScore.keySet().size(); i++) {
+            j++;
+            Text e = new Text();
+            e.setText(keys.get(i) + " " + hiScore.get(keys.get(i)));
+            playersTop.add(e, 1, i);
+            if(j>10){
+                break;
+            }
+        }
+
     }
 
     public void addNumbers(){
