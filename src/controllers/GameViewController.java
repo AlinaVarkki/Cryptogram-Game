@@ -61,6 +61,27 @@ public class GameViewController implements Serializable {
     @FXML
     private Button frequenciesButton;
 
+    //dynamically creating amount of textboxes
+    @FXML
+    private void initialize() {
+        //player.incrementCryptogramsPlayed();
+        System.out.println(player.getNumCryptogramsPlayed());
+        createTextBoxes();
+        addLetters();
+        saveButton.setOnAction(actionEvent -> saveGame());
+
+        menuButton.setOnAction(actionEvent -> goToMenu());
+
+        showSolutionButton.setOnAction(actionEvent -> showSolution(enterLetters));
+
+        frequenciesButton.setOnAction(actionEvent -> showFrequncies());
+
+        hintButton.setOnAction(actionEvent -> giveHint());
+
+        //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
+        fillBoxes();
+    }
+
     //constructor for restored cryptograms, passing in restored cryptogram
     public GameViewController(Cryptogram cryptogram){
         this.cryptogram = cryptogram;
@@ -89,26 +110,7 @@ public class GameViewController implements Serializable {
     }
 
 
-    //dynamically creating amount of textboxes
-    @FXML
-    private void initialize() {
-        //player.incrementCryptogramsPlayed();
-        System.out.println(player.getNumCryptogramsPlayed());
-        createTextBoxes();
-        addLetters();
-        saveButton.setOnAction(actionEvent -> saveGame());
 
-        menuButton.setOnAction(actionEvent -> goToMenu());
-
-        showSolutionButton.setOnAction(actionEvent -> showSolution());
-
-        frequenciesButton.setOnAction(actionEvent -> showFrequncies());
-
-        hintButton.setOnAction(actionEvent -> giveHint());
-
-        //fill boxes with current user solution (for restored cryptograms, in other case it's empty)
-        fillBoxes();
-    }
 
 
     //method called when user wants to save the game
@@ -365,30 +367,30 @@ public class GameViewController implements Serializable {
     //method creates new textfields on the same places (because if we fill old ones, listener will call certain methods and all statistics will get updated)
     //after filling textboxes, they get disabled and user cannot do anything with textboxes
     //save button is not longer working, you cannot save game that is solved
-    public void showSolution() {
+    public void showSolution(GridPane x) {
 
         int row = 1;
         //variable that gets incremented with every pass to change the row after it's at max(6 in a row)
         int c = 0;
         int column = 0;
         //max of letters in a row
-        int trashHold = enterLetters.getColumnCount();
+        int trashHold = x.getColumnCount();
         //adding textboxes to cells
-        for (int i = 0; i < phrase.length(); i++) {
+        for (int i = 0; i < cryptogram.returnSolution().length(); i++) {
             //create new textbox and override methods to only accept1 letter (and only letters)
             fields[i] = new TextField();
 
-            String s = (String) cryptogram.getMap().get(phrase.charAt(i));
+            String s = (String) cryptogram.getMap().get(cryptogram.returnSolution().charAt(i));
 
             if (phrase.charAt(i) != ' ') {
-                enterLetters.add(fields[i], column, row);
+                x.add(fields[i], column, row);
             }
 
             column = column + 1;
             c = c + 1;
             if (c >= trashHold) {
                 row = row + 2;
-                trashHold = trashHold + enterLetters.getColumnCount();
+                trashHold = trashHold + x.getColumnCount();
             }
             if (column > 9) {
                 column = 0;

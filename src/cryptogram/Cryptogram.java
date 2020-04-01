@@ -5,6 +5,8 @@ import player.Player;
 import java.io.Serializable;
 import java.util.*;
 
+import static cryptogram.CryptLoader.gamePhrase;
+
 public abstract class Cryptogram implements Serializable{
     public abstract HashMap getMap();
     public abstract HashMap encryptionMap();
@@ -12,7 +14,7 @@ public abstract class Cryptogram implements Serializable{
     //stores real phrase for the cryptogram
     public static HashMap<Character, String> usedMapping;
 
-    private String phrase = CryptLoader.gamePhrase;
+    private String phrase = gamePhrase;
     private String encrypted_puzzle;
     //List<player.Player> allPlayers = new ArrayList<>();
     private String[] tokens = {""};
@@ -28,6 +30,7 @@ public abstract class Cryptogram implements Serializable{
     public HashMap<Character, String> getUser_solution() {
         return user_solution;
     }
+
 
     //method that returns letters in the cryptogram.Cryptogram as a set
     public Set<Character> getCryptogramCharacters() {
@@ -118,6 +121,10 @@ public abstract class Cryptogram implements Serializable{
         return phrase;
     }
 
+    public String returnSolution(){
+        return phrase;
+    }
+
     //methods just for testing
     public void setPhrase(String a){
         phrase = a;
@@ -132,5 +139,18 @@ public abstract class Cryptogram implements Serializable{
         for(int i = 0; i < phrase.length(); i++){
             usedMapping.put(phrase.charAt(i), (String) getMap().get(phrase.charAt(i)));
         }
+    }
+
+    public Character giveHint(){
+        ArrayList keys = new ArrayList();
+        for(int i = 0; i<phrase.length(); i++){
+            keys.add(String.valueOf(phrase.charAt(i)));
+        }
+        Random rand = new Random();
+        int random;
+        random = rand.nextInt(phrase.length());
+
+
+    return phrase.charAt(random);
     }
 }

@@ -13,7 +13,6 @@ import java.util.TreeMap;
 
 public class FrequenciesContoller {
     HashMap<Character, Double> englishAlphabetMap = new HashMap<>();
-//    HashMap<Character, String> encryption_map = Cryptogram.get;
     TreeMap<String, Double> cryptogramAlphabetMap = new TreeMap<>();
 
     @FXML
@@ -30,7 +29,7 @@ public class FrequenciesContoller {
 
     public void fillAplhabetGrid() {
     fillEnglishAplhabet();
-    List<String> keys = new ArrayList(englishAlphabetMap.keySet());
+    ArrayList keys = new ArrayList(englishAlphabetMap.keySet());
     //loop through set size and allocate text to every row
     for(int i = 0; i < englishAlphabetMap.keySet().size(); i++) {
         Text e = new Text();
@@ -72,6 +71,9 @@ public class FrequenciesContoller {
         englishAlphabetMap.put('Q',0.1962);
     }
 
+    public HashMap returnEnglishAlphabetMap(){
+        return englishAlphabetMap;
+    }
 
     public void fillCryptogramGrid() {
         fillCryptogramAlphabet();

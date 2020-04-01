@@ -37,7 +37,7 @@ public class StatsController {
     @FXML
     private void initialize() {
         playersTop.setStyle("-fx-font-size: 20px;");
-        addNumbers();
+
         fillTop();
         fillTopGrid();
         totalGuesses.setText("      Total guesses: " + LogInController.currentPlayer.totalGuesses);
@@ -70,7 +70,8 @@ public class StatsController {
                 Player user = (Player) restore.readObject();
                 hiScore.put(user.username, user.cryptogramsCompleted);
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                noPlayers();
             }
 
         }
@@ -80,18 +81,23 @@ public class StatsController {
         Map<String, Integer> sortedMap = sortByValue(hiScore);
         List<String> keys = new ArrayList<>(sortedMap.keySet());
         Collections.reverse(keys);
-        int j = 0;
-        for (int i = 0; i < hiScore.keySet().size(); i++) {
-            j++;
-            Text e = new Text();
-            e.setFont(Font.font("Verdana", 20));
-            e.setText(keys.get(i) + "     Score: " + sortedMap.get(keys.get(i)));
-            playersTop.add(e, 1, i);
-            if(j>10){
-                break;
+        if(hiScore.size() > 1) {
+            addNumbers();
+            int j = 0;
+            for (int i = 0; i < hiScore.keySet().size(); i++) {
+                j++;
+                Text e = new Text();
+                e.setFont(Font.font("Verdana", 20));
+                e.setText(keys.get(i) + "     Score: " + sortedMap.get(keys.get(i)));
+                playersTop.add(e, 1, i);
+                if (j > 10) {
+                    break;
+                }
             }
         }
-
+        else{
+            noPlayers();
+        }
     }
 
     //function to sort list map by value
@@ -118,5 +124,12 @@ public class StatsController {
             e.setText(String.valueOf(i+1));
             playersTop.add(e, 0, i);
         }
+    }
+
+    public void noPlayers(){
+        Text e = new Text();
+        e.setFont(Font.font("Verdana", 20));
+        e.setText("There are no players stored");
+        playersTop.add(e, 1, 1);
     }
 }
