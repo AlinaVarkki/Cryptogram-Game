@@ -103,7 +103,7 @@ public class FrequenciesContoller {
                 cryptogramAlphabetMap.put(curr, cryptogramAlphabetMap.get(curr) +1);
             }
         }
-//this is all here because some map is String so char, not idea, but deadlines are short
+//this is all here because some map is String to char
         List<String> keys = new ArrayList(cryptogramAlphabetMap.keySet());
         List<Character>keys1 = new ArrayList<>();
         for(int i = 0; i<keys.size(); i++){

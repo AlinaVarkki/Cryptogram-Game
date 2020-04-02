@@ -18,6 +18,9 @@ import java.util.*;
 public class StatsController {
 
     private static final String playerDirectory = "resources\\players\\";
+
+
+
     HashMap<String,Integer> hiScore = new HashMap<>();
 
 
@@ -131,5 +134,10 @@ public class StatsController {
         e.setFont(Font.font("Verdana", 20));
         e.setText("There are no players stored");
         playersTop.add(e, 1, 1);
+    }
+
+    //for tests
+    public HashMap<String, Integer> getHiScore() {
+        return hiScore;
     }
 }
