@@ -10,13 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import player.Player;
@@ -204,6 +205,7 @@ public class GameViewController implements Serializable {
 
             };
 
+
             String s = (String) cryptogram.getMap().get(phrase.charAt(i));
 
             //listener for cells
@@ -305,12 +307,13 @@ public class GameViewController implements Serializable {
                 //adding textboxes to cells
                 for (int i = 0; i < phrase.length(); i++) {
                     Text e = new Text();
+                    e.setFont(Font.font(String.valueOf(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20))));
 
                     if (phrase.charAt(i) == ' ') {
                         e.setText(" ");
                     }
                     else {
-                        e.setText(String.valueOf(cryptogram.getMap().get(phrase.charAt(i))));
+                        e.setText("            " + String.valueOf(cryptogram.getMap().get(phrase.charAt(i))).toUpperCase());
                     }
                     enterLetters.add(e, columnl, rowl);
 

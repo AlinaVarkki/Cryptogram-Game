@@ -3,6 +3,9 @@ package controllers;
 import cryptogram.Cryptogram;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.text.DecimalFormat;
@@ -14,6 +17,7 @@ import java.util.TreeMap;
 public class FrequenciesContoller {
     HashMap<Character, Double> englishAlphabetMap = new HashMap<>();
     TreeMap<String, Double> cryptogramAlphabetMap = new TreeMap<>();
+    TreeMap<String, Double> finalMap = new TreeMap<>();
 
     @FXML
     private GridPane alphabetFrequencies;
@@ -33,7 +37,7 @@ public class FrequenciesContoller {
     //loop through set size and allocate text to every row
     for(int i = 0; i < englishAlphabetMap.keySet().size(); i++) {
         Text e = new Text();
-        e.setText(String.valueOf(keys.get(i)));
+        e.setText("     " + String.valueOf(keys.get(i)));
         alphabetFrequencies.add(e, 0, i);
         Text a = new Text();
         a.setText(String.valueOf(englishAlphabetMap.get(keys.get(i))) + " %");
@@ -77,14 +81,14 @@ public class FrequenciesContoller {
 
     public void fillCryptogramGrid() {
         fillCryptogramAlphabet();
-        List<String> keys = new ArrayList(cryptogramAlphabetMap.keySet());
+        List<String> keys = new ArrayList(finalMap.keySet());
 
-        for(int i = 0; i < cryptogramAlphabetMap.keySet().size(); i++) {
+        for(int i = 0; i < finalMap.keySet().size(); i++) {
             Text e = new Text();
-            e.setText(String.valueOf(keys.get(i)));
+            e.setText("     "  + String.valueOf(keys.get(i)).toUpperCase());
             cryptogramFrequencies.add(e, 0, i);
             Text a = new Text();
-            a.setText(String.valueOf(cryptogramAlphabetMap.get(keys.get(i))) + " %");
+            a.setText(String.valueOf(finalMap.get(keys.get(i))) + " %");
             cryptogramFrequencies.add(a, 1, i);
 
         }
@@ -94,6 +98,7 @@ public class FrequenciesContoller {
     public void fillCryptogramAlphabet() {
         int counter = 0;
         String s = GameViewController.phrase;
+       s =  s.replaceAll("\\s+", "");;
         for(int i = 0; i < s.length(); i++){
             counter++;
             String curr = Character.toString(s.charAt(i));
@@ -103,6 +108,7 @@ public class FrequenciesContoller {
                 cryptogramAlphabetMap.put(curr, cryptogramAlphabetMap.get(curr) +1);
             }
         }
+
 //this is all here because some map is String to char
         List<String> keys = new ArrayList(cryptogramAlphabetMap.keySet());
         List<Character>keys1 = new ArrayList<>();
@@ -110,22 +116,21 @@ public class FrequenciesContoller {
             keys1.add(keys.get(i).charAt(0));
         }
 
+
         //replace actual values with mapped ones
         for(int i = 0; i<keys.size();i++){
             cryptogramAlphabetMap.put(Cryptogram.usedMapping.get(keys1.get(i)), cryptogramAlphabetMap.get(keys.get(i)));
+            finalMap.put(Cryptogram.usedMapping.get(keys1.get(i)), cryptogramAlphabetMap.get(keys.get(i)));
             cryptogramAlphabetMap.remove(keys.get(i));
+
         }
 
-        if(cryptogramAlphabetMap.containsKey(" ")){
-            cryptogramAlphabetMap.remove(" ");
-        }
-
-        List<String> keys2 = new ArrayList(cryptogramAlphabetMap.keySet());
+        List<String> keys2 = new ArrayList(finalMap.keySet());
 
         for(int i = 0; i < keys2.size(); i++){
-            Double a = cryptogramAlphabetMap.get(keys2.get(i))/counter * 100;
+            Double a = finalMap.get(keys2.get(i))/counter * 100;
             DecimalFormat df = new DecimalFormat("#.##");
-        cryptogramAlphabetMap.put(keys2.get(i), Double.parseDouble(df.format(a)));
+            finalMap.put(keys2.get(i), Double.parseDouble(df.format(a)));
         }
     }
 
